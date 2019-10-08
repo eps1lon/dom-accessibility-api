@@ -221,6 +221,11 @@ function computeTooltipAttributeValue(node: Node): string | null {
 	return null;
 }
 
+/**
+ * implements https://w3c.github.io/accname/#mapping_additional_nd_te
+ * @param root 
+ * @param context 
+ */
 export function computeAccessibleName(
 	root: Element,
 	context: { isReferenced?: boolean } = {}
