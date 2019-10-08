@@ -254,7 +254,7 @@ export function computeAccessibleName(
 				isReferenced: context.isReferenced,
 				recursion: true
 			});
-			accumulatedText += result;
+			accumulatedText += ` ${result}`;
 		}
 
 		if (isElement(node)) {
