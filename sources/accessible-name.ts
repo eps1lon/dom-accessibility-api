@@ -173,11 +173,19 @@ function hasAnyConcreteRoles(node: Node, roles: string[]): node is Element {
 				.split(" ")
 				.some(role => roles.indexOf(role) !== -1);
 		}
+		// https://w3c.github.io/html-aria/
 		switch (node.tagName) {
 			case "A":
 				return roles.indexOf("link") !== -1;
 			case "BUTTON":
 				return roles.indexOf("button") !== -1;
+			case "H1":
+			case "H2":
+			case "H3":
+			case "H4":
+			case "H5":
+			case "H6":
+				return roles.indexOf("heading") !== -1;
 			case "SELECT":
 				return roles.indexOf("listbox") !== -1;
 			case "OPTION":
@@ -212,7 +220,7 @@ function isNativeHostLanguageTextAlternativeElement(
  * TODO https://w3c.github.io/aria/#namefromcontent
  */
 function allowsNameFromContent(node: Node): boolean {
-	return hasAnyConcreteRoles(node, ["option", "link", "button"]);
+	return hasAnyConcreteRoles(node, ["option", "heading", "link", "button"]);
 }
 
 /**
