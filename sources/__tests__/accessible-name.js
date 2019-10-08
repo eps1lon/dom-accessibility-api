@@ -93,6 +93,13 @@ test.each([
 <input type="image" src="foo.jpg" id="test" data-test />	
 `,
 		"fancy"
+	],
+	[
+		`
+<input data-test id="test" type="text" aria-label="bar" aria-labelledby="ID1 test">
+<div id="ID1">foo</label>
+	`,
+		"foo bar"
 	]
 ])(`&#`, (markup, accessibleName) => {
 	const container = renderIntoDocument(markup);

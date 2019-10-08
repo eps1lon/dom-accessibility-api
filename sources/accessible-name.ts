@@ -224,7 +224,7 @@ export function computeAccessibleName(
 	/**
 	 * @type {Set<Node>}
 	 */
-	const visitedNodes = new Set();
+	const consultedNodes = new Set();
 	/**
 	 * @type {FlatString}
 	 */
@@ -275,8 +275,8 @@ export function computeAccessibleName(
 		}
 
 		const titleAttribute = node.getAttributeNode("title");
-		if (titleAttribute !== null && !visitedNodes.has(titleAttribute)) {
-			visitedNodes.add(titleAttribute);
+		if (titleAttribute !== null && !consultedNodes.has(titleAttribute)) {
+			consultedNodes.add(titleAttribute);
 			return titleAttribute.value;
 		}
 
@@ -312,19 +312,20 @@ export function computeAccessibleName(
 		current: Node,
 		context: { isReferenced?: boolean; recursion?: boolean }
 	): string {
-		if (visitedNodes.has(current)) {
+		if (consultedNodes.has(current)) {
 			return "";
 		}
-		visitedNodes.add(current);
 
 		// special casing, cheating to make tests pass
 		if (hasAnyConcreteRoles(current, ["menu"])) {
+			consultedNodes.add(current);
 			return "";
 		}
 
 		const { isReferenced = false, recursion = isReferenced } = context;
 		// 2A
 		if (isHidden(current) && !isReferenced) {
+			consultedNodes.add(current);
 			return "" as FlatString;
 		}
 
@@ -342,6 +343,7 @@ export function computeAccessibleName(
 			""
 		).trim();
 		if (ariaLabel !== "") {
+			consultedNodes.add(current);
 			if (recursion && isEmbeddedControl(current)) {
 				throw new Error("Not implemented");
 			}
@@ -351,16 +353,19 @@ export function computeAccessibleName(
 		// 2D
 		const attributeTextAlternative = computeAttributeTextAlternative(current);
 		if (attributeTextAlternative !== null) {
+			consultedNodes.add(current);
 			return attributeTextAlternative;
 		}
 		const elementTextAlternative = computeElementTextAlternative(current);
 		if (elementTextAlternative !== null) {
+			consultedNodes.add(current);
 			return elementTextAlternative;
 		}
 
 		// 2E
 		if (isReferenced) {
 			if (hasAnyConcreteRoles(current, ["combobox", "listbox"])) {
+				consultedNodes.add(current);
 				const selectedOptions = querySelectedOptions(current);
 				if (selectedOptions.length === 0) {
 					return "";
@@ -375,6 +380,7 @@ export function computeAccessibleName(
 					.join(" ");
 			}
 			if (hasAbstractRole(current, "range")) {
+				consultedNodes.add(current);
 				if (current.hasAttribute("aria-valuetext")) {
 					return current.getAttribute("aria-valuetext")!;
 				}
@@ -385,6 +391,7 @@ export function computeAccessibleName(
 				return current.getAttribute("value") || "";
 			}
 			if (hasAbstractRole(current, "textbox")) {
+				consultedNodes.add(current);
 				return current.getAttribute("value") || "";
 			}
 		}
@@ -396,23 +403,28 @@ export function computeAccessibleName(
 			isNativeHostLanguageTextAlternativeElement(current) ||
 			isDescendantOfNativeHostLanguageTextAlternativeElement(current)
 		) {
+			consultedNodes.add(current);
 			return computeMiscTextAlternative(current, { isReferenced });
 		}
 
 		if (current.nodeType === current.TEXT_NODE) {
+			consultedNodes.add(current);
 			return current.textContent || "";
 		}
 
 		if (recursion) {
+			consultedNodes.add(current);
 			return computeMiscTextAlternative(current, { isReferenced });
 		}
 
 		const tooltipAttributeValue = computeTooltipAttributeValue(current);
 		if (tooltipAttributeValue !== null) {
+			consultedNodes.add(current);
 			return tooltipAttributeValue;
 		}
 
 		// TODO should this be reachable?
+		consultedNodes.add(current);
 		return "";
 	}
 
