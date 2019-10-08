@@ -1,6 +1,16 @@
 DIR: accname
 
 description_*.html: [fail, bridge not implemented]
+name_test_case_659-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_660-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_661-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_662-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_663a-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
 name_test_case_753-manual.html:
   [fail, getComputedStyle pseudo selector not implemented]
 name_test_case_754-manual.html:
