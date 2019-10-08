@@ -1,0 +1,37 @@
+{
+	"name": "dom-accessibility-api",
+	"version": "0.0.1",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"format": "prettier \"**/*.{json,js,ts}\" --write --ignore-path .prettierignore",
+		"test": "jest",
+		"test-wpt": "mocha tests/run-wpts.js",
+		"init-wpt": "git submodule update --init --recursive",
+		"reset-wpt": "rimraf ./tests/wpt && yarn init-wpt",
+		"update-wpt": "git submodule update --recursive --remote && cd tests/wpt && python wpt.py manifest --path ../wpt-manifest.json"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.6.2",
+		"@babel/preset-env": "^7.6.2",
+		"@babel/preset-typescript": "^7.6.0",
+		"@testing-library/dom": "^6.6.0",
+		"@types/jest": "^24.0.18",
+		"jest": "^24.9.0",
+		"jest-diff": "^24.9.0",
+		"jest-environment-jsdom-thirteen": "^1.0.1",
+		"js-yaml": "^3.13.1",
+		"jsdom": "^15.1.1",
+		"minimatch": "^3.0.4",
+		"mocha": "^6.2.1",
+		"mocha-sugar-free": "^1.4.0",
+		"prettier": "^1.18.2",
+		"q": "^1.5.1",
+		"request": "^2.34",
+		"request-promise-native": "^1.0.7",
+		"typescript": "^3.6.3"
+	},
+	"prettier": {
+		"useTabs": true
+	}
+}
