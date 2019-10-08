@@ -17,7 +17,6 @@ class ATTAcomm {
 
 				for (const assertion of assertions) {
 					const [matcher, name, equality, expected] = assertion;
-					console.log(matcher, name, equality, expected);
 
 					if (matcher === "property") {
 						if (name === namePropertyName[implementation]) {
