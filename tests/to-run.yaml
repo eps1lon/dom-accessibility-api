@@ -1,4 +1,4 @@
 DIR: accname
 
 description_*.html: [fail, bridge not implemented]
-name_*.html: [fail, not implemented]
+#name_*.html: [pass]
