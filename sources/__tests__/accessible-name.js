@@ -40,7 +40,7 @@ expect.extend({
 });
 
 test.each([
-/* 	[
+	[
 		`
 <div data-test aria-labelledby="label">I reference my name</div>
 <div id="label" role="presentation">I'm prohibited a name</div>
@@ -54,7 +54,7 @@ test.each([
 <element3 id="el3"> hello </element3>
 `,
 		"hello"
-	], */
+	],
 	[
 		`
 <input type="checkbox" id="test" data-test />
@@ -71,6 +71,17 @@ test.each([
 </label>
 `,
 		"Flash the screen 1 times."
+	],
+	[
+		`
+<input type="text" id="test" data-test />
+<label for="test">
+	foo
+	<input role="spinbutton" type="number" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10">
+	baz
+</label>
+`,
+		"foo 5 baz"
 	]
 ])(`&#`, (markup, accessibleName) => {
 	const container = renderIntoDocument(markup);

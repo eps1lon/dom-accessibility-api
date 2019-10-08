@@ -120,7 +120,28 @@ function isEmbeddedControl(node: Node): boolean {
 	return false;
 }
 
-function hasRole(node: Node, roles: string[]): node is Element {
+function hasAbstractRole(node: Node, role: string): node is Element {
+	if (!isElement(node)) {
+		return false;
+	}
+
+	switch (role) {
+		case "range":
+			return hasAnyConcreteRole(node, [
+				"meter",
+				"progressbar",
+				"scrollbar",
+				"slider",
+				"spinbutton"
+			]);
+		default:
+			throw new TypeError(
+				`No knowledge about abstract role '${role}'. This is likely a bug :(`
+			);
+	}
+}
+
+function hasAnyConcreteRole(node: Node, roles: string[]): node is Element {
 	if (isElement(node) && node.hasAttribute("role")) {
 		return node
 			.getAttribute("role")!
@@ -131,7 +152,7 @@ function hasRole(node: Node, roles: string[]): node is Element {
 }
 
 function isMarkedPresentational(node: Node): node is Element {
-	return hasRole(node, ["none", "presentation"]);
+	return hasAnyConcreteRole(node, ["none", "presentation"]);
 }
 
 /**
@@ -147,7 +168,7 @@ function isNativeHostLanguageTextAlternativeElement(
  * TODO
  */
 function allowsNameFromContent(node: Node): boolean {
-	return hasRole(node, ["option"]);
+	return hasAnyConcreteRole(node, ["option"]);
 }
 
 /**
@@ -239,7 +260,7 @@ export function computeAccessibleName(
 
 		const { labels } = node;
 		// IE11 does not implement labels, TODO: verify with caniuse instead of mdn
-		if (labels === null || labels === undefined) {
+		if (labels === null || labels === undefined || labels.length === 0) {
 			return null;
 		}
 
@@ -304,7 +325,7 @@ export function computeAccessibleName(
 
 		// 2E
 		if (isReferenced) {
-			if (hasRole(current, ["combobox"])) {
+			if (hasAnyConcreteRole(current, ["combobox"])) {
 				const chosenOption = current.querySelector('[aria-selected="true"]');
 				if (chosenOption === null) {
 					return "";
@@ -313,6 +334,16 @@ export function computeAccessibleName(
 					isReferenced: true,
 					recursion: true
 				});
+			}
+			if (hasAbstractRole(current, "range")) {
+				if (current.hasAttribute("aria-valuetext")) {
+					return current.getAttribute("aria-valuetext")!;
+				}
+				if (current.hasAttribute("aria-valuenow")) {
+					return current.getAttribute("aria-valuenow")!;
+				}
+				// Otherwise, use the value as specified by a host language attribute.
+				return current.getAttribute("value") || "";
 			}
 		}
 
