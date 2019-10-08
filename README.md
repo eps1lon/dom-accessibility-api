@@ -2,7 +2,15 @@
 
 https://w3c.github.io/accname/ for jsdom
 
-This is not published yet. I wrote this down in 12 hours to get a quick overview
+```bash
+$ yarn add dom-accessibility-api
+```
+
+```js
+import { computeAccessibleName } from "dom-accessibility-api";
+```
+
+I wrote this down in 12 hours to get a quick overview
 how complex a full implementation would be.
 
 I'm very new to working with specs so if you got any insights, something catches

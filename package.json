@@ -2,10 +2,14 @@
 	"name": "dom-accessibility-api",
 	"version": "0.0.1",
 	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
 	"license": "MIT",
+	"files": [
+		"dist/"
+	],
 	"scripts": {
 		"build": "tsc -p tsconfig.json",
-		"format": "prettier \"**/*.{json,js,ts}\" --write --ignore-path .prettierignore",
+		"format": "prettier \"**/*.{json,js,md,ts}\" --write --ignore-path .prettierignore",
 		"test": "jest",
 		"test-wpt": "mocha tests/run-wpts.js",
 		"init-wpt": "git submodule update --init --recursive",
