@@ -121,13 +121,6 @@ function isMarkedPresentational(node: Node): node is Element {
 /**
  * TODO
  */
-function computeAttributeTextAlternative(node: Node): string | null {
-	return null;
-}
-
-/**
- * TODO
- */
 function computeElementTextAlternative(node: Node): string | null {
 	// isMarkedPresentational
 	return null;
@@ -180,6 +173,23 @@ export function computeAccessibleName(
 
 	if (prohibitsNaming(root) && !context.isReferenced) {
 		return "" as FlatString;
+	}
+
+	/**
+	 * TODO
+	 */
+	function computeAttributeTextAlternative(node: Node): string | null {
+		if (!isElement(node)) {
+			return null;
+		}
+
+		const titleAttribute = node.getAttributeNode("title");
+		if (titleAttribute !== null && !visitedNodes.has(titleAttribute)) {
+			visitedNodes.add(titleAttribute);
+			return titleAttribute.value;
+		}
+
+		return null;
 	}
 
 	function computeTextAlternative(
