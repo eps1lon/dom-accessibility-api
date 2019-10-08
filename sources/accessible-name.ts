@@ -284,6 +284,12 @@ export function computeAccessibleName(
 			return titleAttribute.value;
 		}
 
+		const altAttribute = node.getAttributeNode("alt");
+		if (altAttribute !== null && !consultedNodes.has(altAttribute)) {
+			consultedNodes.add(altAttribute);
+			return altAttribute.value;
+		}
+
 		return null;
 	}
 
