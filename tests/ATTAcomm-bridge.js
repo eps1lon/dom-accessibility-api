@@ -8,9 +8,9 @@ const namePropertyName = {
 
 class ATTAcomm {
 	constructor({ steps, title }) {
-		const element = document.getElementById("test");
-
 		test(() => {
+			const element = document.getElementById("test");
+
 			for (const step of steps) {
 				const { test } = step;
 				const assertions = test[implementation];
@@ -21,12 +21,15 @@ class ATTAcomm {
 
 					if (matcher === "property") {
 						if (name === namePropertyName[implementation]) {
-							const actual = "";
+							const actual = computeAccessibleName(element);
 							if (equality === "is") {
 								assert_equals(actual, expected);
+								continue;
 							}
 						}
 					}
+
+					throw new Error(`Don't know how to handle this assertion`);
 				}
 			}
 

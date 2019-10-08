@@ -53,7 +53,10 @@ function prohibitsNaming(node: Node): boolean {
 }
 
 function isElement(node: Node | null): node is Element {
-	return node instanceof Element;
+	return (
+		// @ts-ignore
+		node !== null && node instanceof node.ownerDocument.defaultView.Element
+	);
 }
 
 /**

@@ -1,9 +1,10 @@
 {
 	"name": "dom-accessibility-api",
 	"version": "0.0.1",
-	"main": "index.js",
+	"main": "dist/index.js",
 	"license": "MIT",
 	"scripts": {
+		"build": "tsc -p tsconfig.json",
 		"format": "prettier \"**/*.{json,js,ts}\" --write --ignore-path .prettierignore",
 		"test": "jest",
 		"test-wpt": "mocha tests/run-wpts.js",
