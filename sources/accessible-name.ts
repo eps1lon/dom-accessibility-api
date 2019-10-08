@@ -142,6 +142,12 @@ function hasAbstractRole(node: Node, role: string): node is Element {
 				"slider",
 				"spinbutton"
 			]);
+		case "textbox":
+			return (
+				node.tagName === "TEXTAREA" ||
+				(isHTMLInputElement(node) &&
+					["search", "text"].indexOf(node.type) !== -1)
+			);
 		default:
 			throw new TypeError(
 				`No knowledge about abstract role '${role}'. This is likely a bug :(`
@@ -376,6 +382,9 @@ export function computeAccessibleName(
 					return current.getAttribute("aria-valuenow")!;
 				}
 				// Otherwise, use the value as specified by a host language attribute.
+				return current.getAttribute("value") || "";
+			}
+			if (hasAbstractRole(current, "textbox")) {
 				return current.getAttribute("value") || "";
 			}
 		}
