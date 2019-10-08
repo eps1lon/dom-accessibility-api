@@ -2,6 +2,14 @@
 
 https://w3c.github.io/accname/ for jsdom
 
+This is not published yet. I wrote this down in 12 hours to get a quick overview
+how complex a full implementation would be.
+
+I'm very new to working with specs so if you got any insights, something catches
+your eye feel free to let me know. DMs are open.
+
+## progress
+
 <details>
 <summary>report 124/159 passing of which 16 are due to jsdom, 14 are accessible desc, 9 are pathological </summary>
 
