@@ -113,8 +113,7 @@ function isHidden(node: Node): node is Element {
  * @param {string} attributeName -
  * @returns {Element[]} -
  */
-
-function idRefs(node: Node, attributeName: string): (Element)[] {
+function idRefs(node: Node, attributeName: string): Element[] {
 	if (isElement(node) && node.hasAttribute(attributeName)) {
 		const ids = node.getAttribute(attributeName)!.split(" ");
 
@@ -127,6 +126,15 @@ function idRefs(node: Node, attributeName: string): (Element)[] {
 	}
 
 	return [];
+}
+
+/**
+ * All defined children. This include childNodes as well as owned (portaled) trees
+ * via aria-owns
+ * @param node
+ */
+function queryChildNodes(node: Node): Node[] {
+	return Array.from(node.childNodes).concat(idRefs(node, "aria-owns"));
 }
 
 /**
@@ -195,12 +203,32 @@ function hasAnyConcreteRoles(node: Node, roles: string[]): node is Element {
 	return false;
 }
 
+/**
+ * element.querySelectorAll but also considers owned tree
+ * @param element
+ * @param selectors
+ */
+function querySelectorAllSubtree(
+	element: Element,
+	selectors: string
+): Element[] {
+	const elements = [];
+
+	for (const root of [element, ...idRefs(element, "aria-owns")]) {
+		elements.push(...Array.from(root.querySelectorAll(selectors)));
+	}
+
+	return elements;
+}
+
 function querySelectedOptions(listbox: Element) {
 	if (isHTMLSelectElement(listbox)) {
 		// IE11 polyfill
-		return listbox.selectedOptions || listbox.querySelectorAll("[selected]");
+		return (
+			listbox.selectedOptions || querySelectorAllSubtree(listbox, "[selected]")
+		);
 	}
-	return listbox.querySelectorAll('[aria-selected="true"]');
+	return querySelectorAllSubtree(listbox, '[aria-selected="true"]');
 }
 
 function isMarkedPresentational(node: Node): node is Element {
@@ -276,7 +304,7 @@ export function computeAccessibleName(
 			);
 		}
 
-		for (const child of Array.from(node.childNodes)) {
+		for (const child of queryChildNodes(node)) {
 			const result = computeTextAlternative(child, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
 				isReferenced: false,
