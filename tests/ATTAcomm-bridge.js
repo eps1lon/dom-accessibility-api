@@ -6,6 +6,11 @@ const namePropertyName = {
 	ATK: "name"
 };
 
+/**
+ * Shim of wpt/wai-aria/scripts/ATTAcomm or rather
+ * a minimal implementation of https://spec-ops.github.io/atta-api/
+ * to pass wpt/accname
+ */
 class ATTAcomm {
 	constructor({ steps, title }) {
 		test(() => {
