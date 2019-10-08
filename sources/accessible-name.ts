@@ -310,7 +310,14 @@ export function computeAccessibleName(
 				isReferenced: false,
 				recursion: true
 			});
-			accumulatedText += ` ${result}`;
+			// TODO: Unclear why display affects delimiter
+			const display =
+				isElement(node) &&
+				safeWindow(node)
+					.getComputedStyle(node)
+					.getPropertyValue("display");
+			const separator = display !== "inline" ? " " : "";
+			accumulatedText += `${separator}${result}`;
 		}
 
 		if (isElement(node)) {
@@ -370,7 +377,7 @@ export function computeAccessibleName(
 			return null;
 		}
 
-		// isMarkedPresentational
+		consultedNodes.add(input);
 		return Array.from(labels)
 			.map(element => {
 				return computeTextAlternative(element, {

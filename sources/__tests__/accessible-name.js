@@ -100,6 +100,13 @@ test.each([
 <div id="ID1">foo</label>
 	`,
 		"foo bar"
+	],
+	[
+		`
+<label>This <input type="checkbox" id="test" data-test /> is</label>
+<label for="test">a test</label>
+		`,
+		"This is a test"
 	]
 ])(`&#`, (markup, accessibleName) => {
 	const container = renderIntoDocument(markup);
