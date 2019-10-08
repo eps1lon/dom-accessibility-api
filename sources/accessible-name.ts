@@ -67,6 +67,14 @@ function isHTMLInputElement(node: Node | null): node is HTMLInputElement {
 	);
 }
 
+function isHTMLSelectElement(node: Node | null): node is HTMLSelectElement {
+	return (
+		isElement(node) &&
+		// @ts-ignore
+		node instanceof node.ownerDocument.defaultView.HTMLSelectElement
+	);
+}
+
 function safeWindow(node: Node): Window {
 	if (node.isConnected === false) {
 		throw new TypeError(`Can't reach window from disconnected node`);
@@ -127,7 +135,7 @@ function hasAbstractRole(node: Node, role: string): node is Element {
 
 	switch (role) {
 		case "range":
-			return hasAnyConcreteRole(node, [
+			return hasAnyConcreteRoles(node, [
 				"meter",
 				"progressbar",
 				"scrollbar",
@@ -141,18 +149,34 @@ function hasAbstractRole(node: Node, role: string): node is Element {
 	}
 }
 
-function hasAnyConcreteRole(node: Node, roles: string[]): node is Element {
-	if (isElement(node) && node.hasAttribute("role")) {
-		return node
-			.getAttribute("role")!
-			.split(" ")
-			.some(role => roles.indexOf(role) !== -1);
+function hasAnyConcreteRoles(node: Node, roles: string[]): node is Element {
+	if (isElement(node)) {
+		if (node.hasAttribute("role")) {
+			return node
+				.getAttribute("role")!
+				.split(" ")
+				.some(role => roles.indexOf(role) !== -1);
+		}
+		switch (node.tagName) {
+			case "SELECT":
+				return roles.indexOf("listbox") !== -1;
+			case "OPTION":
+				return roles.indexOf("option") !== -1;
+		}
 	}
 	return false;
 }
 
+function querySelectedOptions(listbox: Element) {
+	if (isHTMLSelectElement(listbox)) {
+		// IE11 polyfill
+		return listbox.selectedOptions || listbox.querySelectorAll("[selected]");
+	}
+	return listbox.querySelectorAll('[aria-selected="true"]');
+}
+
 function isMarkedPresentational(node: Node): node is Element {
-	return hasAnyConcreteRole(node, ["none", "presentation"]);
+	return hasAnyConcreteRoles(node, ["none", "presentation"]);
 }
 
 /**
@@ -168,7 +192,7 @@ function isNativeHostLanguageTextAlternativeElement(
  * TODO
  */
 function allowsNameFromContent(node: Node): boolean {
-	return hasAnyConcreteRole(node, ["option"]);
+	return hasAnyConcreteRoles(node, ["option"]);
 }
 
 /**
@@ -325,15 +349,19 @@ export function computeAccessibleName(
 
 		// 2E
 		if (isReferenced) {
-			if (hasAnyConcreteRole(current, ["combobox"])) {
-				const chosenOption = current.querySelector('[aria-selected="true"]');
-				if (chosenOption === null) {
+			if (hasAnyConcreteRoles(current, ["combobox", "listbox"])) {
+				const selectedOptions = querySelectedOptions(current);
+				if (selectedOptions.length === 0) {
 					return "";
 				}
-				return computeTextAlternative(chosenOption, {
-					isReferenced: true,
-					recursion: true
-				});
+				return Array.from(selectedOptions)
+					.map(selectedOption => {
+						return computeTextAlternative(selectedOption, {
+							isReferenced: true,
+							recursion: true
+						});
+					})
+					.join(" ");
 			}
 			if (hasAbstractRole(current, "range")) {
 				if (current.hasAttribute("aria-valuetext")) {
