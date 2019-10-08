@@ -380,15 +380,17 @@ export function computeAccessibleName(
 		}
 
 		// 2D
-		const attributeTextAlternative = computeAttributeTextAlternative(current);
-		if (attributeTextAlternative !== null) {
-			consultedNodes.add(current);
-			return attributeTextAlternative;
-		}
-		const elementTextAlternative = computeElementTextAlternative(current);
-		if (elementTextAlternative !== null) {
-			consultedNodes.add(current);
-			return elementTextAlternative;
+		if (!hasAnyConcreteRoles(current, ["none", "presentation"])) {
+			const attributeTextAlternative = computeAttributeTextAlternative(current);
+			if (attributeTextAlternative !== null) {
+				consultedNodes.add(current);
+				return attributeTextAlternative;
+			}
+			const elementTextAlternative = computeElementTextAlternative(current);
+			if (elementTextAlternative !== null) {
+				consultedNodes.add(current);
+				return elementTextAlternative;
+			}
 		}
 
 		// 2E
