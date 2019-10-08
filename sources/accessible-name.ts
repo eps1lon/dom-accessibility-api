@@ -223,8 +223,8 @@ function computeTooltipAttributeValue(node: Node): string | null {
 
 /**
  * implements https://w3c.github.io/accname/#mapping_additional_nd_te
- * @param root 
- * @param context 
+ * @param root
+ * @param context
  */
 export function computeAccessibleName(
 	root: Element,
@@ -307,8 +307,17 @@ export function computeAccessibleName(
 		if (!isHTMLInputElement(node)) {
 			return null;
 		}
+		const input = node;
 
-		const { labels } = node;
+		// https://w3c.github.io/html-aam/#input-type-text-input-type-password-input-type-search-input-type-tel-input-type-email-input-type-url-and-textarea-element-accessible-description-computation
+		if (input.type === "submit") {
+			return "Submit";
+		}
+		if (input.type === "reset") {
+			return "Reset";
+		}
+
+		const { labels } = input;
 		// IE11 does not implement labels, TODO: verify with caniuse instead of mdn
 		if (labels === null || labels === undefined || labels.length === 0) {
 			return null;
