@@ -10,6 +10,9 @@ your eye feel free to let me know. DMs are open.
 
 ## progress
 
+Using https://github.com/web-platform-tests/wpt. Be sure to init submodules when
+cloning.
+
 <details>
 <summary>report 124/159 passing of which 16 are due to jsdom, 14 are accessible desc, 9 are pathological </summary>
 
