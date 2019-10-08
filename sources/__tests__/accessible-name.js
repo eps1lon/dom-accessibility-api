@@ -82,6 +82,17 @@ test.each([
 </label>
 `,
 		"foo 5 baz"
+	],
+	[
+		// :after getcomputed not implemented
+		`
+<style>
+	label:after { content:" fruit"; }
+</style>
+<label for="test">fancy</label>
+<input type="image" src="foo.jpg" id="test" data-test />	
+`,
+		"fancy"
 	]
 ])(`&#`, (markup, accessibleName) => {
 	const container = renderIntoDocument(markup);
