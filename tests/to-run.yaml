@@ -1,6 +1,10 @@
 DIR: accname
 
 description_*.html: [fail, bridge not implemented]
+name_file-label-inline-block-elements-manual.html:
+  [fail, getComputedStyle display defaults not implemented]
+name_file-label-inline-block-styles-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
 name_heading-combobox-focusable-alternative-manual.html:
   [fail, could not find spec for that]
 name_test_case_552-manual.html:
