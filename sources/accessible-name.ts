@@ -164,6 +164,8 @@ function hasAnyConcreteRoles(node: Node, roles: string[]): node is Element {
 				.some(role => roles.indexOf(role) !== -1);
 		}
 		switch (node.tagName) {
+			case "A":
+				return roles.indexOf("link") !== -1;
 			case "SELECT":
 				return roles.indexOf("listbox") !== -1;
 			case "OPTION":
@@ -195,10 +197,10 @@ function isNativeHostLanguageTextAlternativeElement(
 }
 
 /**
- * TODO
+ * TODO https://w3c.github.io/aria/#namefromcontent
  */
 function allowsNameFromContent(node: Node): boolean {
-	return hasAnyConcreteRoles(node, ["option"]);
+	return hasAnyConcreteRoles(node, ["option", "link"]);
 }
 
 /**
