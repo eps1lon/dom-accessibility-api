@@ -290,6 +290,11 @@ export function computeAccessibleName(
 			return altAttribute.value;
 		}
 
+		if (isHTMLInputElement(node) && node.type === "button") {
+			consultedNodes.add(node);
+			return node.getAttribute("value") || "";
+		}
+
 		return null;
 	}
 
