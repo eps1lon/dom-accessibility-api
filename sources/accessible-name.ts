@@ -92,8 +92,18 @@ function isHidden(node: Node): node is Element {
 	if (!isElement(node)) {
 		return false;
 	}
+
+	if (
+		node.hasAttribute("hidden") ||
+		node.getAttribute("aria-hidden") === "true"
+	) {
+		return true;
+	}
+
+	const style = safeWindow(node).getComputedStyle(node);
 	return (
-		node.hasAttribute("hidden") || node.getAttribute("aria-hidden") === "true"
+		style.getPropertyValue("display") === "none" ||
+		style.getPropertyValue("visibility") === "hidden"
 	);
 }
 
@@ -246,7 +256,7 @@ export function computeAccessibleName(
 	// 2F.i
 	function computeMiscTextAlternative(
 		node: Node,
-		context: { isReferenced?: boolean }
+		context: { isEmbeddedInLabel: boolean; isReferenced: boolean }
 	): string {
 		let accumulatedText = "";
 		if (isElement(node)) {
@@ -260,7 +270,8 @@ export function computeAccessibleName(
 
 		for (const child of Array.from(node.childNodes)) {
 			const result = computeTextAlternative(child, {
-				isReferenced: context.isReferenced,
+				isEmbeddedInLabel: context.isEmbeddedInLabel,
+				isReferenced: false,
 				recursion: true
 			});
 			accumulatedText += ` ${result}`;
@@ -327,7 +338,8 @@ export function computeAccessibleName(
 		return Array.from(labels)
 			.map(element => {
 				return computeTextAlternative(element, {
-					isReferenced: true,
+					isEmbeddedInLabel: true,
+					isReferenced: false,
 					recursion: true
 				});
 			})
@@ -339,7 +351,11 @@ export function computeAccessibleName(
 
 	function computeTextAlternative(
 		current: Node,
-		context: { isReferenced?: boolean; recursion?: boolean }
+		context: {
+			isEmbeddedInLabel: boolean;
+			isReferenced: boolean;
+			recursion: boolean;
+		}
 	): string {
 		if (consultedNodes.has(current)) {
 			return "";
@@ -351,18 +367,23 @@ export function computeAccessibleName(
 			return "";
 		}
 
-		const { isReferenced = false, recursion = isReferenced } = context;
 		// 2A
-		if (isHidden(current) && !isReferenced) {
+		if (isHidden(current) && !context.isReferenced) {
 			consultedNodes.add(current);
 			return "" as FlatString;
 		}
 
 		// 2B
 		const labelElements = idRefs(current, "aria-labelledby");
-		if (!isReferenced && labelElements.length > 0) {
+		if (!context.isReferenced && labelElements.length > 0) {
 			return labelElements
-				.map(element => computeTextAlternative(element, { isReferenced: true }))
+				.map(element =>
+					computeTextAlternative(element, {
+						isEmbeddedInLabel: context.isEmbeddedInLabel,
+						isReferenced: true,
+						recursion: true
+					})
+				)
 				.join(" ");
 		}
 
@@ -373,7 +394,7 @@ export function computeAccessibleName(
 		).trim();
 		if (ariaLabel !== "") {
 			consultedNodes.add(current);
-			if (recursion && isEmbeddedControl(current)) {
+			if (context.recursion && isEmbeddedControl(current)) {
 				throw new Error("Not implemented");
 			}
 			return ariaLabel;
@@ -394,7 +415,7 @@ export function computeAccessibleName(
 		}
 
 		// 2E
-		if (isReferenced) {
+		if (context.isReferenced || context.isEmbeddedInLabel) {
 			if (hasAnyConcreteRoles(current, ["combobox", "listbox"])) {
 				consultedNodes.add(current);
 				const selectedOptions = querySelectedOptions(current);
@@ -404,7 +425,8 @@ export function computeAccessibleName(
 				return Array.from(selectedOptions)
 					.map(selectedOption => {
 						return computeTextAlternative(selectedOption, {
-							isReferenced: true,
+							isEmbeddedInLabel: context.isEmbeddedInLabel,
+							isReferenced: false,
 							recursion: true
 						});
 					})
@@ -430,12 +452,15 @@ export function computeAccessibleName(
 		// 2F
 		if (
 			allowsNameFromContent(current) ||
-			(isElement(current) && isReferenced) ||
+			(isElement(current) && context.isReferenced) ||
 			isNativeHostLanguageTextAlternativeElement(current) ||
 			isDescendantOfNativeHostLanguageTextAlternativeElement(current)
 		) {
 			consultedNodes.add(current);
-			return computeMiscTextAlternative(current, { isReferenced });
+			return computeMiscTextAlternative(current, {
+				isEmbeddedInLabel: context.isEmbeddedInLabel,
+				isReferenced: false
+			});
 		}
 
 		if (current.nodeType === current.TEXT_NODE) {
@@ -443,9 +468,12 @@ export function computeAccessibleName(
 			return current.textContent || "";
 		}
 
-		if (recursion) {
+		if (context.recursion) {
 			consultedNodes.add(current);
-			return computeMiscTextAlternative(current, { isReferenced });
+			return computeMiscTextAlternative(current, {
+				isEmbeddedInLabel: context.isEmbeddedInLabel,
+				isReferenced: false
+			});
 		}
 
 		const tooltipAttributeValue = computeTooltipAttributeValue(current);
@@ -459,5 +487,11 @@ export function computeAccessibleName(
 		return "";
 	}
 
-	return asFlatString(computeTextAlternative(root, {}));
+	return asFlatString(
+		computeTextAlternative(root, {
+			isEmbeddedInLabel: false,
+			isReferenced: false,
+			recursion: false
+		})
+	);
 }
