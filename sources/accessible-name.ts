@@ -59,6 +59,22 @@ function isElement(node: Node | null): node is Element {
 	);
 }
 
+function isHTMLInputElement(node: Node | null): node is HTMLInputElement {
+	return (
+		isElement(node) &&
+		// @ts-ignore
+		node instanceof node.ownerDocument.defaultView.HTMLInputElement
+	);
+}
+
+function safeWindow(node: Node): Window {
+	if (node.isConnected === false) {
+		throw new TypeError(`Can't reach window from disconnected node`);
+	}
+
+	return node.ownerDocument!.defaultView!;
+}
+
 /**
  *
  * @param {Node} node -
@@ -121,14 +137,6 @@ function isMarkedPresentational(node: Node): node is Element {
 /**
  * TODO
  */
-function computeElementTextAlternative(node: Node): string | null {
-	// isMarkedPresentational
-	return null;
-}
-
-/**
- * TODO
- */
 function isNativeHostLanguageTextAlternativeElement(
 	node: Node
 ): node is Element {
@@ -139,7 +147,7 @@ function isNativeHostLanguageTextAlternativeElement(
  * TODO
  */
 function allowsNameFromContent(node: Node): boolean {
-	return false;
+	return hasRole(node, ["option"]);
 }
 
 /**
@@ -175,8 +183,40 @@ export function computeAccessibleName(
 		return "" as FlatString;
 	}
 
+	// 2F.i
+	function computeMiscTextAlternative(
+		node: Node,
+		context: { isReferenced?: boolean }
+	): string {
+		let accumulatedText = "";
+		if (isElement(node)) {
+			const pseudoBefore = safeWindow(node).getComputedStyle(node, ":before");
+			const beforeContent = pseudoBefore.getPropertyValue("content");
+			accumulatedText = prependResultWithoutSpace(
+				accumulatedText,
+				beforeContent
+			);
+		}
+
+		for (const child of Array.from(node.childNodes)) {
+			const result = computeTextAlternative(child, {
+				isReferenced: context.isReferenced,
+				recursion: true
+			});
+			accumulatedText += result;
+		}
+
+		if (isElement(node)) {
+			const pseudoAfter = safeWindow(node).getComputedStyle(node, ":after");
+			const afterContent = pseudoAfter.getPropertyValue("content");
+			accumulatedText = appendResultWithoutSpace(accumulatedText, afterContent);
+		}
+
+		return accumulatedText;
+	}
+
 	/**
-	 * TODO
+	 * TODO: placeholder
 	 */
 	function computeAttributeTextAlternative(node: Node): string | null {
 		if (!isElement(node)) {
@@ -190,6 +230,31 @@ export function computeAccessibleName(
 		}
 
 		return null;
+	}
+
+	function computeElementTextAlternative(node: Node): string | null {
+		if (!isHTMLInputElement(node)) {
+			return null;
+		}
+
+		const { labels } = node;
+		// IE11 does not implement labels, TODO: verify with caniuse instead of mdn
+		if (labels === null || labels === undefined) {
+			return null;
+		}
+
+		// isMarkedPresentational
+		return Array.from(labels)
+			.map(element => {
+				return computeTextAlternative(element, {
+					isReferenced: true,
+					recursion: true
+				});
+			})
+			.filter(label => {
+				return label.length > 0;
+			})
+			.join(" ");
 	}
 
 	function computeTextAlternative(
@@ -238,44 +303,27 @@ export function computeAccessibleName(
 		}
 
 		// 2E
-
-		// 2F.i
-		function computeMiscTextAlternative(node: Node): string {
-			let accumulatedText = "";
-			if (isElement(current)) {
-				const pseudoBefore = window.getComputedStyle(current, ":before");
-				const beforeContent = pseudoBefore.getPropertyValue("content");
-				accumulatedText = prependResultWithoutSpace(
-					accumulatedText,
-					beforeContent
-				);
+		if (isReferenced) {
+			if (hasRole(current, ["combobox"])) {
+				const chosenOption = current.querySelector('[aria-selected="true"]');
+				if (chosenOption === null) {
+					return "";
+				}
+				return computeTextAlternative(chosenOption, {
+					isReferenced: true,
+					recursion: true
+				});
 			}
-
-			for (const child of Array.from(current.childNodes)) {
-				const result = computeTextAlternative(child, { recursion: true });
-				accumulatedText += result;
-			}
-
-			if (isElement(current)) {
-				const pseudoAfter = window.getComputedStyle(current, ":after");
-				const afterContent = pseudoAfter.getPropertyValue("content");
-				accumulatedText = appendResultWithoutSpace(
-					accumulatedText,
-					afterContent
-				);
-			}
-
-			return accumulatedText;
 		}
 
 		// 2F
 		if (
 			allowsNameFromContent(current) ||
-			isReferenced ||
+			(isElement(current) && isReferenced) ||
 			isNativeHostLanguageTextAlternativeElement(current) ||
 			isDescendantOfNativeHostLanguageTextAlternativeElement(current)
 		) {
-			return computeMiscTextAlternative(current);
+			return computeMiscTextAlternative(current, { isReferenced });
 		}
 
 		if (current.nodeType === current.TEXT_NODE) {
@@ -283,7 +331,7 @@ export function computeAccessibleName(
 		}
 
 		if (recursion) {
-			return computeMiscTextAlternative(current);
+			return computeMiscTextAlternative(current, { isReferenced });
 		}
 
 		const tooltipAttributeValue = computeTooltipAttributeValue(current);

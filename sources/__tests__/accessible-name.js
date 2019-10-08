@@ -40,7 +40,7 @@ expect.extend({
 });
 
 test.each([
-	[
+/* 	[
 		`
 <div data-test aria-labelledby="label">I reference my name</div>
 <div id="label" role="presentation">I'm prohibited a name</div>
@@ -54,6 +54,23 @@ test.each([
 <element3 id="el3"> hello </element3>
 `,
 		"hello"
+	], */
+	[
+		`
+<input type="checkbox" id="test" data-test />
+<label for="test">Flash the screen
+	<div role="combobox">
+		<div role="textbox"></div>
+		<ul role="listbox" style="list-style-type: none;">
+			<li role="option" aria-selected="true">1</li>
+			<li role="option">2</li>
+			<li role="option">3</li>
+		</ul>
+	</div>
+	times.
+</label>
+`,
+		"Flash the screen 1 times."
 	]
 ])(`&#`, (markup, accessibleName) => {
 	const container = renderIntoDocument(markup);
