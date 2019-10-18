@@ -1,0 +1,41 @@
+DIR: accname
+
+description_*.html: [fail, bridge not implemented]
+name_file-label-inline-block-elements-manual.html:
+  [fail, getComputedStyle display defaults not implemented]
+name_file-label-inline-block-styles-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_heading-combobox-focusable-alternative-manual.html:
+  [fail, could not find spec for that]
+name_test_case_552-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_553-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_610-manual.html: [fail, unknown `Running, 0 complete, 1 remain`]
+name_test_case_659-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_660-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_661-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_662-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_663a-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_753-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_754-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_755-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_756-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_757-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_758-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_759-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_76*-manual.html:
+  [fail, getComputedStyle pseudo selector not implemented]
+#name_*.html: [pass]

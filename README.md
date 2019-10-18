@@ -19,10 +19,10 @@ your eye feel free to let me know. DMs are open.
 ## progress
 
 Using https://github.com/web-platform-tests/wpt. Be sure to init submodules when
-cloning.
+cloning. See tests/README.md for more info about the test setup.
 
 <details>
-<summary>report 124/159 passing of which 16 are due to jsdom, 14 are accessible desc, 9 are pathological </summary>
+<summary>report 124/159 passing of which 16 are due `::before { content }`, 14 are accessible desc, 9 are pathological </summary>
 
 ```bash
 web-platform-tests

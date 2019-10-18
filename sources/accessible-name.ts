@@ -296,12 +296,13 @@ export function computeAccessibleName(
 	): string {
 		let accumulatedText = "";
 		if (isElement(node)) {
-			const pseudoBefore = safeWindow(node).getComputedStyle(node, ":before");
+			const pseudoBefore = safeWindow(node).getComputedStyle(node, "::before");
 			const beforeContent = pseudoBefore.getPropertyValue("content");
-			accumulatedText = prependResultWithoutSpace(
+			// TODO handle `content`
+			/* accumulatedText = prependResultWithoutSpace(
 				accumulatedText,
 				beforeContent
-			);
+			); */
 		}
 
 		for (const child of queryChildNodes(node)) {
@@ -323,7 +324,8 @@ export function computeAccessibleName(
 		if (isElement(node)) {
 			const pseudoAfter = safeWindow(node).getComputedStyle(node, ":after");
 			const afterContent = pseudoAfter.getPropertyValue("content");
-			accumulatedText = appendResultWithoutSpace(accumulatedText, afterContent);
+			// TODO handle `content`
+			/* accumulatedText = appendResultWithoutSpace(accumulatedText, afterContent); */
 		}
 
 		return accumulatedText;

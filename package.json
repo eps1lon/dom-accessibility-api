@@ -11,10 +11,12 @@
 		"build": "tsc -p tsconfig.json",
 		"format": "prettier \"**/*.{json,js,md,ts}\" --write --ignore-path .prettierignore",
 		"test": "jest",
-		"test-wpt": "mocha tests/run-wpts.js",
-		"init-wpt": "git submodule update --init --recursive",
-		"reset-wpt": "rimraf ./tests/wpt && yarn init-wpt",
-		"update-wpt": "git submodule update --recursive --remote && cd tests/wpt && python wpt.py manifest --path ../wpt-manifest.json"
+		"test:wpt:jsdom": "mocha tests/wpt-jsdom/run-wpts.js",
+		"test:wpt:browser:server": "serve tests/wpt",
+		"test:wpt:browser:open": "cypress open --project tests",
+		"wpt:init": "git submodule update --init --recursive",
+		"wpt:reset": "rimraf ./tests/wpt && yarn init-wpt",
+		"wpt:update": "git submodule update --recursive --remote && cd tests/wpt && python wpt.py manifest --path ../wpt-jsdom/wpt-manifest.json"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.6.2",
@@ -34,9 +36,14 @@
 		"q": "^1.5.1",
 		"request": "^2.34",
 		"request-promise-native": "^1.0.7",
+		"serve-handler": "^6.1.2",
 		"typescript": "^3.6.3"
 	},
 	"prettier": {
 		"useTabs": true
+	},
+	"dependencies": {
+		"cypress": "^3.4.1",
+		"serve": "^11.2.0"
 	}
 }

@@ -1,0 +1,178 @@
+/// <reference types="Cypress" />
+
+const usedApiIndex = 0; // ATK
+
+context("wpt", () => {
+	[
+		"name_1.0_combobox-focusable-alternative-manual",
+		"name_1.0_combobox-focusable-manual",
+		"name_checkbox-label-embedded-combobox-manual",
+		"name_checkbox-label-embedded-listbox-manual",
+		"name_checkbox-label-embedded-menu-manual",
+		"name_checkbox-label-embedded-select-manual",
+		"name_checkbox-label-embedded-slider-manual",
+		"name_checkbox-label-embedded-spinbutton-manual",
+		"name_checkbox-label-embedded-textbox-manual",
+		"name_checkbox-label-multiple-label-alternative-manual",
+		"name_checkbox-label-multiple-label-manual",
+		"name_checkbox-title-manual",
+		"name_file-label-embedded-combobox-manual",
+		"name_file-label-embedded-menu-manual",
+		"name_file-label-embedded-select-manual",
+		"name_file-label-embedded-slider-manual",
+		"name_file-label-embedded-spinbutton-manual",
+		"name_file-label-inline-block-elements-manual",
+		"name_file-label-inline-block-styles-manual",
+		"name_file-label-inline-hidden-elements-manual",
+		"name_file-label-owned-combobox-manual",
+		"name_file-label-owned-combobox-owned-listbox-manual",
+		"name_file-title-manual",
+		"name_from_content-manual",
+		"name_from_content_of_label-manual",
+		"name_from_content_of_labelledby_element-manual",
+		"name_from_content_of_labelledby_elements_one_of_which_is_hidden-manual",
+		"name_heading-combobox-focusable-alternative-manual",
+		"name_image-title-manual",
+		"name_link-mixed-content-manual",
+		"name_link-with-label-manual",
+		"name_password-label-embedded-combobox-manual",
+		"name_password-label-embedded-menu-manual",
+		"name_password-label-embedded-select-manual",
+		"name_password-label-embedded-slider-manual",
+		"name_password-label-embedded-spinbutton-manual",
+		"name_password-title-manual",
+		"name_radio-label-embedded-combobox-manual",
+		"name_radio-label-embedded-menu-manual",
+		"name_radio-label-embedded-select-manual",
+		"name_radio-label-embedded-slider-manual",
+		"name_radio-label-embedded-spinbutton-manual",
+		"name_radio-title-manual",
+		"name_test_case_539-manual",
+		"name_test_case_540-manual",
+		"name_test_case_541-manual",
+		"name_test_case_543-manual",
+		"name_test_case_544-manual",
+		"name_test_case_545-manual",
+		"name_test_case_546-manual",
+		"name_test_case_547-manual",
+		"name_test_case_548-manual",
+		"name_test_case_549-manual",
+		"name_test_case_550-manual",
+		"name_test_case_551-manual",
+		"name_test_case_552-manual",
+		"name_test_case_553-manual",
+		"name_test_case_556-manual",
+		"name_test_case_557-manual",
+		"name_test_case_558-manual",
+		"name_test_case_559-manual",
+		"name_test_case_560-manual",
+		"name_test_case_561-manual",
+		"name_test_case_562-manual",
+		"name_test_case_563-manual",
+		"name_test_case_564-manual",
+		"name_test_case_565-manual",
+		"name_test_case_566-manual",
+		"name_test_case_596-manual",
+		"name_test_case_597-manual",
+		"name_test_case_598-manual",
+		"name_test_case_599-manual",
+		"name_test_case_600-manual",
+		"name_test_case_601-manual",
+		"name_test_case_602-manual",
+		"name_test_case_603-manual",
+		"name_test_case_604-manual",
+		"name_test_case_605-manual",
+		"name_test_case_606-manual",
+		"name_test_case_607-manual",
+		"name_test_case_608-manual",
+		"name_test_case_609-manual",
+		"name_test_case_610-manual",
+		"name_test_case_611-manual",
+		"name_test_case_612-manual",
+		"name_test_case_613-manual",
+		"name_test_case_614-manual",
+		"name_test_case_615-manual",
+		"name_test_case_616-manual",
+		"name_test_case_617-manual",
+		"name_test_case_618-manual",
+		"name_test_case_619-manual",
+		"name_test_case_620-manual",
+		"name_test_case_621-manual",
+		"name_test_case_659-manual",
+		"name_test_case_660-manual",
+		"name_test_case_661-manual",
+		"name_test_case_662-manual",
+		"name_test_case_663a-manual",
+		"name_test_case_721-manual",
+		"name_test_case_723-manual",
+		"name_test_case_724-manual",
+		"name_test_case_725-manual",
+		"name_test_case_726-manual",
+		"name_test_case_727-manual",
+		"name_test_case_728-manual",
+		"name_test_case_729-manual",
+		"name_test_case_730-manual",
+		"name_test_case_731-manual",
+		"name_test_case_733-manual",
+		"name_test_case_734-manual",
+		"name_test_case_735-manual",
+		"name_test_case_736-manual",
+		"name_test_case_737-manual",
+		"name_test_case_738-manual",
+		"name_test_case_739-manual",
+		"name_test_case_740-manual",
+		"name_test_case_741-manual",
+		"name_test_case_742-manual",
+		"name_test_case_743-manual",
+		"name_test_case_744-manual",
+		"name_test_case_745-manual",
+		"name_test_case_746-manual",
+		"name_test_case_747-manual",
+		"name_test_case_748-manual",
+		"name_test_case_749-manual",
+		"name_test_case_750-manual",
+		"name_test_case_751-manual",
+		"name_test_case_752-manual",
+		"name_test_case_753-manual",
+		"name_test_case_754-manual",
+		"name_test_case_755-manual",
+		"name_test_case_756-manual",
+		"name_test_case_757-manual",
+		"name_test_case_758-manual",
+		"name_test_case_759-manual",
+		"name_test_case_760-manual",
+		"name_test_case_761-manual",
+		"name_test_case_762-manual",
+		"name_text-label-embedded-combobox-manual",
+		"name_text-label-embedded-menu-manual",
+		"name_text-label-embedded-select-manual",
+		"name_text-label-embedded-slider-manual",
+		"name_text-label-embedded-spinbutton-manual",
+		"name_text-title-manual"
+	].forEach(testBasename => {
+		it(`passes ${testBasename}`, () => {
+			cy.visit(`http://localhost:5000/accname/${testBasename}`);
+
+			cy.get(
+				`#steps tr:nth-of-type(2) .api tr:nth-of-type(${2 + usedApiIndex})`
+			)
+				.then($row => {
+					const [$apiName, $access, $name, $equality, $expected] = $row.find(
+						"td"
+					);
+
+					// these cases are handled
+					expect($apiName.textContent).to.equal("ATK");
+					expect($access.textContent).to.equal("property");
+					expect($equality.textContent).to.equal("is");
+
+					return $expected.textContent;
+				})
+				.then(expected => {
+					cy.get("#test").then($element => {
+						expect($element[0]).to.have.accessibleName(expected);
+					});
+				});
+		});
+	});
+});
