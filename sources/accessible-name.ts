@@ -1,5 +1,3 @@
-import { prettyDOM } from "@testing-library/dom";
-
 /**
  * implements https://w3c.github.io/accname/
  */
@@ -11,8 +9,6 @@ type FlatString = string & {
 	__flat: true;
 };
 
-type MaybeFlat = string | FlatString;
-
 /**
  *
  * @param {string} string -
@@ -20,29 +16,6 @@ type MaybeFlat = string | FlatString;
  */
 function asFlatString(s: string): FlatString {
 	return s.trim().replace(/\s\s+/g, " ") as FlatString;
-}
-
-function isEmpty(s: string | null | undefined): s is string {
-	return s == null || s.length === 0;
-}
-
-function appendResultWithoutSpace<T extends MaybeFlat, U extends MaybeFlat>(
-	result: T,
-	x: U
-): T | U {
-	return `${x}${result}` as T | U;
-}
-function appendResultWithSpace<T extends MaybeFlat, U extends MaybeFlat>(
-	result: T,
-	x: U
-): T | U {
-	return `${x} ${result}` as T | U;
-}
-function prependResultWithoutSpace(result: string, x: string = ""): string {
-	return `${result}${x}`;
-}
-function prepenResultWithSpace(result: string, x: string = ""): string {
-	return `${result} ${x}`;
 }
 
 /**
