@@ -43,4 +43,4 @@ steps:
     inputs:
       artifactName: "browser-test-videos"
       targetPath: "tests/cypress/videos"
-    displayName: "Publish size-snapshot"
+    displayName: "Publish cypress screenshots"
