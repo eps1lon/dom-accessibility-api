@@ -1,0 +1,46 @@
+trigger:
+  - master
+
+pool:
+  vmImage: "ubuntu-latest"
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "12.11.x"
+    displayName: "Install Node.js"
+
+  - script: |
+      yarn install
+    displayName: "Install packages"
+
+  - script: |
+      yarn wpt:init
+      tests/wpt/wpt make-hosts-file | sudo tee -a /etc/hosts
+    displayName: "Prepare web-platform-test"
+
+  - script: |
+      yarn build
+    displayName: "Build"
+
+  - script: yarn test
+    displayName: "Run jest tests"
+
+  - script: yarn test:wpt:jsdom
+    displayName: "Run wpt tests in jsdom"
+
+  - script: yarn test:wpt:browser
+    displayName: "Run wpt tests in browser"
+
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: "browser-test-screenshots"
+      targetPath: "tests/cypress/screenshots"
+    condition: failed()
+    displayName: "Publish cypress screenshots"
+
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: "browser-test-videos"
+      targetPath: "tests/cypress/videos"
+    displayName: "Publish cypress screenshots"

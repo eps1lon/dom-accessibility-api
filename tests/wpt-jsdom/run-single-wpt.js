@@ -55,7 +55,7 @@ class CustomResourceLoader extends ResourceLoader {
 
 			return super.fetch(`file://${filePath}`, options);
 		} else if (url.pathname === "/wai-aria/scripts/ATTAcomm.js") {
-			const filePath = path.resolve(__dirname, "./ATTAcomm-bridge.js");
+			const filePath = path.resolve(__dirname, "./ATTAcomm.js");
 			return super.fetch(`file://${filePath}`, options);
 		}
 

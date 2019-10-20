@@ -37,12 +37,18 @@ const minimatchers = new Map();
 
 checkToRun();
 
+let serverProcess;
 let wptServerURL;
 const runSingleWPT = require("./run-single-wpt.js")(() => wptServerURL);
 before({ timeout: 30 * 1000 }, () => {
-	return startWPTServer().then(url => {
+	return startWPTServer().then(({ server, url }) => {
+		serverProcess = server;
 		wptServerURL = url;
 	});
+});
+
+after(() => {
+	serverProcess.kill("SIGINT");
 });
 
 describe("web-platform-tests", () => {

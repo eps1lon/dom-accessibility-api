@@ -46,6 +46,7 @@ module.exports = () => {
 
 					resolve(
 						Promise.all([
+							Promise.resolve(python),
 							pollForServer(
 								`http://${config.browser_host}:${config.ports.http[0]}/`
 							),
@@ -75,7 +76,9 @@ module.exports = () => {
 				);
 			}
 		)
-		.then(([firstURL]) => firstURL);
+		.then(([server, firstURL]) => {
+			return { server, url: firstURL };
+		});
 };
 
 function pollForServer(url) {
