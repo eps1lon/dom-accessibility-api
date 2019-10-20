@@ -16,7 +16,8 @@ steps:
 
   - script: |
       yarn wpt:init
-    displayName: "Init repo"
+      tests/wpt/wpt make-hosts-file | sudo tee -a /etc/hosts
+    displayName: "Prepare web-platform-test"
 
   - script: |
       yarn build

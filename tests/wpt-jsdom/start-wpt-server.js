@@ -27,7 +27,7 @@ module.exports = () => {
 	const configPath = configPaths[configType];
 	const config = configs[configType];
 
-	return Promise.resolve()
+	return dnsLookup("web-platform.test")
 		.then(
 			() => {
 				const configArg = path.relative(path.resolve(wptDir), configPath);
