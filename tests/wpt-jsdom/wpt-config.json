@@ -1,5 +1,5 @@
 {
-	"browser_host": "web-platform.test",
+	"browser_host": "localhost",
 	"doc_root": ".",
 	"ws_doc_root": null,
 	"server_host": null,
