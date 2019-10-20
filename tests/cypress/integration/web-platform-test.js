@@ -98,14 +98,14 @@ context("wpt", () => {
 		["name_test_case_616-manual", "pass"],
 		["name_test_case_617-manual", "fail"], // whitespace, check if label children should be concetaned with a space
 		["name_test_case_618-manual", "fail"], // whitespace, see name_test_case_617-manual
-		["name_test_case_619-manual", "fail"], // whitespace, duplicate of name_test_case_618-manual
-		["name_test_case_620-manual", "fail"], // whitespace, duplicate of name_test_case_617-manual
+		["name_test_case_619-manual", "fail"], // whitespace, see name_test_case_617-manual
+		["name_test_case_620-manual", "fail"], // whitespace, see name_test_case_617-manual
 		["name_test_case_621-manual", "pass"],
 		["name_test_case_659-manual", "fail"], // wrong, ::before + ::after
-		["name_test_case_660-manual", "fail"], // wrong, duplicate of name_test_case_659-manual
-		["name_test_case_661-manual", "fail"], // wrong, ::before + ::after
-		["name_test_case_662-manual", "fail"], // wrong, duplicate of name_test_case_661-manual
-		["name_test_case_663a-manual", "fail"], // wrong, ::before + ::after
+		["name_test_case_660-manual", "fail"], // wrong, see name_test_case_659-manual
+		["name_test_case_661-manual", "fail"], // wrong, see name_test_case_659-manual
+		["name_test_case_662-manual", "fail"], // wrong, see name_test_case_659-manual
+		["name_test_case_663a-manual", "fail"], // wrong, see name_test_case_659-manual
 		["name_test_case_721-manual", "pass"],
 		["name_test_case_723-manual", "pass"],
 		["name_test_case_724-manual", "pass"],
@@ -138,8 +138,8 @@ context("wpt", () => {
 		["name_test_case_752-manual", "pass"],
 		["name_test_case_753-manual", "fail"], // wrong, ::before
 		["name_test_case_754-manual", "fail"], // wrong, ::before
-		["name_test_case_755-manual", "fail"], // wrong, duplicate?
-		["name_test_case_756-manual", "fail"], // wrong, ::before + ::after
+		["name_test_case_755-manual", "fail"], // wrong, ::before
+		["name_test_case_756-manual", "fail"], // wrong, ::before
 		["name_test_case_757-manual", "fail"], // wrong, ::before
 		["name_test_case_758-manual", "fail"], // wrong, ::before
 		["name_test_case_759-manual", "fail"], // wrong, ::after
