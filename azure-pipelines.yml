@@ -29,7 +29,7 @@ steps:
   - script: yarn test:wpt:jsdom
     displayName: "Run wpt tests in jsdom"
 
-  - script: yar test:wpt:browser
+  - script: yarn test:wpt:browser
     displayName: "Run wpt tests in browser"
 
   - task: PublishPipelineArtifact@0
