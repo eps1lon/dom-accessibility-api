@@ -1,5 +1,7 @@
 # dom-accessibility-api
 
+[![Build Status](https://dev.azure.com/silbermannsebastian/dom-accessibility-api/_apis/build/status/eps1lon.dom-accessibility-api?branchName=master)](https://dev.azure.com/silbermannsebastian/dom-accessibility-api/_build/latest?definitionId=6&branchName=master)
+
 https://w3c.github.io/accname/ for jsdom
 
 ```bash
