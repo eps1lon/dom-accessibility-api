@@ -1,19 +1,36 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- master
+  - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "12.11.x"
+    displayName: "Install Node.js"
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - script: |
+      yarn install
+    displayName: "Install packages"
+
+  - script: yarn test
+    displayName: "Run jest tests"
+
+  - script: test:wpt:jsdom
+    displayName: "Run wpt tests in jsdom"
+
+  - script: test:wpt:browser
+    displayName: "Run wpt tests in browser"
+
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: "browser-test-screenshots"
+      targetPath: "tests/cypress/screenshots"
+    displayName: "Publish cypress screenshots"
+
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: "browser-test-videos"
+      targetPath: "tests/cypress/videos"
+    displayName: "Publish size-snapshot"
