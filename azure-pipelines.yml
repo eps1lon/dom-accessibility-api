@@ -18,6 +18,10 @@ steps:
       yarn wpt:init
     displayName: "Init repo"
 
+  - script: |
+      yarn build
+    displayName: "Build"
+
   - script: yarn test
     displayName: "Run jest tests"
 
