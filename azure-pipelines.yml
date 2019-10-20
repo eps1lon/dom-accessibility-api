@@ -36,6 +36,7 @@ steps:
     inputs:
       artifactName: "browser-test-screenshots"
       targetPath: "tests/cypress/screenshots"
+    condition: failed()
     displayName: "Publish cypress screenshots"
 
   - task: PublishPipelineArtifact@0
