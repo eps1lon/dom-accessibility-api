@@ -15,6 +15,11 @@ steps:
     displayName: "Install packages"
 
   - script: |
+      yarn format
+      git diff --exit-code
+    displayName: "Check format"
+
+  - script: |
       yarn wpt:init
       tests/wpt/wpt make-hosts-file | sudo tee -a /etc/hosts
     displayName: "Prepare web-platform-test"
