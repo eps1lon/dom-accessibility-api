@@ -263,6 +263,14 @@ function getValueOfTextbox(element: Element): string {
 	return element.textContent || "";
 }
 
+function getTextualContent(declaration: CSSStyleDeclaration): string {
+	const content = declaration.getPropertyValue("content");
+	if (/^["'].*["']$/.test(content)) {
+		return content.slice(1, -1);
+	}
+	return "";
+}
+
 /**
  * implements https://w3c.github.io/accname/#mapping_additional_nd_te
  * @param root
@@ -293,12 +301,8 @@ export function computeAccessibleName(
 		let accumulatedText = "";
 		if (isElement(node)) {
 			const pseudoBefore = safeWindow(node).getComputedStyle(node, "::before");
-			const beforeContent = pseudoBefore.getPropertyValue("content");
-			// TODO handle `content`
-			/* accumulatedText = prependResultWithoutSpace(
-				accumulatedText,
-				beforeContent
-			); */
+			const beforeContent = getTextualContent(pseudoBefore);
+			accumulatedText = `${beforeContent} ${accumulatedText}`;
 		}
 
 		for (const child of queryChildNodes(node)) {
@@ -319,9 +323,8 @@ export function computeAccessibleName(
 
 		if (isElement(node)) {
 			const pseudoAfter = safeWindow(node).getComputedStyle(node, ":after");
-			const afterContent = pseudoAfter.getPropertyValue("content");
-			// TODO handle `content`
-			/* accumulatedText = appendResultWithoutSpace(accumulatedText, afterContent); */
+			const afterContent = getTextualContent(pseudoAfter);
+			accumulatedText = `${accumulatedText} ${afterContent}`;
 		}
 
 		return accumulatedText;
@@ -443,15 +446,15 @@ export function computeAccessibleName(
 
 		// 2D
 		if (!hasAnyConcreteRoles(current, ["none", "presentation"])) {
-			const attributeTextAlternative = computeAttributeTextAlternative(current);
-			if (attributeTextAlternative !== null) {
-				consultedNodes.add(current);
-				return attributeTextAlternative;
-			}
 			const elementTextAlternative = computeElementTextAlternative(current);
 			if (elementTextAlternative !== null) {
 				consultedNodes.add(current);
 				return elementTextAlternative;
+			}
+			const attributeTextAlternative = computeAttributeTextAlternative(current);
+			if (attributeTextAlternative !== null) {
+				consultedNodes.add(current);
+				return attributeTextAlternative;
 			}
 		}
 
