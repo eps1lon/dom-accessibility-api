@@ -28,8 +28,20 @@ steps:
       yarn build
     displayName: "Build"
 
-  - script: yarn test
+  - script: yarn test:ci
     displayName: "Run jest tests"
+
+  - task: PublishTestResults@2
+    condition: succeededOrFailed()
+    inputs:
+      testRunner: JUnit
+      testResultsFiles: "$(System.DefaultWorkingDirectory)/junit.xml"
+
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: "$(System.DefaultWorkingDirectory)/coverage/*coverage.xml"
+      reportDirectory: "$(System.DefaultWorkingDirectory)/coverage"
 
   - script: yarn test:wpt:jsdom
     displayName: "Run wpt tests in jsdom"
