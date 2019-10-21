@@ -48,6 +48,14 @@ function isHTMLSelectElement(node: Node | null): node is HTMLSelectElement {
 	);
 }
 
+function isHTMLTextAreaElement(node: Node | null): node is HTMLTextAreaElement {
+	return (
+		isElement(node) &&
+		// @ts-ignore
+		node instanceof node.ownerDocument.defaultView.HTMLTextAreaElement
+	);
+}
+
 function safeWindow(node: Node): Window {
 	if (node.isConnected === false) {
 		throw new TypeError(`Can't reach window from disconnected node`);
@@ -245,6 +253,15 @@ function isDescendantOfNativeHostLanguageTextAlternativeElement(
  */
 function computeTooltipAttributeValue(node: Node): string | null {
 	return null;
+}
+
+function getValueOfTextbox(element: Element): string {
+	if (isHTMLInputElement(element) || isHTMLTextAreaElement(element)) {
+		return element.value;
+	}
+	// TODO: Do we need to check for contentenditable i.e. where is the `value` of
+	// <div role="textbox" /> specified?
+	return element.textContent || "";
 }
 
 /**
@@ -470,7 +487,7 @@ export function computeAccessibleName(
 			}
 			if (hasAnyConcreteRoles(current, ["textbox"])) {
 				consultedNodes.add(current);
-				return current.getAttribute("value") || "";
+				return getValueOfTextbox(current);
 			}
 		}
 
