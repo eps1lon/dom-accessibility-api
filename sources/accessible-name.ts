@@ -2,6 +2,8 @@
  * implements https://w3c.github.io/accname/
  */
 
+import getRole from "./getRole";
+
 /**
  *  A string of characters where all carriage returns, newlines, tabs, and form-feeds are replaced with a single space, and multiple spaces are reduced to a single space. The string contains only character data; it does not contain any markup.
  */
@@ -150,43 +152,7 @@ function hasAbstractRole(node: Node, role: string): node is Element {
 
 function hasAnyConcreteRoles(node: Node, roles: string[]): node is Element {
 	if (isElement(node)) {
-		if (node.hasAttribute("role")) {
-			return node
-				.getAttribute("role")!
-				.split(" ")
-				.some(role => roles.indexOf(role) !== -1);
-		}
-
-		// https://w3c.github.io/html-aria/
-
-		if (isHTMLInputElement(node)) {
-			if (
-				["email", "tel", "text", "url"].indexOf(node.type) !== -1 &&
-				!node.hasAttribute("list")
-			) {
-				return roles.indexOf("textbox") !== -1;
-			}
-		}
-
-		switch (node.tagName) {
-			case "A":
-				return roles.indexOf("link") !== -1;
-			case "BUTTON":
-				return roles.indexOf("button") !== -1;
-			case "H1":
-			case "H2":
-			case "H3":
-			case "H4":
-			case "H5":
-			case "H6":
-				return roles.indexOf("heading") !== -1;
-			case "SELECT":
-				return roles.indexOf("listbox") !== -1;
-			case "OPTION":
-				return roles.indexOf("option") !== -1;
-			case "TEXTAREA":
-				return roles.indexOf("textbox") !== -1;
-		}
+		return roles.indexOf(getRole(node)!) !== -1;
 	}
 	return false;
 }
