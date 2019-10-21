@@ -302,7 +302,7 @@ export function computeAccessibleName(
 		if (isElement(node)) {
 			const pseudoBefore = safeWindow(node).getComputedStyle(node, "::before");
 			const beforeContent = getTextualContent(pseudoBefore);
-			accumulatedText = `${beforeContent}${accumulatedText}`;
+			accumulatedText = `${beforeContent} ${accumulatedText}`;
 		}
 
 		for (const child of queryChildNodes(node)) {
@@ -324,7 +324,7 @@ export function computeAccessibleName(
 		if (isElement(node)) {
 			const pseudoAfter = safeWindow(node).getComputedStyle(node, ":after");
 			const afterContent = getTextualContent(pseudoAfter);
-			accumulatedText = `${accumulatedText}${afterContent}`;
+			accumulatedText = `${accumulatedText} ${afterContent}`;
 		}
 
 		return accumulatedText;
@@ -446,15 +446,15 @@ export function computeAccessibleName(
 
 		// 2D
 		if (!hasAnyConcreteRoles(current, ["none", "presentation"])) {
-			const attributeTextAlternative = computeAttributeTextAlternative(current);
-			if (attributeTextAlternative !== null) {
-				consultedNodes.add(current);
-				return attributeTextAlternative;
-			}
 			const elementTextAlternative = computeElementTextAlternative(current);
 			if (elementTextAlternative !== null) {
 				consultedNodes.add(current);
 				return elementTextAlternative;
+			}
+			const attributeTextAlternative = computeAttributeTextAlternative(current);
+			if (attributeTextAlternative !== null) {
+				consultedNodes.add(current);
+				return attributeTextAlternative;
 			}
 		}
 

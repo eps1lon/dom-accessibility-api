@@ -101,11 +101,11 @@ context("wpt", () => {
 		["name_test_case_619-manual", "fail"], // whitespace, see name_test_case_617-manual
 		["name_test_case_620-manual", "fail"], // whitespace, see name_test_case_617-manual
 		["name_test_case_621-manual", "pass"],
-		["name_test_case_659-manual", "fail"], // wrong, ::before + ::after
-		["name_test_case_660-manual", "fail"], // wrong, see name_test_case_659-manual
-		["name_test_case_661-manual", "fail"], // wrong, see name_test_case_659-manual
-		["name_test_case_662-manual", "fail"], // wrong, see name_test_case_659-manual
-		["name_test_case_663a-manual", "fail"], // wrong, see name_test_case_659-manual
+		["name_test_case_659-manual", "fail"], // wrong, ::before + [title] + ::after
+		["name_test_case_660-manual", "fail"], // wrong, ::before + [title] + ::after
+		["name_test_case_661-manual", "pass"],
+		["name_test_case_662-manual", "pass"],
+		["name_test_case_663a-manual", "pass"],
 		["name_test_case_721-manual", "pass"],
 		["name_test_case_723-manual", "pass"],
 		["name_test_case_724-manual", "pass"],
