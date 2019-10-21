@@ -62,8 +62,8 @@ context("wpt", () => {
 		["name_test_case_549-manual", "pass"],
 		["name_test_case_550-manual", "pass"],
 		["name_test_case_551-manual", "pass"],
-		["name_test_case_552-manual", "fail"], // missing word, ::before
-		["name_test_case_553-manual", "fail"], // missing word, ::after
+		["name_test_case_552-manual", "pass"],
+		["name_test_case_553-manual", "pass"],
 		["name_test_case_556-manual", "pass"],
 		["name_test_case_557-manual", "pass"],
 		["name_test_case_558-manual", "pass"],
@@ -136,16 +136,16 @@ context("wpt", () => {
 		["name_test_case_750-manual", "pass"],
 		["name_test_case_751-manual", "pass"],
 		["name_test_case_752-manual", "pass"],
-		["name_test_case_753-manual", "fail"], // wrong, ::before
-		["name_test_case_754-manual", "fail"], // wrong, ::before
-		["name_test_case_755-manual", "fail"], // wrong, ::before
-		["name_test_case_756-manual", "fail"], // wrong, ::before
-		["name_test_case_757-manual", "fail"], // wrong, ::before
-		["name_test_case_758-manual", "fail"], // wrong, ::before
-		["name_test_case_759-manual", "fail"], // wrong, ::after
-		["name_test_case_760-manual", "fail"], // wrong, ::after
-		["name_test_case_761-manual", "fail"], // wrong, ::after
-		["name_test_case_762-manual", "fail"], // wrong, ::after
+		["name_test_case_753-manual", "pass"],
+		["name_test_case_754-manual", "pass"],
+		["name_test_case_755-manual", "pass"],
+		["name_test_case_756-manual", "pass"],
+		["name_test_case_757-manual", "pass"],
+		["name_test_case_758-manual", "pass"],
+		["name_test_case_759-manual", "pass"],
+		["name_test_case_760-manual", "pass"],
+		["name_test_case_761-manual", "pass"],
+		["name_test_case_762-manual", "pass"],
 		["name_text-label-embedded-combobox-manual", "pass"],
 		["name_text-label-embedded-menu-manual", "pass"],
 		["name_text-label-embedded-select-manual", "pass"],
