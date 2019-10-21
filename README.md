@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/dom-accessibility-api.svg)](https://badge.fury.io/js/dom-accessibility-api)
 [![Build Status](https://dev.azure.com/silbermannsebastian/dom-accessibility-api/_apis/build/status/eps1lon.dom-accessibility-api?branchName=master)](https://dev.azure.com/silbermannsebastian/dom-accessibility-api/_build/latest?definitionId=6&branchName=master)
-![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/eps1lon/dom-accessibility-api/6)
+![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/silbermannsebastian/dom-accessibility-api/6)
 
 Computes the accessible name of a given DOM Element.
 https://w3c.github.io/accname/ implemented in JavaScript for testing.
