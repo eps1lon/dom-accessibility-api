@@ -259,8 +259,7 @@ function getValueOfTextbox(element: Element): string {
 	if (isHTMLInputElement(element) || isHTMLTextAreaElement(element)) {
 		return element.value;
 	}
-	// TODO: Do we need to check for contentenditable i.e. where is the `value` of
-	// <div role="textbox" /> specified?
+	// https://github.com/eps1lon/dom-accessibility-api/issues/4
 	return element.textContent || "";
 }
 
