@@ -20,11 +20,6 @@ steps:
     displayName: "Check format"
 
   - script: |
-      yarn wpt:init
-      tests/wpt/wpt make-hosts-file | sudo tee -a /etc/hosts
-    displayName: "Prepare web-platform-test"
-
-  - script: |
       yarn build
     displayName: "Build"
 
@@ -42,6 +37,11 @@ steps:
       codeCoverageTool: Cobertura
       summaryFileLocation: "$(System.DefaultWorkingDirectory)/coverage/*coverage.xml"
       reportDirectory: "$(System.DefaultWorkingDirectory)/coverage"
+
+  - script: |
+      yarn wpt:init
+      tests/wpt/wpt make-hosts-file | sudo tee -a /etc/hosts
+    displayName: "Prepare web-platform-test"
 
   - script: yarn test:wpt:jsdom
     displayName: "Run wpt tests in jsdom"
