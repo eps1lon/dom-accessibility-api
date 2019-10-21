@@ -4,15 +4,17 @@ There are three different test suites
 
 Tests are extracted from the WPT tests. They help debugging the function under test.
 Their failure or passing is not necessarily an indication of the state of the package.
+This uses the source.
 
 ## wpt + jsdom
 
-Runs the web-platform-tests of `accname` in `jsdom`.
+Runs the web-platform-tests of `accname` in `jsdom`. Needs built package.
 
 ## wpt + cypress
 
 Runs the web-platform-tests of `accname` in `cypress`. This is an actual browser
-test that should be considered first when talking about the state of this package
+test that should be considered first when talking about the state of this package.
+Needs built package.
 
 ## wpt + karma
 
