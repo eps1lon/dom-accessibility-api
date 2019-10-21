@@ -133,12 +133,6 @@ function hasAbstractRole(node: Node, role: string): node is Element {
 				"slider",
 				"spinbutton"
 			]);
-		case "textbox":
-			return (
-				node.tagName === "TEXTAREA" ||
-				(isHTMLInputElement(node) &&
-					["search", "text"].indexOf(node.type) !== -1)
-			);
 		default:
 			throw new TypeError(
 				`No knowledge about abstract role '${role}'. This is likely a bug :(`
@@ -154,7 +148,18 @@ function hasAnyConcreteRoles(node: Node, roles: string[]): node is Element {
 				.split(" ")
 				.some(role => roles.indexOf(role) !== -1);
 		}
+
 		// https://w3c.github.io/html-aria/
+
+		if (isHTMLInputElement(node)) {
+			if (
+				["email", "tel", "text", "url"].indexOf(node.type) !== -1 &&
+				!node.hasAttribute("list")
+			) {
+				return roles.indexOf("textbox") !== -1;
+			}
+		}
+
 		switch (node.tagName) {
 			case "A":
 				return roles.indexOf("link") !== -1;
@@ -171,6 +176,8 @@ function hasAnyConcreteRoles(node: Node, roles: string[]): node is Element {
 				return roles.indexOf("listbox") !== -1;
 			case "OPTION":
 				return roles.indexOf("option") !== -1;
+			case "TEXTAREA":
+				return roles.indexOf("textbox") !== -1;
 		}
 	}
 	return false;
@@ -461,7 +468,7 @@ export function computeAccessibleName(
 				// Otherwise, use the value as specified by a host language attribute.
 				return current.getAttribute("value") || "";
 			}
-			if (hasAbstractRole(current, "textbox")) {
+			if (hasAnyConcreteRoles(current, ["textbox"])) {
 				consultedNodes.add(current);
 				return current.getAttribute("value") || "";
 			}
