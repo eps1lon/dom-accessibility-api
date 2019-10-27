@@ -416,15 +416,17 @@ export function computeAccessibleName(
 					computeTextAlternative(element, {
 						isEmbeddedInLabel: context.isEmbeddedInLabel,
 						isReferenced: true,
-						recursion: true
+						// thais isn't recursion as specified, otherwise we would skip
+						// `aria-label` in
+						// <input id="myself" aria-label="foo" aria-labelledby="myself"
+						recursion: false
 					})
 				)
 				.join(" ");
 		}
 
 		// 2C
-		const skipToStep2E =
-			context.recursion && context.isEmbeddedInLabel && isControl(current);
+		const skipToStep2E = context.recursion && isControl(current);
 		if (!skipToStep2E) {
 			const ariaLabel = (
 				(isElement(current) && current.getAttribute("aria-label")) ||
