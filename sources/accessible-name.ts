@@ -59,11 +59,13 @@ function isHTMLTextAreaElement(node: Node | null): node is HTMLTextAreaElement {
 }
 
 function safeWindow(node: Node): Window {
-	if (node.isConnected === false) {
-		throw new TypeError(`Can't reach window from disconnected node`);
-	}
+	const { defaultView } =
+		node.ownerDocument === null ? (node as Document) : node.ownerDocument;
 
-	return node.ownerDocument!.defaultView!;
+	if (defaultView === null) {
+		throw new TypeError("no window available");
+	}
+	return defaultView;
 }
 
 /**
