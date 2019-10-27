@@ -124,6 +124,45 @@ describe("to upstream", () => {
 	])(`role %s`, (_, markup, expectedAccessibleName) =>
 		testMarkup(markup, expectedAccessibleName)
 	);
+
+	test.each([
+		[
+			// TODO
+			// weird edge case that results in an empty accessible name
+			// Intuitevly the fist input has "foo baz" while the second one has "foo David"
+			"two inputs, one label",
+			`
+<label>
+	foo
+	<input type="text" value="David">
+	<input data-test type="text" value="baz">
+</label>
+
+`,
+			""
+		],
+		[
+			"textarea value",
+			`
+<label for="test">
+	foo
+	<textarea>David</textarea>
+</label>
+<input data-test id="test" type="text" value="baz">			
+`,
+			"foo David"
+		],
+		[
+			"select value",
+			`
+<select id="role"><option selected>contributor</option></select>
+<button data-test id="trigger" aria-labelledby="trigger role">Pick</button>
+`,
+			"Pick contributor"
+		]
+	])(`coverage for %s`, (_, markup, expectedAccessibleName) => {
+		return testMarkup(markup, expectedAccessibleName);
+	});
 });
 
 test.each([
