@@ -146,6 +146,17 @@ describe("to upstream", () => {
 			`
 <label for="test">
 	foo
+	<input type="text" value="David" />
+</label>
+<input data-test id="test" type="text" value="baz">			
+`,
+			"foo David"
+		],
+		[
+			"textarea value",
+			`
+<label for="test">
+	foo
 	<textarea>David</textarea>
 </label>
 <input data-test id="test" type="text" value="baz">			
