@@ -34,7 +34,7 @@ context("wpt", () => {
 			"name_from_content_of_labelledby_elements_one_of_which_is_hidden-manual",
 			"pass"
 		],
-		["name_heading-combobox-focusable-alternative-manual", "fail"], // wrong text alternative, see mailing list
+		["name_heading-combobox-focusable-alternative-manual", "pass"],
 		["name_image-title-manual", "pass"],
 		["name_link-mixed-content-manual", "pass"],
 		["name_link-with-label-manual", "pass"],

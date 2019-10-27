@@ -123,12 +123,14 @@ function queryChildNodes(node: Node): Node[] {
 }
 
 /**
- *
  * @param {Node} node -
- * @returns {boolean} -
+ * @returns {boolean} - As defined in step 2E of https://w3c.github.io/accname/#mapping_additional_nd_te
  */
-function isEmbeddedControl(node: Node): boolean {
-	return false;
+function isControl(node: Node): boolean {
+	return (
+		hasAnyConcreteRoles(node, ["button", "combobox", "listbox", "textbox"]) ||
+		hasAbstractRole(node, "range")
+	);
 }
 
 function hasAbstractRole(node: Node, role: string): node is Element {
@@ -414,46 +416,52 @@ export function computeAccessibleName(
 					computeTextAlternative(element, {
 						isEmbeddedInLabel: context.isEmbeddedInLabel,
 						isReferenced: true,
-						recursion: true
+						// thais isn't recursion as specified, otherwise we would skip
+						// `aria-label` in
+						// <input id="myself" aria-label="foo" aria-labelledby="myself"
+						recursion: false
 					})
 				)
 				.join(" ");
 		}
 
 		// 2C
-		const ariaLabel = (
-			(isElement(current) && current.getAttribute("aria-label")) ||
-			""
-		).trim();
-		if (ariaLabel !== "") {
-			consultedNodes.add(current);
-			if (context.recursion && isEmbeddedControl(current)) {
-				throw new Error("Not implemented");
+		const skipToStep2E = context.recursion && isControl(current);
+		if (!skipToStep2E) {
+			const ariaLabel = (
+				(isElement(current) && current.getAttribute("aria-label")) ||
+				""
+			).trim();
+			if (ariaLabel !== "") {
+				consultedNodes.add(current);
+				return ariaLabel;
 			}
-			return ariaLabel;
-		}
 
-		// 2D
-		if (!hasAnyConcreteRoles(current, ["none", "presentation"])) {
-			const elementTextAlternative = computeElementTextAlternative(current);
-			if (elementTextAlternative !== null) {
-				consultedNodes.add(current);
-				return elementTextAlternative;
-			}
-			const attributeTextAlternative = computeAttributeTextAlternative(current);
-			if (attributeTextAlternative !== null) {
-				consultedNodes.add(current);
-				return attributeTextAlternative;
+			// 2D
+			if (!hasAnyConcreteRoles(current, ["none", "presentation"])) {
+				const elementTextAlternative = computeElementTextAlternative(current);
+				if (elementTextAlternative !== null) {
+					consultedNodes.add(current);
+					return elementTextAlternative;
+				}
+				const attributeTextAlternative = computeAttributeTextAlternative(
+					current
+				);
+				if (attributeTextAlternative !== null) {
+					consultedNodes.add(current);
+					return attributeTextAlternative;
+				}
 			}
 		}
 
 		// 2E
-		if (context.isReferenced || context.isEmbeddedInLabel) {
+		if (skipToStep2E || context.isEmbeddedInLabel || context.isReferenced) {
 			if (hasAnyConcreteRoles(current, ["combobox", "listbox"])) {
 				consultedNodes.add(current);
 				const selectedOptions = querySelectedOptions(current);
 				if (selectedOptions.length === 0) {
-					return "";
+					// defined per test `name_heading_combobox`
+					return isHTMLInputElement(current) ? current.value : "";
 				}
 				return Array.from(selectedOptions)
 					.map(selectedOption => {
