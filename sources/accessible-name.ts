@@ -199,10 +199,31 @@ function isNativeHostLanguageTextAlternativeElement(
 }
 
 /**
- * TODO https://w3c.github.io/aria/#namefromcontent
+ * https://w3c.github.io/aria/#namefromcontent
  */
 function allowsNameFromContent(node: Node): boolean {
-	return hasAnyConcreteRoles(node, ["option", "heading", "link", "button"]);
+	return hasAnyConcreteRoles(node, [
+		"button",
+		"cell",
+		"checkbox",
+		"columnheader",
+		"gridcell",
+		"heading",
+		"label",
+		"legend",
+		"link",
+		"menuitem",
+		"menuitemcheckbox",
+		"menuitemradio",
+		"option",
+		"radio",
+		"row",
+		"rowheader",
+		"switch",
+		"tab",
+		"tooltip",
+		"treeitem"
+	]);
 }
 
 /**
