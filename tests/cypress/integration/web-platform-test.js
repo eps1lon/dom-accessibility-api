@@ -89,7 +89,7 @@ context("wpt", () => {
 		["name_test_case_607-manual", "pass"],
 		["name_test_case_608-manual", "pass"],
 		["name_test_case_609-manual", "pass"],
-		["name_test_case_610-manual", "fail"], // wrong, tests looks incorrect though
+		["name_test_case_610-manual", "pass"],
 		["name_test_case_611-manual", "pass"],
 		["name_test_case_612-manual", "pass"],
 		["name_test_case_613-manual", "pass"],

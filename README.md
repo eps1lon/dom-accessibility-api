@@ -28,15 +28,15 @@ cloning. See tests/README.md for more info about the test setup.
 
 ### browser (Chrome)
 
-134/144 of which 5 are due to missing whitespace.
+135/144 of which 5 are due to missing whitespace.
 
 ### jsdom
 
 <details>
-<summary>report 124/159 passing of which 16 are due `::before { content }`, 14 are accessible desc, 9 are pathological </summary>
+<summary>report 125/159 passing of which 16 are due `::before { content }`, 14 are accessible desc, 8 are pathological </summary>
 
 ```bash
-web-platform-tests
+  web-platform-tests
     accname
       ✓ [expected fail] description_1.0_combobox-focusable-manual.html
       ✓ [expected fail] description_from_content_of_describedby_element-manual.html
@@ -134,7 +134,7 @@ web-platform-tests
       ✓ name_test_case_607-manual.html
       ✓ name_test_case_608-manual.html
       ✓ name_test_case_609-manual.html
-      ✓ [expected fail] name_test_case_610-manual.html
+      ✓ name_test_case_610-manual.html
       ✓ name_test_case_611-manual.html
       ✓ name_test_case_612-manual.html
       ✓ name_test_case_613-manual.html
