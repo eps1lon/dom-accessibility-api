@@ -7,7 +7,8 @@ expect.extend({
 	toHaveAccessibleName(received, expected) {
 		if (received == null) {
 			return {
-				message: () => "",
+				message: () =>
+					`The element was not an Element but '${String(received)}'`,
 				pass: false
 			};
 		}
@@ -107,8 +108,24 @@ test.each([
 <label for="test">a test</label>
 		`,
 		"This is a test"
-	]
-])(`&#`, (markup, accessibleName) => {
+	],
+	// byAltText('an image') = byRole('image', {name: 'an image'})
+	[`<img data-test alt="an image" />`, "an image"],
+	// this would require a custom matcher
+	[
+		`<div id="label"><em>the</em> logo</div><img data-test aria-labelledby="label" />`,
+		"the logo"
+	],
+	// byDisplayValue isn't solvable by accessibleName
+	[`<label>Age <input data-test type="text" value="10" /></label>`, "Age"],
+	// byLabelText('Age') =>  byRole('textbox', {name: 'Age'})
+	// byText('Arizona') => byRole('option', {name: 'Arizona'})
+	[`<option data-test >Arizona</option>`, "Arizona"],
+	// this would require a custom matcher
+	[`<button data-test>Click <em>me</em></option>`, "Click me"],
+	// byTitle('Hello, Dave!') => byRole('textbox', {name: 'Hello, Dave!'})
+	[`<input data-test title="Hello, Dave!" />`, "Hello, Dave!"]
+])(`case %#`, (markup, accessibleName) => {
 	const container = renderIntoDocument(markup);
 
 	const testNode = container.querySelector("[data-test]");
