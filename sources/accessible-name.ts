@@ -455,12 +455,13 @@ export function computeAccessibleName(
 		}
 
 		// 2E
-		if (skipToStep2E || context.isEmbeddedInLabel) {
+		if (skipToStep2E || context.isEmbeddedInLabel || context.isReferenced) {
 			if (hasAnyConcreteRoles(current, ["combobox", "listbox"])) {
 				consultedNodes.add(current);
 				const selectedOptions = querySelectedOptions(current);
 				if (selectedOptions.length === 0) {
-					return "";
+					// defined per test `name_heading_combobox`
+					return isHTMLInputElement(current) ? current.value : "";
 				}
 				return Array.from(selectedOptions)
 					.map(selectedOption => {
