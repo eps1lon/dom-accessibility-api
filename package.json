@@ -28,6 +28,7 @@
 		"@testing-library/dom": "^6.6.0",
 		"@types/jest": "^24.0.18",
 		"concurrently": "^5.0.0",
+		"cypress": "^3.4.1",
 		"jest": "^24.9.0",
 		"jest-diff": "^24.9.0",
 		"jest-environment-jsdom-thirteen": "^1.0.1",
@@ -41,14 +42,11 @@
 		"q": "^1.5.1",
 		"request": "^2.34",
 		"request-promise-native": "^1.0.7",
-		"serve-handler": "^6.1.2",
+		"serve": "^11.2.0",
 		"typescript": "^3.6.3"
 	},
 	"prettier": {
 		"useTabs": true
 	},
-	"dependencies": {
-		"cypress": "^3.4.1",
-		"serve": "^11.2.0"
-	}
+	"dependencies": {}
 }
