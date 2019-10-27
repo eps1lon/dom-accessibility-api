@@ -40,6 +40,92 @@ expect.extend({
 	}
 });
 
+function testMarkup(markup, accessibleName) {
+	const container = renderIntoDocument(markup);
+
+	const testNode = container.querySelector("[data-test]");
+	expect(testNode).toHaveAccessibleName(accessibleName);
+}
+
+describe("to upstream", () => {
+	test.each([
+		// name from content
+		[
+			"cell",
+			`<div data-test role="cell"><em>greek</em> alpha</div>`,
+			"greek alpha"
+		],
+		[
+			"checkbox",
+			`<div data-test role="checkbox"><em>greek</em> beta</div>`,
+			"greek beta"
+		],
+		[
+			"columnheader",
+			`<div data-test role="columnheader"><em>greek</em> gamma</div>`,
+			"greek gamma"
+		],
+		[
+			"gridcell",
+			`<div data-test role="gridcell"><em>greek</em> delta</div>`,
+			"greek delta"
+		],
+		[
+			"legend",
+			`<fieldset><legend data-test><em>greek</em> zeta</legend></fieldset>`,
+			"greek zeta"
+		],
+		[
+			"menuitem",
+			`<li data-test role="menuitem"><em>greek</em> eta</li>`,
+			"greek eta"
+		],
+		[
+			"menuitemradio",
+			`<li data-test role="menuitemradio"><em>greek</em> theta</li>`,
+			"greek theta"
+		],
+		[
+			"menuitemcheckbox",
+			`<li data-test role="menuitemcheckbox"><em>greek</em> iota</li>`,
+			"greek iota"
+		],
+		[
+			"radio",
+			`<div data-test role="radio"><em>greek</em> kappa</div>`,
+			"greek kappa"
+		],
+		[
+			"row",
+			`<table><tbody><tr data-test><td>greek</td><td>lambda</td></tr></tbody></table>`,
+			"greek lambda"
+		],
+		[
+			"rowheader",
+			`<table><tbody><tr data-test><td data-test role="rowheader"><em>greek</em> mu</td></tr></tbody></table>`,
+			"greek mu"
+		],
+		[
+			"switch",
+			`<div data-test role="switch"><em>greek</em> nu</div>`,
+			"greek nu"
+		],
+		["tab", `<div data-test role="tab"><em>greek</em> xi</div>`, "greek xi"],
+		[
+			"tooltip",
+			`<div data-test role="tooltip"><em>greek</em> omicron</div>`,
+			"greek omicron"
+		],
+		[
+			"treeitem",
+			`<li data-test role="treeitem"><em>greek</em> pi</li>`,
+			"greek pi"
+		]
+	])(`role %s`, (_, markup, expectedAccessibleName) =>
+		testMarkup(markup, expectedAccessibleName)
+	);
+});
+
 test.each([
 	[
 		`
@@ -108,8 +194,7 @@ test.each([
 <label for="test">a test</label>
 		`,
 		"This is a test"
-	],
-	// byAltText('an image') = byRole('image', {name: 'an image'})
+	], // byAltText('an image') = byRole('image', {name: 'an image'})
 	[`<img data-test alt="an image" />`, "an image"],
 	// this would require a custom matcher
 	[
@@ -125,9 +210,4 @@ test.each([
 	[`<button data-test>Click <em>me</em></option>`, "Click me"],
 	// byTitle('Hello, Dave!') => byRole('textbox', {name: 'Hello, Dave!'})
 	[`<input data-test title="Hello, Dave!" />`, "Hello, Dave!"]
-])(`case %#`, (markup, accessibleName) => {
-	const container = renderIntoDocument(markup);
-
-	const testNode = container.querySelector("[data-test]");
-	expect(testNode).toHaveAccessibleName(accessibleName);
-});
+])(`test #%#`, testMarkup);

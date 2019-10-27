@@ -117,7 +117,7 @@ const cases = [
 	["input type=week", null, createElementFactory("input", {type: "week"})],
 	["ins", null, createElementFactory("ins", {})],
 	["label", null, createElementFactory("label", {})],
-  ["legend", null, createElementFactory("legend", {})],
+  ["legend", 'legend', createElementFactory("legend", {})],
   // WARNING: Only in certain context
 	["li", "listitem", createElementFactory("li", {})],
 	["link element with a href", "link", createElementFactory("link", {href: "some"})],

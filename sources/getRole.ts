@@ -32,6 +32,7 @@ const tagToRoleMappings: Record<string, string | undefined> = {
 	H6: "heading",
 	HEADER: "banner",
 	HR: "separator",
+	LEGEND: "legend",
 	LI: "listitem",
 	MATH: "math",
 	MAIN: "main",
