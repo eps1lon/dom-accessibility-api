@@ -10,6 +10,7 @@
 	"scripts": {
 		"build": "tsc -p tsconfig.json",
 		"format": "prettier \"**/*.{json,js,md,ts,yml}\" --write --ignore-path .prettierignore",
+		"lint": "eslint --report-unused-disable-directives \"sources/**/*.ts\"",
 		"test": "jest",
 		"test:ci": "jest --ci --config jest.ci.config.js --runInBand",
 		"test:wpt:jsdom": "mocha tests/wpt-jsdom/run-wpts.js",
@@ -27,8 +28,10 @@
 		"@babel/preset-typescript": "^7.6.0",
 		"@testing-library/dom": "^6.6.0",
 		"@types/jest": "^24.0.18",
+		"@typescript-eslint/eslint-plugin": "^2.5.0",
 		"concurrently": "^5.0.0",
 		"cypress": "^3.4.1",
+		"eslint": "^6.6.0",
 		"jest": "^24.9.0",
 		"jest-diff": "^24.9.0",
 		"jest-environment-jsdom-thirteen": "^1.0.1",
@@ -48,5 +51,7 @@
 	"prettier": {
 		"useTabs": true
 	},
-	"dependencies": {}
+	"dependencies": {
+		"@typescript-eslint/parser": "^2.5.0"
+	}
 }

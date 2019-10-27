@@ -72,11 +72,13 @@ function getImplicitRole(element: Element): string | null {
 			if (element.hasAttribute("href")) {
 				return "link";
 			}
+			break;
 		case "IMG":
 			if ((element.getAttribute("alt") || "").length > 0) {
 				return "img";
 			}
-		case "INPUT":
+			break;
+		case "INPUT": {
 			const { type } = element as HTMLInputElement;
 			switch (type) {
 				case "button":
@@ -106,6 +108,7 @@ function getImplicitRole(element: Element): string | null {
 				default:
 					return null;
 			}
+		}
 		case "SELECT":
 			if (
 				element.hasAttribute("multiple") ||
@@ -120,6 +123,8 @@ function getImplicitRole(element: Element): string | null {
 
 function getExplicitRole(element: Element): string | null {
 	if (element.hasAttribute("role")) {
+		// safe due to hasAttribute check
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const [explicitRole] = element
 			.getAttribute("role")!
 			.trim()

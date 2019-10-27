@@ -100,14 +100,20 @@ function isHidden(node: Node): node is Element {
  */
 function idRefs(node: Node, attributeName: string): Element[] {
 	if (isElement(node) && node.hasAttribute(attributeName)) {
+		// safe due to hasAttribute check
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const ids = node.getAttribute(attributeName)!.split(" ");
 
-		return ids
-			.map(id => node.ownerDocument!.getElementById(id))
-			.filter(
-				(element: Element | null): element is Element => element !== null
-				// TODO: why does this not narrow?
-			) as Element[];
+		return (
+			ids
+				// safe since it can't be null for an Element
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+				.map(id => node.ownerDocument!.getElementById(id))
+				.filter(
+					(element: Element | null): element is Element => element !== null
+					// TODO: why does this not narrow?
+				) as Element[]
+		);
 	}
 
 	return [];
@@ -154,9 +160,12 @@ function hasAbstractRole(node: Node, role: string): node is Element {
 	}
 }
 
-function hasAnyConcreteRoles(node: Node, roles: string[]): node is Element {
+function hasAnyConcreteRoles(
+	node: Node,
+	roles: Array<string | null>
+): node is Element {
 	if (isElement(node)) {
-		return roles.indexOf(getRole(node)!) !== -1;
+		return roles.indexOf(getRole(node)) !== -1;
 	}
 	return false;
 }
@@ -179,7 +188,7 @@ function querySelectorAllSubtree(
 	return elements;
 }
 
-function querySelectedOptions(listbox: Element) {
+function querySelectedOptions(listbox: Element): ArrayLike<Element> {
 	if (isHTMLSelectElement(listbox)) {
 		// IE11 polyfill
 		return (
@@ -271,14 +280,7 @@ export function computeAccessibleName(
 	root: Element,
 	context: { isReferenced?: boolean } = {}
 ): string {
-	/**
-	 * @type {Set<Node>}
-	 */
-	const consultedNodes = new Set();
-	/**
-	 * @type {FlatString}
-	 */
-	let totalAccumulatedText = "";
+	const consultedNodes = new Set<Node>();
 
 	if (prohibitsNaming(root) && !context.isReferenced) {
 		return "" as FlatString;
@@ -476,9 +478,13 @@ export function computeAccessibleName(
 			if (hasAbstractRole(current, "range")) {
 				consultedNodes.add(current);
 				if (current.hasAttribute("aria-valuetext")) {
+					// safe due to hasAttribute guard
+					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 					return current.getAttribute("aria-valuetext")!;
 				}
 				if (current.hasAttribute("aria-valuenow")) {
+					// safe due to hasAttribute guard
+					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 					return current.getAttribute("aria-valuenow")!;
 				}
 				// Otherwise, use the value as specified by a host language attribute.

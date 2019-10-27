@@ -19,6 +19,9 @@ steps:
       git diff --exit-code
     displayName: "Check format"
 
+  - script: yarn lint
+    displayName: "Lint code"
+
   - script: |
       yarn build
     displayName: "Build"
