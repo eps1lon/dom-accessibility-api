@@ -123,12 +123,14 @@ function queryChildNodes(node: Node): Node[] {
 }
 
 /**
- *
  * @param {Node} node -
- * @returns {boolean} -
+ * @returns {boolean} - As defined in step 2E of https://w3c.github.io/accname/#mapping_additional_nd_te
  */
-function isEmbeddedControl(node: Node): boolean {
-	return false;
+function isControl(node: Node): boolean {
+	return (
+		hasAnyConcreteRoles(node, ["button", "combobox", "listbox", "textbox"]) ||
+		hasAbstractRole(node, "range")
+	);
 }
 
 function hasAbstractRole(node: Node, role: string): node is Element {
@@ -421,9 +423,9 @@ export function computeAccessibleName(
 		}
 
 		// 2C
-		if (context.recursion && isEmbeddedControl(current)) {
-			// skip to 2E
-		} else {
+		const skipToStep2E =
+			context.recursion && context.isEmbeddedInLabel && isControl(current);
+		if (!skipToStep2E) {
 			const ariaLabel = (
 				(isElement(current) && current.getAttribute("aria-label")) ||
 				""
@@ -451,7 +453,7 @@ export function computeAccessibleName(
 		}
 
 		// 2E
-		if (context.isEmbeddedInLabel) {
+		if (skipToStep2E || context.isEmbeddedInLabel) {
 			if (hasAnyConcreteRoles(current, ["combobox", "listbox"])) {
 				consultedNodes.add(current);
 				const selectedOptions = querySelectedOptions(current);

@@ -126,7 +126,7 @@ describe("to upstream", () => {
 	);
 
 	test.each([
-		[
+		/* [
 			// TODO
 			// weird edge case that results in an empty accessible name
 			// Intuitevly the fist input has "foo baz" while the second one has "foo David"
@@ -170,6 +170,19 @@ describe("to upstream", () => {
 <button data-test id="trigger" aria-labelledby="trigger role">Pick</button>
 `,
 			"Pick contributor"
+		] */
+		// It seems like this is what wpt `name_heading-combobox-focusable-alternative`
+		// should actually test. I could not find specification for combobox falling
+		// back to the "value" attribute when computing the text alternative for the selected option
+		[
+			"embedded textbox",
+			`
+<h2 data-test>
+	Country of origin:
+	<input type="text" title="Choose your country." value="United States">
+</h2>
+`,
+			"Country of origin: United States"
 		]
 	])(`coverage for %s`, (_, markup, expectedAccessibleName) => {
 		return testMarkup(markup, expectedAccessibleName);
