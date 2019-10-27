@@ -1,0 +1,16 @@
+{
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"plugins": ["@typescript-eslint"],
+	"rules": {
+		// required for window.Element
+		"@typescript-eslint/ban-ts-ignore": "off",
+		// I find this rule not very helpful since it prevents me from ordering
+		// functions in a file by importance e.g. default export at the top
+		"@typescript-eslint/no-use-before-define": "off"
+	}
+}
