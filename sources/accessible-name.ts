@@ -421,34 +421,37 @@ export function computeAccessibleName(
 		}
 
 		// 2C
-		const ariaLabel = (
-			(isElement(current) && current.getAttribute("aria-label")) ||
-			""
-		).trim();
-		if (ariaLabel !== "") {
-			consultedNodes.add(current);
-			if (context.recursion && isEmbeddedControl(current)) {
-				throw new Error("Not implemented");
+		if (context.recursion && isEmbeddedControl(current)) {
+			// skip to 2E
+		} else {
+			const ariaLabel = (
+				(isElement(current) && current.getAttribute("aria-label")) ||
+				""
+			).trim();
+			if (ariaLabel !== "") {
+				consultedNodes.add(current);
+				return ariaLabel;
 			}
-			return ariaLabel;
-		}
 
-		// 2D
-		if (!hasAnyConcreteRoles(current, ["none", "presentation"])) {
-			const elementTextAlternative = computeElementTextAlternative(current);
-			if (elementTextAlternative !== null) {
-				consultedNodes.add(current);
-				return elementTextAlternative;
-			}
-			const attributeTextAlternative = computeAttributeTextAlternative(current);
-			if (attributeTextAlternative !== null) {
-				consultedNodes.add(current);
-				return attributeTextAlternative;
+			// 2D
+			if (!hasAnyConcreteRoles(current, ["none", "presentation"])) {
+				const elementTextAlternative = computeElementTextAlternative(current);
+				if (elementTextAlternative !== null) {
+					consultedNodes.add(current);
+					return elementTextAlternative;
+				}
+				const attributeTextAlternative = computeAttributeTextAlternative(
+					current
+				);
+				if (attributeTextAlternative !== null) {
+					consultedNodes.add(current);
+					return attributeTextAlternative;
+				}
 			}
 		}
 
 		// 2E
-		if (context.isReferenced || context.isEmbeddedInLabel) {
+		if (context.isEmbeddedInLabel) {
 			if (hasAnyConcreteRoles(current, ["combobox", "listbox"])) {
 				consultedNodes.add(current);
 				const selectedOptions = querySelectedOptions(current);
