@@ -428,6 +428,8 @@ export function computeAccessibleName(
 		}
 
 		// 2C
+		// Changed from the spec in anticipation of https://github.com/w3c/accname/issues/64
+		// spec says we should only consider skipping if we have a non-empty label
 		const skipToStep2E = context.recursion && isControl(current);
 		if (!skipToStep2E) {
 			const ariaLabel = (
