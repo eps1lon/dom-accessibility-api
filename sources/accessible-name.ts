@@ -451,7 +451,7 @@ export function computeAccessibleName(root: Element): string {
 			}
 
 			// 2D
-			if (!hasAnyConcreteRoles(current, ["none", "presentation"])) {
+			if (!isMarkedPresentational(current)) {
 				const elementTextAlternative = computeElementTextAlternative(current);
 				if (elementTextAlternative !== null) {
 					consultedNodes.add(current);
