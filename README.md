@@ -15,16 +15,13 @@ $ yarn add dom-accessibility-api
 import { computeAccessibleName } from "dom-accessibility-api";
 ```
 
-I wrote this down in 12 hours to get a quick overview
-how complex a full implementation would be.
-
-I'm very new to working with specs so if you got any insights, something catches
-your eye feel free to let me know. DMs are open.
+I'm not an editor of any of the referenced specs (nor very experience with using them) so if you got any insights, something catches
+your eye please open an issue.
 
 ## progress
 
 Using https://github.com/web-platform-tests/wpt. Be sure to init submodules when
-cloning. See tests/README.md for more info about the test setup.
+cloning. See [the test readme](/tests/README.md) for more info about the test setup.
 
 ### browser (Chrome)
 
