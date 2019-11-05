@@ -1,6 +1,6 @@
 {
 	"name": "dom-accessibility-api",
-	"version": "0.0.1",
+	"version": "0.0.0-development",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"license": "MIT",
@@ -26,6 +26,11 @@
 		"@babel/core": "^7.6.2",
 		"@babel/preset-env": "^7.6.2",
 		"@babel/preset-typescript": "^7.6.0",
+		"@semantic-release/changelog": "^3.0.5",
+		"@semantic-release/commit-analyzer": "^6.3.2",
+		"@semantic-release/git": "^7.0.18",
+		"@semantic-release/npm": "^5.3.4",
+		"@semantic-release/release-notes-generator": "^7.3.2",
 		"@testing-library/dom": "^6.6.0",
 		"@types/jest": "^24.0.18",
 		"@typescript-eslint/eslint-plugin": "^2.5.0",
@@ -45,6 +50,7 @@
 		"q": "^1.5.1",
 		"request": "^2.34",
 		"request-promise-native": "^1.0.7",
+		"semantic-release": "^15.13.30",
 		"serve": "^11.2.0",
 		"typescript": "^3.6.3"
 	},
@@ -53,5 +59,9 @@
 	},
 	"dependencies": {
 		"@typescript-eslint/parser": "^2.5.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/eps1lon/dom-accessibility-api.git"
 	}
 }
