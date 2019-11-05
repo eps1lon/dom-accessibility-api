@@ -21,10 +21,22 @@ function asFlatString(s: string): FlatString {
 }
 
 /**
- * TODO
+ * https://w3c.github.io/aria/#namefromprohibited
  */
 function prohibitsNaming(node: Node): boolean {
-	return false;
+	return hasAnyConcreteRoles(node, [
+		"caption",
+		"code",
+		"deletion",
+		"emphasis",
+		"generic",
+		"insertion",
+		"paragraph",
+		"presentation",
+		"strong",
+		"subscript",
+		"superscript"
+	]);
 }
 
 function isElement(node: Node | null): node is Element {

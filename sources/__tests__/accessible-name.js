@@ -274,3 +274,87 @@ test.each([
 	// byTitle('Hello, Dave!') => byRole('textbox', {name: 'Hello, Dave!'})
 	[`<input data-test title="Hello, Dave!" />`, "Hello, Dave!"]
 ])(`test #%#`, testMarkup);
+
+describe("prohibited naming", () => {
+	test.each([
+		["caption", "<div data-test role='caption'>table</div>"],
+		["code", '<div data-test role="code">named?</div>'],
+		["deletion", '<div data-test role="deletion">named?</div>'],
+		["emphasis", '<div data-test role="emphasis">named?</div>'],
+		["generic", '<div data-test role="generic">named?</div>'],
+		["insertion", '<div data-test role="insertion">named?</div>'],
+		["paragraph", '<div data-test role="paragraph">named?</div>'],
+		["presentation", '<div data-test role="presentation">named?</div>'],
+		["strong", '<div data-test role="strong">named?</div>'],
+		["subscript", '<div data-test role="subscript">named?</div>'],
+		["superscript", "<div data-test role='supscript'>Hello</div>"]
+	])("role '%s' prohibites naming", (_, markup) => {
+		testMarkup(markup, "");
+	});
+
+	test.each([
+		[
+			"caption",
+			`
+<table data-test aria-labelledby='caption'></table>
+<div id='caption' role='caption'>a table</div>
+`,
+			"a table"
+		],
+		[
+			"code",
+			"<button data-test><span role='code'>html-aam</span></button>",
+			"html-aam"
+		],
+		[
+			"deletion",
+			"<button data-test>aria <span role='deletion'>1.1</span><span>1.2</span></button>",
+			"aria 1.1 1.2"
+		],
+		[
+			"emphasis",
+			"<button data-test>aria <span role='emphasis'>1.2</span></button>",
+			"aria 1.2"
+		],
+		[
+			"generic",
+			"<button data-test><span role='generic'>click</span></button>",
+			"click"
+		],
+		[
+			"insertion",
+			"<button data-test><span role='insertion'>wai</span>aria</button>",
+			"wai aria"
+		],
+		[
+			"paragraph",
+			"<button data-test><span role='paragraph'>I'm getting lazy</span></button>",
+			"I'm getting lazy"
+		],
+		[
+			"presentation",
+			"<button data-test><span role='presentation'>icon</span></button>",
+			"icon"
+		],
+		[
+			"strong",
+			"<button data-test><span role='strong'>CLICK!</span></button>",
+			"CLICK!"
+		],
+		[
+			"subscript",
+			"<button data-test>A<span role='subscript'>_x</span></button>",
+			"A _x"
+		],
+		[
+			"superscript",
+			"<button data-test>2<span role='superscript'>64</span></button>",
+			"2 64"
+		]
+	])(
+		"role '%s'can be part of the accessible name of another element",
+		(_, markup, name) => {
+			testMarkup(markup, name);
+		}
+	);
+});
