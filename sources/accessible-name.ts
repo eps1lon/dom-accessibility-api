@@ -276,13 +276,10 @@ function getTextualContent(declaration: CSSStyleDeclaration): string {
  * @param root
  * @param context
  */
-export function computeAccessibleName(
-	root: Element,
-	context: { isReferenced?: boolean } = {}
-): string {
+export function computeAccessibleName(root: Element): string {
 	const consultedNodes = new Set<Node>();
 
-	if (prohibitsNaming(root) && !context.isReferenced) {
+	if (prohibitsNaming(root)) {
 		return "" as FlatString;
 	}
 
