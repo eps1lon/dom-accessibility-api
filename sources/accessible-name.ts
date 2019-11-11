@@ -3,6 +3,13 @@
  */
 
 import getRole from "./getRole";
+import {
+	isElement,
+	isHTMLInputElement,
+	isHTMLSelectElement,
+	isHTMLTextAreaElement,
+	safeWindow
+} from "./util";
 
 /**
  *  A string of characters where all carriage returns, newlines, tabs, and form-feeds are replaced with a single space, and multiple spaces are reduced to a single space. The string contains only character data; it does not contain any markup.
@@ -37,47 +44,6 @@ function prohibitsNaming(node: Node): boolean {
 		"subscript",
 		"superscript"
 	]);
-}
-
-function isElement(node: Node | null): node is Element {
-	return (
-		// @ts-ignore
-		node !== null && node instanceof node.ownerDocument.defaultView.Element
-	);
-}
-
-function isHTMLInputElement(node: Node | null): node is HTMLInputElement {
-	return (
-		isElement(node) &&
-		// @ts-ignore
-		node instanceof node.ownerDocument.defaultView.HTMLInputElement
-	);
-}
-
-function isHTMLSelectElement(node: Node | null): node is HTMLSelectElement {
-	return (
-		isElement(node) &&
-		// @ts-ignore
-		node instanceof node.ownerDocument.defaultView.HTMLSelectElement
-	);
-}
-
-function isHTMLTextAreaElement(node: Node | null): node is HTMLTextAreaElement {
-	return (
-		isElement(node) &&
-		// @ts-ignore
-		node instanceof node.ownerDocument.defaultView.HTMLTextAreaElement
-	);
-}
-
-function safeWindow(node: Node): Window {
-	const { defaultView } =
-		node.ownerDocument === null ? (node as Document) : node.ownerDocument;
-
-	if (defaultView === null) {
-		throw new TypeError("no window available");
-	}
-	return defaultView;
 }
 
 /**
