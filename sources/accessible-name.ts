@@ -374,6 +374,7 @@ export function computeAccessibleName(root: Element): string {
 		}
 
 		// special casing, cheating to make tests pass
+		// https://github.com/w3c/accname/issues/67
 		if (hasAnyConcreteRoles(current, ["menu"])) {
 			consultedNodes.add(current);
 			return "";
@@ -473,7 +474,7 @@ export function computeAccessibleName(root: Element): string {
 			}
 		}
 
-		// 2F
+		// 2F: https://w3c.github.io/accname/#step2F
 		if (
 			allowsNameFromContent(current) ||
 			(isElement(current) && context.isReferenced) ||
