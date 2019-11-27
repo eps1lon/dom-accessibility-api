@@ -32,7 +32,7 @@
 		"@testing-library/dom": "^6.10.1",
 		"@types/jest": "^24.0.23",
 		"@typescript-eslint/parser": "^2.9.0",
-		"@typescript-eslint/eslint-plugin": "^2.5.0",
+		"@typescript-eslint/eslint-plugin": "^2.9.0",
 		"concurrently": "^5.0.0",
 		"cypress": "^3.6.1",
 		"eslint": "^6.6.0",
