@@ -358,3 +358,40 @@ describe("prohibited naming", () => {
 		}
 	);
 });
+
+describe("options.getComputedStyle", () => {
+	beforeEach(() => {
+		jest.spyOn(window, "getComputedStyle");
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
+
+	it("uses window.getComputedStyle by default", () => {
+		const container = renderIntoDocument("<button>test</button>");
+
+		computeAccessibleName(container.querySelector("button"));
+
+		// also mixing in a regression test for the number of calls
+		expect(window.getComputedStyle).toHaveBeenCalledTimes(4);
+	});
+
+	it("can be mocked with a fake", () => {
+		const container = renderIntoDocument("<button>test</button>");
+
+		const name = computeAccessibleName(container.querySelector("button"), {
+			getComputedStyle: () => {
+				const declaration = new CSSStyleDeclaration();
+				declaration.content = "'foo'";
+				declaration.display = "block";
+				declaration.visibility = "visible";
+
+				return declaration;
+			}
+		});
+
+		expect(name).toEqual("foo test foo");
+		expect(window.getComputedStyle).not.toHaveBeenCalled();
+	});
+});
