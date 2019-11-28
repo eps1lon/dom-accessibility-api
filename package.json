@@ -63,5 +63,8 @@
 		"accessibility",
 		"ARIA",
 		"accname"
-	]
+	],
+	"publishConfig": {
+		"access": "public"
+	}
 }
