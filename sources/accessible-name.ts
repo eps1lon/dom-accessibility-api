@@ -19,6 +19,33 @@ type FlatString = string & {
 };
 
 /**
+ * interface for an options-bag where `window.getComputedStyle` can be mocked
+ */
+interface GetComputedStyleOptions {
+	getComputedStyle?: typeof window.getComputedStyle;
+}
+/**
+ * Small utility that handles all the JS quirks with `this` which is important
+ * if no mock is provided.
+ * @param element
+ * @param options - These are not optional to prevent accidentally calling it without options in `computeAccessibleName`
+ */
+function createGetComputedStyle(
+	element: Element,
+	options: GetComputedStyleOptions
+): typeof window.getComputedStyle {
+	const window = safeWindow(element);
+	const {
+		// This might be overengineered. I don't know what happens if I call
+		// window.getComputedStyle(elementFromAnotherWindow) or if I don't bind it
+		// the type declarations don't require a `this`
+		getComputedStyle = window.getComputedStyle.bind(window)
+	} = options;
+
+	return getComputedStyle;
+}
+
+/**
  *
  * @param {string} string -
  * @returns {FlatString} -
@@ -48,10 +75,14 @@ function prohibitsNaming(node: Node): boolean {
 
 /**
  *
- * @param {Node} node -
+ * @param node -
+ * @param options - These are not optional to prevent accidentally calling it without options in `computeAccessibleName`
  * @returns {boolean} -
  */
-function isHidden(node: Node): node is Element {
+function isHidden(
+	node: Node,
+	options: GetComputedStyleOptions
+): node is Element {
 	if (!isElement(node)) {
 		return false;
 	}
@@ -63,7 +94,7 @@ function isHidden(node: Node): node is Element {
 		return true;
 	}
 
-	const style = safeWindow(node).getComputedStyle(node);
+	const style = createGetComputedStyle(node, options)(node);
 	return (
 		style.getPropertyValue("display") === "none" ||
 		style.getPropertyValue("visibility") === "hidden"
@@ -252,9 +283,13 @@ function getTextualContent(declaration: CSSStyleDeclaration): string {
 /**
  * implements https://w3c.github.io/accname/#mapping_additional_nd_te
  * @param root
- * @param context
+ * @param [options]
+ * @parma [options.getComputedStyle] - mock window.getComputedStyle. Needs `content`, `display` and `visibility`
  */
-export function computeAccessibleName(root: Element): string {
+export function computeAccessibleName(
+	root: Element,
+	options: GetComputedStyleOptions = {}
+): string {
 	const consultedNodes = new Set<Node>();
 
 	if (prohibitsNaming(root)) {
@@ -268,7 +303,10 @@ export function computeAccessibleName(root: Element): string {
 	): string {
 		let accumulatedText = "";
 		if (isElement(node)) {
-			const pseudoBefore = safeWindow(node).getComputedStyle(node, "::before");
+			const pseudoBefore = createGetComputedStyle(node, options)(
+				node,
+				"::before"
+			);
 			const beforeContent = getTextualContent(pseudoBefore);
 			accumulatedText = `${beforeContent} ${accumulatedText}`;
 		}
@@ -282,15 +320,13 @@ export function computeAccessibleName(root: Element): string {
 			// TODO: Unclear why display affects delimiter
 			const display =
 				isElement(node) &&
-				safeWindow(node)
-					.getComputedStyle(node)
-					.getPropertyValue("display");
+				createGetComputedStyle(node, options)(node).getPropertyValue("display");
 			const separator = display !== "inline" ? " " : "";
 			accumulatedText += `${separator}${result}`;
 		}
 
 		if (isElement(node)) {
-			const pseudoAfter = safeWindow(node).getComputedStyle(node, ":after");
+			const pseudoAfter = createGetComputedStyle(node, options)(node, ":after");
 			const afterContent = getTextualContent(pseudoAfter);
 			accumulatedText = `${accumulatedText} ${afterContent}`;
 		}
@@ -381,7 +417,7 @@ export function computeAccessibleName(root: Element): string {
 		}
 
 		// 2A
-		if (isHidden(current) && !context.isReferenced) {
+		if (isHidden(current, options) && !context.isReferenced) {
 			consultedNodes.add(current);
 			return "" as FlatString;
 		}
