@@ -30,7 +30,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.7.5",
-		"@babel/preset-env": "^7.7.6",
+		"@babel/preset-env": "^7.7.7",
 		"@babel/preset-typescript": "^7.7.4",
 		"@changesets/cli": "^2.4.1",
 		"@testing-library/dom": "^6.11.0",
