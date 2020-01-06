@@ -53,7 +53,7 @@
 		"q": "^1.5.1",
 		"request": "^2.34",
 		"request-promise-native": "^1.0.8",
-		"serve": "^11.2.0",
+		"serve": "^11.3.0",
 		"typescript": "^3.7.4"
 	},
 	"prettier": {
