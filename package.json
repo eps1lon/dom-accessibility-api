@@ -38,7 +38,7 @@
 		"@typescript-eslint/parser": "^2.14.0",
 		"@typescript-eslint/eslint-plugin": "^2.14.0",
 		"concurrently": "^5.0.2",
-		"cypress": "^3.8.1",
+		"cypress": "^3.8.2",
 		"eslint": "^6.8.0",
 		"jest": "^24.9.0",
 		"jest-diff": "^24.9.0",
