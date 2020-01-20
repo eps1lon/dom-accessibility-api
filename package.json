@@ -29,9 +29,9 @@
 		"wpt:update": "git submodule update --recursive --remote && cd tests/wpt && python wpt.py manifest --path ../wpt-jsdom/wpt-manifest.json"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.7.5",
-		"@babel/preset-env": "^7.7.6",
-		"@babel/preset-typescript": "^7.7.4",
+		"@babel/core": "^7.8.3",
+		"@babel/preset-env": "^7.8.3",
+		"@babel/preset-typescript": "^7.8.3",
 		"@changesets/cli": "^2.4.1",
 		"@testing-library/dom": "^6.11.0",
 		"@types/jest": "^24.9.0",
