@@ -11,6 +11,16 @@
 		"@typescript-eslint/ban-ts-ignore": "off",
 		// I find this rule not very helpful since it prevents me from ordering
 		// functions in a file by importance e.g. default export at the top
-		"@typescript-eslint/no-use-before-define": "off"
+		"@typescript-eslint/no-use-before-define": "off",
+		"no-restricted-properties": [
+			2,
+			{
+				"object": "window",
+				// we restrict usage since it is quite costly in jsdom
+				// we only access it from a point where the library user can inject their
+				// own implementation. See https://github.com/eps1lon/dom-accessibility-api/blob/eb868428a31a093aecc531bf2dd17e8547bd0c3b/sources/accessible-name.ts#L33
+				"property": "getComputedStyle"
+			}
+		]
 	}
 }
