@@ -32,7 +32,7 @@
 		"@babel/core": "^7.8.3",
 		"@babel/preset-env": "^7.8.3",
 		"@babel/preset-typescript": "^7.8.3",
-		"@changesets/cli": "^2.4.1",
+		"@changesets/cli": "^2.5.0",
 		"@testing-library/dom": "^6.11.0",
 		"@types/jest": "^24.9.1",
 		"@typescript-eslint/parser": "^2.16.0",
