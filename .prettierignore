@@ -3,3 +3,4 @@
 /tests/wpt
 /tests/wpt-jsdom/wpt-manifest.json
 /CHANGELOG.md
+/.yarn
