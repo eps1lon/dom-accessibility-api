@@ -212,7 +212,7 @@ function isMarkedPresentational(node: Node): node is Element {
 }
 
 /**
- * TODO
+ * TODO https://github.com/eps1lon/dom-accessibility-api/issues/99
  */
 function isNativeHostLanguageTextAlternativeElement(
 	node: Node
@@ -249,7 +249,7 @@ function allowsNameFromContent(node: Node): boolean {
 }
 
 /**
- * TODO
+ * TODO https://github.com/eps1lon/dom-accessibility-api/issues/100
  */
 function isDescendantOfNativeHostLanguageTextAlternativeElement(
 	node: Node
@@ -258,7 +258,7 @@ function isDescendantOfNativeHostLanguageTextAlternativeElement(
 }
 
 /**
- * TODO
+ * TODO https://github.com/eps1lon/dom-accessibility-api/issues/101
  */
 function computeTooltipAttributeValue(node: Node): string | null {
 	return null;
@@ -334,9 +334,6 @@ export function computeAccessibleName(
 		return accumulatedText;
 	}
 
-	/**
-	 * TODO: placeholder
-	 */
 	function computeAttributeTextAlternative(node: Node): string | null {
 		if (!isElement(node)) {
 			return null;
