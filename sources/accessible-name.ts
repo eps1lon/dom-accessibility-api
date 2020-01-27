@@ -39,6 +39,7 @@ function createGetComputedStyle(
 		// This might be overengineered. I don't know what happens if I call
 		// window.getComputedStyle(elementFromAnotherWindow) or if I don't bind it
 		// the type declarations don't require a `this`
+		// eslint-disable-next-line no-restricted-properties
 		getComputedStyle = window.getComputedStyle.bind(window)
 	} = options;
 
