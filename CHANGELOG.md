@@ -1,4 +1,8 @@
-# [0.1.0](https://github.com/eps1lon/dom-accessibility-api/compare/v0.0.1...v0.1.0) (2019-11-05)
+## 0.3.0
+
+### Minor Changes
+
+- 7f1ada0: Internal polish
 
 ## 0.2.0
 
