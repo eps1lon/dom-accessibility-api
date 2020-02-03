@@ -775,14 +775,14 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@changesets/apply-release-plan@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@changesets/apply-release-plan/-/apply-release-plan-0.4.0.tgz#dc29d3cd7efc07c298fcde5a516b272427f85a52"
-  integrity sha512-oG20kAjUDRNFXIzJ6jpXgikVAr6tAsQoAK2P6c0XOHetOc0CwOG3sdb4+9CIvp/do0yKlP02+FDwaqxBE0MX/A==
+"@changesets/apply-release-plan@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@changesets/apply-release-plan/-/apply-release-plan-0.4.1.tgz#3e284772fa3f72a9f623ba320017f8c0e20c239b"
+  integrity sha512-zgCG/Iq969nRii4QXfofPLIN3Errom0kFtsR9aJAiJi/xlXKqusmVAky7VqQpo+S54cuVuOAnFJoNNGTUhlJ4Q==
   dependencies:
     "@babel/runtime" "^7.4.4"
     "@changesets/config" "^0.3.0"
-    "@changesets/get-version-range-type" "^0.1.1"
+    "@changesets/get-version-range-type" "^0.2.0"
     "@changesets/git" "^0.4.0"
     "@changesets/types" "^0.4.0"
     fs-extra "^7.0.1"
@@ -793,24 +793,24 @@
     resolve-from "^5.0.0"
     semver "^5.4.1"
 
-"@changesets/assemble-release-plan@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@changesets/assemble-release-plan/-/assemble-release-plan-0.3.0.tgz#d234911a2581edcfea41818a8f7c61843544d40c"
-  integrity sha512-kHXxRrCXMBoG0uHom555/DuhShjd0sDckdN3ZKFLreXuxSOgzjGVYRymd4UIC9lbUd+5xQJRG1mRp7q50tUNgg==
+"@changesets/assemble-release-plan@^0.3.0", "@changesets/assemble-release-plan@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@changesets/assemble-release-plan/-/assemble-release-plan-0.3.1.tgz#e1694f5049e849a9a6190d2f518bc73288c98a23"
+  integrity sha512-qlfzf1akpptamc1DtBdX6KnG6XTMI5dnBd51psmqLGokZGv9R684d4JncRmNrD2w+THp1UQsA8sfgs9+T18OzQ==
   dependencies:
     "@babel/runtime" "^7.4.4"
     "@changesets/errors" "^0.1.2"
     "@changesets/types" "^0.4.0"
     semver "^5.4.1"
 
-"@changesets/cli@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@changesets/cli/-/cli-2.5.0.tgz#482fd1302119bbff8472bb12a6a78d91752ca093"
-  integrity sha512-1FODI0KZ0QAj5xfYtuP291m8DYQEEE8P5BeuGd/eUfRD8NnUiLFVFxKUsk98PmTaS9gDrIyvyUIbvLSr3kQHIg==
+"@changesets/cli@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@changesets/cli/-/cli-2.5.1.tgz#06e90296039879617cf9d1084ac7123ddfce7871"
+  integrity sha512-Q76japTcdBxH05ixnJtSiqW7ttW73gjWSorw3UtzAN6TNIm3Ts3p8VvbEkj5AQPpE4I6rAJWKUYX3VUJH4KGOw==
   dependencies:
     "@babel/runtime" "^7.4.4"
-    "@changesets/apply-release-plan" "^0.4.0"
-    "@changesets/assemble-release-plan" "^0.3.0"
+    "@changesets/apply-release-plan" "^0.4.1"
+    "@changesets/assemble-release-plan" "^0.3.1"
     "@changesets/config" "^0.3.0"
     "@changesets/errors" "^0.1.2"
     "@changesets/get-release-plan" "^0.4.0"
@@ -868,10 +868,10 @@
     get-dependents-graph "^0.2.0"
     get-workspaces "^0.6.0"
 
-"@changesets/get-version-range-type@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@changesets/get-version-range-type/-/get-version-range-type-0.1.1.tgz#1a0872073b9ea599c7076fcb2ca89a6e56c7564a"
-  integrity sha512-c61mf/okSm3LjAfU1ximmFxG+sJck82N5mlCy3BBKfM53aJTmaX4Kg6MVsAcg/qae2R60K1fnv5EGfmaSmjCeg==
+"@changesets/get-version-range-type@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@changesets/get-version-range-type/-/get-version-range-type-0.2.0.tgz#1b647e87c7d1f0fd3d75cc9957f7610f699a7deb"
+  integrity sha512-myE/FG1AqmvacjsvOt4UBzVl9KdKXGD6isCP14Q+GY94Ky1zp9n9YByuf6BiIq7/6gAM/2kC9kQvKG9I/AS9Yw==
 
 "@changesets/git@^0.4.0":
   version "0.4.0"
