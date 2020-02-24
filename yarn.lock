@@ -791,10 +791,10 @@
     "@changesets/types" "^0.4.0"
     semver "^5.4.1"
 
-"@changesets/cli@^2.5.1":
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/@changesets/cli/-/cli-2.5.1.tgz#06e90296039879617cf9d1084ac7123ddfce7871"
-  integrity sha512-Q76japTcdBxH05ixnJtSiqW7ttW73gjWSorw3UtzAN6TNIm3Ts3p8VvbEkj5AQPpE4I6rAJWKUYX3VUJH4KGOw==
+"@changesets/cli@^2.5.2":
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/@changesets/cli/-/cli-2.5.2.tgz#97009683ec0eae084c88e9e1c9f043fe73149d68"
+  integrity sha512-qdwvGqIrWbcU+mwGJB80MUJI0PRbt72o3uSVRZrepk18dkuVq73vGHk/++i/X6fvc1y3jPlLW5cMaZ2bGzKA6g==
   dependencies:
     "@babel/runtime" "^7.4.4"
     "@changesets/apply-release-plan" "^0.4.1"
