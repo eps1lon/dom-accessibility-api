@@ -54,7 +54,7 @@
 		"request": "^2.88",
 		"request-promise-native": "^1.0.8",
 		"serve": "^11.3.0",
-		"typescript": "^3.7.5"
+		"typescript": "^3.8.2"
 	},
 	"prettier": {
 		"useTabs": true
