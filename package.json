@@ -8,17 +8,25 @@
 		"type": "git",
 		"url": "https://github.com/eps1lon/dom-accessibility-api.git"
 	},
+	"dependencies": {
+		"core-js-pure": "^3.6.4"
+	},
 	"files": [
+		".browserslistrc",
 		"dist/"
 	],
 	"scripts": {
-		"build": "tsc -p tsconfig.json",
+		"build": "yarn build:clean && yarn build:source && yarn build:types",
+		"build:clean": "rimraf dist",
+		"build:source": "babel sources --extensions \".ts\" --ignore \"**/__tests__/**/*\" --out-dir dist/ --source-maps",
+		"build:types": "tsc -p tsconfig.json --emitDeclarationOnly",
 		"format": "prettier \"**/*.{json,js,md,ts,yml}\" --write --ignore-path .prettierignore",
 		"lint": "eslint --report-unused-disable-directives \"sources/**/*.ts\"",
 		"release:prepare": "yarn changeset version",
 		"release": "yarn changeset publish",
 		"test": "jest",
 		"test:ci": "jest --ci --config jest.ci.config.js --runInBand",
+		"test:types": "tsc -p tsconfig.json --noEmit",
 		"test:wpt:jsdom": "mocha tests/wpt-jsdom/run-wpts.js",
 		"test:wpt:browser": "concurrently --success first --kill-others \"yarn test:wpt:browser:run\" \"yarn test:wpt:browser:server\"",
 		"test:wpt:browser:run": "cypress run --project tests",
@@ -29,14 +37,15 @@
 		"wpt:update": "git submodule update --recursive --remote && cd tests/wpt && python wpt.py manifest --path ../wpt-jsdom/wpt-manifest.json"
 	},
 	"devDependencies": {
+		"@babel/cli": "^7.8.4",
 		"@babel/core": "^7.8.4",
 		"@babel/preset-env": "^7.8.4",
 		"@babel/preset-typescript": "^7.8.3",
 		"@changesets/cli": "^2.5.2",
 		"@testing-library/dom": "^6.15.0",
 		"@types/jest": "^25.1.4",
-		"@typescript-eslint/parser": "^2.22.0",
 		"@typescript-eslint/eslint-plugin": "^2.22.0",
+		"@typescript-eslint/parser": "^2.22.0",
 		"concurrently": "^5.1.0",
 		"cypress": "^4.1.0",
 		"eslint": "^6.8.0",
@@ -53,6 +62,7 @@
 		"q": "^1.5.1",
 		"request": "^2.88",
 		"request-promise-native": "^1.0.8",
+		"rimraf": "^3.0.2",
 		"serve": "^11.3.0",
 		"typescript": "^3.8.3"
 	},

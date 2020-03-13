@@ -1,7 +1,8 @@
 /**
  * implements https://w3c.github.io/accname/
  */
-
+import ArrayFrom from "core-js-pure/features/array/from";
+import Set from "core-js-pure/stable/set";
 import getRole from "./getRole";
 import {
 	isElement,
@@ -135,7 +136,7 @@ function idRefs(node: Node, attributeName: string): Element[] {
  * @param node
  */
 function queryChildNodes(node: Node): Node[] {
-	return Array.from(node.childNodes).concat(idRefs(node, "aria-owns"));
+	return ArrayFrom(node.childNodes).concat(idRefs(node, "aria-owns"));
 }
 
 /**
@@ -192,7 +193,7 @@ function querySelectorAllSubtree(
 	const elements = [];
 
 	for (const root of [element, ...idRefs(element, "aria-owns")]) {
-		elements.push(...Array.from(root.querySelectorAll(selectors)));
+		elements.push(...ArrayFrom(root.querySelectorAll(selectors)));
 	}
 
 	return elements;
@@ -381,7 +382,7 @@ export function computeAccessibleName(
 		}
 
 		consultedNodes.add(input);
-		return Array.from(labels)
+		return ArrayFrom(labels)
 			.map(element => {
 				return computeTextAlternative(element, {
 					isEmbeddedInLabel: true,
@@ -477,7 +478,7 @@ export function computeAccessibleName(
 					// defined per test `name_heading_combobox`
 					return isHTMLInputElement(current) ? current.value : "";
 				}
-				return Array.from(selectedOptions)
+				return ArrayFrom(selectedOptions)
 					.map(selectedOption => {
 						return computeTextAlternative(selectedOption, {
 							isEmbeddedInLabel: context.isEmbeddedInLabel,

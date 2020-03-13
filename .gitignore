@@ -5,3 +5,4 @@ tests/cypress/videos
 # jest results
 /junit.xml
 /coverage
+/yarn-error.log
