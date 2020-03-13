@@ -22,6 +22,9 @@ steps:
   - script: yarn lint
     displayName: "Lint code"
 
+  - script: yarn test:types
+    displayName: "Test types"
+
   - script: |
       yarn build
     displayName: "Build"

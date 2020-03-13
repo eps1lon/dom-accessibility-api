@@ -18,6 +18,19 @@ import { computeAccessibleName } from "dom-accessibility-api";
 I'm not an editor of any of the referenced specs (nor very experience with using them) so if you got any insights, something catches
 your eye please open an issue.
 
+## Supported environments
+
+```bash
+ie 11
+edge >= 14
+firefox >= 52
+chrome >= 49
+safari >= 10
+node 10.0
+```
+
+or check the published `.browserslistrc`
+
 ## progress
 
 Using https://github.com/web-platform-tests/wpt. Be sure to init submodules when
