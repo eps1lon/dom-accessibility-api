@@ -272,7 +272,15 @@ test.each([
 	// this would require a custom matcher
 	[`<button data-test>Click <em>me</em></option>`, "Click me"],
 	// byTitle('Hello, Dave!') => byRole('textbox', {name: 'Hello, Dave!'})
-	[`<input data-test title="Hello, Dave!" />`, "Hello, Dave!"]
+	[`<input data-test title="Hello, Dave!" />`, "Hello, Dave!"],
+	[
+		`<label for="select">A Select</label><select data-test id="select" />`,
+		"A Select"
+	],
+	[
+		`<label for="textarea">A TextArea</label><textarea data-test id="textarea" />`,
+		"A TextArea"
+	]
 ])(`test #%#`, testMarkup);
 
 describe("prohibited naming", () => {
