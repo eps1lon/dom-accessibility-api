@@ -22,6 +22,7 @@
 		"build:types": "tsc -p tsconfig.json --emitDeclarationOnly",
 		"format": "prettier \"**/*.{json,js,md,ts,yml}\" --write --ignore-path .prettierignore",
 		"lint": "eslint --report-unused-disable-directives \"sources/**/*.ts\"",
+		"prepublishOnly": "yarn build:source",
 		"release:prepare": "yarn changeset version",
 		"release": "yarn changeset publish",
 		"test": "jest",
