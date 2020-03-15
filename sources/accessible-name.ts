@@ -362,7 +362,13 @@ export function computeAccessibleName(
 	}
 
 	function computeElementTextAlternative(node: Node): string | null {
-		if (!isHTMLInputElement(node)) {
+		if (
+			!(
+				isHTMLInputElement(node) ||
+				isHTMLSelectElement(node) ||
+				isHTMLTextAreaElement(node)
+			)
+		) {
 			return null;
 		}
 		const input = node;
