@@ -1,6 +1,6 @@
 {
 	"name": "dom-accessibility-api",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"license": "MIT",
@@ -41,6 +41,7 @@
 		"@babel/core": "^7.8.7",
 		"@babel/preset-env": "^7.8.7",
 		"@babel/preset-typescript": "^7.8.3",
+		"@changesets/changelog-github": "^0.2.2",
 		"@changesets/cli": "^2.5.2",
 		"@testing-library/dom": "^6.15.0",
 		"@types/jest": "^25.1.4",
