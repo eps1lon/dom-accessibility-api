@@ -1,3 +1,13 @@
+## 0.4.0
+
+### Minor Changes
+
+- [`e80a1fb`](https://github.com/eps1lon/dom-accessibility-api/commit/e80a1fb32c136539a46007a64ef8c998855080a1) [#141](https://github.com/eps1lon/dom-accessibility-api/pull/141) Thanks [@eps1lon](https://github.com/eps1lon)! - Support ES5 environments
+
+### Patch Changes
+
+- [`bd41c2d`](https://github.com/eps1lon/dom-accessibility-api/commit/bd41c2d3dec9c27e178b65bbe226d3c7adef0678) [#143](https://github.com/eps1lon/dom-accessibility-api/pull/143) Thanks [@eps1lon](https://github.com/eps1lon)! - fix: support `<label for>` for `<select>` and `<textarea>`
+
 ## 0.3.0
 
 ### Minor Changes
