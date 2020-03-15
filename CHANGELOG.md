@@ -1,3 +1,9 @@
+## 0.4.1
+
+### Patch Changes
+
+- [`63c119f`](https://github.com/eps1lon/dom-accessibility-api/commit/63c119f388d4e0f121320d75c4ec6fe334d8f370) [#147](https://github.com/eps1lon/dom-accessibility-api/pull/147) Thanks [@eps1lon](https://github.com/eps1lon)! - Deploy all 0.4.0 changes
+
 ## 0.4.0
 
 ### Minor Changes
