@@ -1,0 +1,5 @@
+{
+	"buildCommand": "build:source",
+	"sandboxes": ["new"],
+	"silent": true
+}
