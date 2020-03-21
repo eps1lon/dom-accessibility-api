@@ -6,3 +6,4 @@ tests/cypress/videos
 /junit.xml
 /coverage
 /yarn-error.log
+/dom-accessibility-api.tgz

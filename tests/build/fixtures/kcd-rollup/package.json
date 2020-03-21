@@ -1,0 +1,12 @@
+{
+	"name": "build-fixture-kcd-rollup",
+	"private": true,
+	"dependencies": {
+		"dom-accessibility-api": "file:../../../../dom-accessibility-api.tgz",
+		"kcd-scripts": "^5.5.0"
+	},
+	"scripts": {
+		"start": "yarn install --no-lockfile && yarn build",
+		"build": "kcd-scripts build --bundle --no-clean"
+	}
+}

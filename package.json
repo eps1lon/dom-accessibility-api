@@ -2,7 +2,11 @@
 	"name": "dom-accessibility-api",
 	"version": "0.4.1",
 	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
+	"type": "commonjs",
+	"exports": {
+		"import": "dist/index.mjs",
+		"require": "dist/index.js"
+	},
 	"license": "MIT",
 	"repository": {
 		"type": "git",
@@ -16,9 +20,10 @@
 		"dist/"
 	],
 	"scripts": {
-		"build": "yarn build:clean && yarn build:source && yarn build:types",
+		"build": "yarn build:clean && yarn build:source && yarn build:source:cjs && yarn build:types",
 		"build:clean": "rimraf dist",
-		"build:source": "babel sources --extensions \".ts\" --ignore \"**/__tests__/**/*\" --out-dir dist/ --source-maps",
+		"build:source": "babel sources --extensions \".ts\" --ignore \"**/__tests__/**/*\" --out-dir dist/ --out-file-extension=.mjs --source-maps",
+		"build:source:cjs": "cross-env BABEL_ENV=cjs babel sources --extensions \".ts\" --ignore \"**/__tests__/**/*\" --out-dir dist/ --out-file-extension=.js --source-maps",
 		"build:types": "tsc -p tsconfig.json --emitDeclarationOnly",
 		"format": "prettier \"**/*.{json,js,md,ts,yml}\" --write --ignore-path .prettierignore",
 		"lint": "eslint --report-unused-disable-directives \"sources/**/*.ts\"",
@@ -40,6 +45,7 @@
 	"devDependencies": {
 		"@babel/cli": "^7.8.4",
 		"@babel/core": "^7.8.7",
+		"@babel/plugin-transform-modules-commonjs": "^7.9.0",
 		"@babel/preset-env": "^7.8.7",
 		"@babel/preset-typescript": "^7.8.3",
 		"@changesets/changelog-github": "^0.2.2",
@@ -49,6 +55,7 @@
 		"@typescript-eslint/eslint-plugin": "^2.23.0",
 		"@typescript-eslint/parser": "^2.23.0",
 		"concurrently": "^5.1.0",
+		"cross-env": "^7.0.2",
 		"cypress": "^4.1.0",
 		"eslint": "^6.8.0",
 		"jest": "^25.1.0",
