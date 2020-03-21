@@ -1,0 +1,3 @@
+# kcd scripts output
+dist/
+yarn.lock
