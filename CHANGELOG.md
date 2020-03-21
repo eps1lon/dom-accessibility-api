@@ -2,7 +2,7 @@
 
 ### Minor Changes
 
-- [`0897630`](https://github.com/eps1lon/dom-accessibility-api/commit/0897630862d608a9ca22e9799bb30b37e1032afa) [#141](https://github.com/eps1lon/dom-accessibility-api/pull/155) - Publish version using ES6 modules allongside current CommonJS modules
+- [`0897630`](https://github.com/eps1lon/dom-accessibility-api/commit/0897630862d608a9ca22e9799bb30b37e1032afa) [#155](https://github.com/eps1lon/dom-accessibility-api/pull/155) - Publish version using ES6 modules allongside current CommonJS modules
 
 ## 0.4.1
 
