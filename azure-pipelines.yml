@@ -35,6 +35,15 @@ steps:
       yarn build
     displayName: "Build"
 
+  - script: |
+      npm pack
+      mv dom-accessibility-api-*.tgz dom-accessibility-api.tgz
+    displayName: "Prepare smoke tests of build"
+
+  - script: yarn start
+    displayName: "kcd-rollup smoke tests of build"
+    workingDirectory: tests/build/fixtures/kcd-rollup
+
   - script: yarn test:ci
     displayName: "Run jest tests"
 
