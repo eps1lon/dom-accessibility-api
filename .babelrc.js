@@ -13,8 +13,9 @@ module.exports = {
 			plugins: [
 				[
 					require.resolve("@babel/plugin-transform-modules-commonjs"),
-					// helps rollup identify exports
-					{ loose: true, strict: true }
+					// helps rollup identify exports but also means __esmodule is enumerated
+					// not aware of a use case for enumerating imports though
+					{ loose: true }
 				]
 			]
 		}
