@@ -3,12 +3,12 @@ const fs = require("fs");
 
 const EXPECTED_MANIFEST_VERSION = 6;
 
-exports.getPossibleTestFilePaths = manifest => {
+exports.getPossibleTestFilePaths = (manifest) => {
 	const manualTests = manifest.items.manual;
 
 	const allPaths = [];
 	for (const containerPath of Object.keys(manualTests)) {
-		const testFilePaths = manualTests[containerPath].map(value => value[[0]]);
+		const testFilePaths = manualTests[containerPath].map((value) => value[[0]]);
 		for (const testFilePath of testFilePaths) {
 			// Globally disable worker tests
 			if (testFilePath.startsWith("accname")) {
@@ -20,7 +20,7 @@ exports.getPossibleTestFilePaths = manifest => {
 	return allPaths;
 };
 
-exports.readManifest = filename => {
+exports.readManifest = (filename) => {
 	const manifestString = fs.readFileSync(filename, { encoding: "utf-8" });
 	const manifest = JSON.parse(manifestString);
 

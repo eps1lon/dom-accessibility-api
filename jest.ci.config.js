@@ -6,5 +6,5 @@ module.exports = {
 	collectCoverage: true,
 	coverageDirectory: path.resolve(__dirname, "./coverage"),
 	coverageReporters: ["cobertura", "lcov", "text"],
-	reporters: ["default", "jest-junit"]
+	reporters: ["default", "jest-junit"],
 };

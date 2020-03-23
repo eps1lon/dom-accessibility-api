@@ -9,7 +9,7 @@ expect.extend({
 			return {
 				message: () =>
 					`The element was not an Element but '${String(received)}'`,
-				pass: false
+				pass: false,
 			};
 		}
 
@@ -23,7 +23,7 @@ expect.extend({
 						expected,
 						actual
 					)}`,
-				pass: false
+				pass: false,
 			};
 		}
 
@@ -35,9 +35,9 @@ expect.extend({
 					expected,
 					actual
 				)}`,
-			pass: true
+			pass: true,
 		};
-	}
+	},
 });
 
 function testMarkup(markup, accessibleName) {
@@ -53,74 +53,74 @@ describe("to upstream", () => {
 		[
 			"cell",
 			`<div data-test role="cell"><em>greek</em> alpha</div>`,
-			"greek alpha"
+			"greek alpha",
 		],
 		[
 			"checkbox",
 			`<div data-test role="checkbox"><em>greek</em> beta</div>`,
-			"greek beta"
+			"greek beta",
 		],
 		[
 			"columnheader",
 			`<div data-test role="columnheader"><em>greek</em> gamma</div>`,
-			"greek gamma"
+			"greek gamma",
 		],
 		[
 			"gridcell",
 			`<div data-test role="gridcell"><em>greek</em> delta</div>`,
-			"greek delta"
+			"greek delta",
 		],
 		[
 			"legend",
 			`<fieldset><legend data-test><em>greek</em> zeta</legend></fieldset>`,
-			"greek zeta"
+			"greek zeta",
 		],
 		[
 			"menuitem",
 			`<li data-test role="menuitem"><em>greek</em> eta</li>`,
-			"greek eta"
+			"greek eta",
 		],
 		[
 			"menuitemradio",
 			`<li data-test role="menuitemradio"><em>greek</em> theta</li>`,
-			"greek theta"
+			"greek theta",
 		],
 		[
 			"menuitemcheckbox",
 			`<li data-test role="menuitemcheckbox"><em>greek</em> iota</li>`,
-			"greek iota"
+			"greek iota",
 		],
 		[
 			"radio",
 			`<div data-test role="radio"><em>greek</em> kappa</div>`,
-			"greek kappa"
+			"greek kappa",
 		],
 		[
 			"row",
 			`<table><tbody><tr data-test><td>greek</td><td>lambda</td></tr></tbody></table>`,
-			"greek lambda"
+			"greek lambda",
 		],
 		[
 			"rowheader",
 			`<table><tbody><tr data-test><td data-test role="rowheader"><em>greek</em> mu</td></tr></tbody></table>`,
-			"greek mu"
+			"greek mu",
 		],
 		[
 			"switch",
 			`<div data-test role="switch"><em>greek</em> nu</div>`,
-			"greek nu"
+			"greek nu",
 		],
 		["tab", `<div data-test role="tab"><em>greek</em> xi</div>`, "greek xi"],
 		[
 			"tooltip",
 			`<div data-test role="tooltip"><em>greek</em> omicron</div>`,
-			"greek omicron"
+			"greek omicron",
 		],
 		[
 			"treeitem",
 			`<li data-test role="treeitem"><em>greek</em> pi</li>`,
-			"greek pi"
-		]
+			"greek pi",
+		],
 	])(`role %s`, (_, markup, expectedAccessibleName) =>
 		testMarkup(markup, expectedAccessibleName)
 	);
@@ -139,7 +139,7 @@ describe("to upstream", () => {
 </label>
 
 `,
-			""
+			"",
 		],
 		[
 			"textarea value",
@@ -150,7 +150,7 @@ describe("to upstream", () => {
 </label>
 <input data-test id="test" type="text" value="baz">			
 `,
-			"foo David"
+			"foo David",
 		],
 		[
 			"textarea value",
@@ -161,7 +161,7 @@ describe("to upstream", () => {
 </label>
 <input data-test id="test" type="text" value="baz">			
 `,
-			"foo David"
+			"foo David",
 		],
 		[
 			"select value",
@@ -169,7 +169,7 @@ describe("to upstream", () => {
 <select id="role"><option selected>contributor</option></select>
 <button data-test id="trigger" aria-labelledby="trigger role">Pick</button>
 `,
-			"Pick contributor"
+			"Pick contributor",
 		],
 		// It seems like this is what wpt `name_heading-combobox-focusable-alternative`
 		// should actually test. I could not find specification for combobox falling
@@ -182,8 +182,8 @@ describe("to upstream", () => {
 	<input type="text" title="Choose your country." value="United States">
 </h2>
 `,
-			"Country of origin: United States"
-		]
+			"Country of origin: United States",
+		],
 	])(`coverage for %s`, (_, markup, expectedAccessibleName) => {
 		return testMarkup(markup, expectedAccessibleName);
 	});
@@ -195,7 +195,7 @@ test.each([
 <div data-test aria-labelledby="label">I reference my name</div>
 <div id="label" role="presentation">I'm prohibited a name</div>
 `,
-		"I'm prohibited a name"
+		"I'm prohibited a name",
 	],
 	[
 		`
@@ -203,7 +203,7 @@ test.each([
 <element2 id="el2" aria-labelledby="el1" />
 <element3 id="el3"> hello </element3>
 `,
-		"hello"
+		"hello",
 	],
 	[
 		`
@@ -220,7 +220,7 @@ test.each([
 	times.
 </label>
 `,
-		"Flash the screen 1 times."
+		"Flash the screen 1 times.",
 	],
 	[
 		`
@@ -231,7 +231,7 @@ test.each([
 	baz
 </label>
 `,
-		"foo 5 baz"
+		"foo 5 baz",
 	],
 	[
 		// :after getcomputed not implemented
@@ -242,27 +242,27 @@ test.each([
 <label for="test">fancy</label>
 <input type="image" src="foo.jpg" id="test" data-test />	
 `,
-		"fancy"
+		"fancy",
 	],
 	[
 		`
 <input data-test id="test" type="text" aria-label="bar" aria-labelledby="ID1 test">
 <div id="ID1">foo</label>
 	`,
-		"foo bar"
+		"foo bar",
 	],
 	[
 		`
 <label>This <input type="checkbox" id="test" data-test /> is</label>
 <label for="test">a test</label>
 		`,
-		"This is a test"
+		"This is a test",
 	], // byAltText('an image') = byRole('image', {name: 'an image'})
 	[`<img data-test alt="an image" />`, "an image"],
 	// this would require a custom matcher
 	[
 		`<div id="label"><em>the</em> logo</div><img data-test aria-labelledby="label" />`,
-		"the logo"
+		"the logo",
 	],
 	// byDisplayValue isn't solvable by accessibleName
 	[`<label>Age <input data-test type="text" value="10" /></label>`, "Age"],
@@ -275,12 +275,12 @@ test.each([
 	[`<input data-test title="Hello, Dave!" />`, "Hello, Dave!"],
 	[
 		`<label for="select">A Select</label><select data-test id="select" />`,
-		"A Select"
+		"A Select",
 	],
 	[
 		`<label for="textarea">A TextArea</label><textarea data-test id="textarea" />`,
-		"A TextArea"
-	]
+		"A TextArea",
+	],
 ])(`test #%#`, testMarkup);
 
 describe("prohibited naming", () => {
@@ -295,7 +295,7 @@ describe("prohibited naming", () => {
 		["presentation", '<div data-test role="presentation">named?</div>'],
 		["strong", '<div data-test role="strong">named?</div>'],
 		["subscript", '<div data-test role="subscript">named?</div>'],
-		["superscript", "<div data-test role='supscript'>Hello</div>"]
+		["superscript", "<div data-test role='supscript'>Hello</div>"],
 	])("role '%s' prohibites naming", (_, markup) => {
 		testMarkup(markup, "");
 	});
@@ -307,58 +307,58 @@ describe("prohibited naming", () => {
 <table data-test aria-labelledby='caption'></table>
 <div id='caption' role='caption'>a table</div>
 `,
-			"a table"
+			"a table",
 		],
 		[
 			"code",
 			"<button data-test><span role='code'>html-aam</span></button>",
-			"html-aam"
+			"html-aam",
 		],
 		[
 			"deletion",
 			"<button data-test>aria <span role='deletion'>1.1</span><span>1.2</span></button>",
-			"aria 1.1 1.2"
+			"aria 1.1 1.2",
 		],
 		[
 			"emphasis",
 			"<button data-test>aria <span role='emphasis'>1.2</span></button>",
-			"aria 1.2"
+			"aria 1.2",
 		],
 		[
 			"generic",
 			"<button data-test><span role='generic'>click</span></button>",
-			"click"
+			"click",
 		],
 		[
 			"insertion",
 			"<button data-test><span role='insertion'>wai</span>aria</button>",
-			"wai aria"
+			"wai aria",
 		],
 		[
 			"paragraph",
 			"<button data-test><span role='paragraph'>I'm getting lazy</span></button>",
-			"I'm getting lazy"
+			"I'm getting lazy",
 		],
 		[
 			"presentation",
 			"<button data-test><span role='presentation'>icon</span></button>",
-			"icon"
+			"icon",
 		],
 		[
 			"strong",
 			"<button data-test><span role='strong'>CLICK!</span></button>",
-			"CLICK!"
+			"CLICK!",
 		],
 		[
 			"subscript",
 			"<button data-test>A<span role='subscript'>_x</span></button>",
-			"A _x"
+			"A _x",
 		],
 		[
 			"superscript",
 			"<button data-test>2<span role='superscript'>64</span></button>",
-			"2 64"
-		]
+			"2 64",
+		],
 	])(
 		"role '%s'can be part of the accessible name of another element",
 		(_, markup, name) => {
@@ -396,7 +396,7 @@ describe("options.getComputedStyle", () => {
 				declaration.visibility = "visible";
 
 				return declaration;
-			}
+			},
 		});
 
 		expect(name).toEqual("foo test foo");

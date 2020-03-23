@@ -6,7 +6,7 @@ const { Minimatch } = require("minimatch");
 const { describe, specify, before } = require("mocha-sugar-free");
 const {
 	readManifest,
-	getPossibleTestFilePaths
+	getPossibleTestFilePaths,
 } = require("./wpt-manifest-utils.js");
 const startWPTServer = require("./start-wpt-server.js");
 
@@ -18,7 +18,7 @@ const validReasons = new Set([
 	"mutates-globals",
 	"needs-node10",
 	"needs-node11",
-	"needs-node12"
+	"needs-node12",
 ]);
 
 const hasNode10 = Number(process.versions.node.split(".")[0]) >= 10;
@@ -56,10 +56,12 @@ describe("web-platform-tests", () => {
 		describe(toRunDoc.DIR, () => {
 			for (const testFilePath of possibleTestFilePaths) {
 				if (testFilePath.startsWith(toRunDoc.DIR + "/")) {
-					const matchingPattern = expectationsInDoc(toRunDoc).find(pattern => {
-						const matcher = minimatchers.get(toRunDoc.DIR + "/" + pattern);
-						return matcher.match(testFilePath);
-					});
+					const matchingPattern = expectationsInDoc(toRunDoc).find(
+						(pattern) => {
+							const matcher = minimatchers.get(toRunDoc.DIR + "/" + pattern);
+							return matcher.match(testFilePath);
+						}
+					);
 
 					const testFile = testFilePath.slice((toRunDoc.DIR + "/").length);
 					const reason = matchingPattern && toRunDoc[matchingPattern][0];
@@ -67,7 +69,7 @@ describe("web-platform-tests", () => {
 						"fail-slow",
 						"timeout",
 						"flaky",
-						"mutates-globals"
+						"mutates-globals",
 					].includes(reason);
 					const expectFail =
 						reason === "fail" ||
@@ -141,7 +143,7 @@ function checkToRun() {
 			}
 
 			const matcher = new Minimatch(doc.DIR + "/" + pattern);
-			if (!possibleTestFilePaths.some(filename => matcher.match(filename))) {
+			if (!possibleTestFilePaths.some((filename) => matcher.match(filename))) {
 				throw new Error(
 					`Expectation pattern "${pattern}" does not match any test files`
 				);
