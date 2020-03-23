@@ -56,7 +56,7 @@ const tagToRoleMappings: Record<string, string | undefined> = {
 	TH: "columnheader",
 	THEAD: "rowgroup",
 	TR: "row",
-	UL: "list"
+	UL: "list",
 };
 
 function getImplicitRole(element: Element): string | null {
@@ -125,10 +125,7 @@ function getExplicitRole(element: Element): string | null {
 	if (element.hasAttribute("role")) {
 		// safe due to hasAttribute check
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		const [explicitRole] = element
-			.getAttribute("role")!
-			.trim()
-			.split(" ");
+		const [explicitRole] = element.getAttribute("role")!.trim().split(" ");
 		if (explicitRole !== undefined && explicitRole.length > 0) {
 			return explicitRole;
 		}

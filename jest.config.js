@@ -6,8 +6,8 @@ module.exports = {
 		"/node_modules/",
 		"/fixtures/",
 		"/__tests__/helpers/",
-		"__mocks__"
+		"__mocks__",
 	],
 	testURL: "http://localhost",
-	verbose: true
+	verbose: true,
 };

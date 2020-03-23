@@ -1,9 +1,9 @@
 const implementation = "ATK";
 const descriptionPropertyName = {
-	ATK: "description"
+	ATK: "description",
 };
 const namePropertyName = {
-	ATK: "name"
+	ATK: "name",
 };
 
 /**

@@ -10,7 +10,7 @@ const { computeAccessibleName } = require("../../dist/");
 
 const reporterPathname = "/resources/testharnessreport.js";
 
-module.exports = urlPrefixFactory => {
+module.exports = (urlPrefixFactory) => {
 	if (inBrowserContext()) {
 		return () => {
 			// TODO: browser support for running WPT
@@ -27,7 +27,7 @@ module.exports = urlPrefixFactory => {
 			skipIfBrowser: true,
 			fn() {
 				return createJSDOM(urlPrefixFactory(), testPath, expectFail);
-			}
+			},
 		});
 	};
 };
@@ -70,9 +70,9 @@ function createJSDOM(urlPrefix, testPath, expectFail) {
 	let allowUnhandledExceptions = false;
 
 	const virtualConsole = new VirtualConsole().sendTo(console, {
-		omitJSDOMErrors: true
+		omitJSDOMErrors: true,
 	});
-	virtualConsole.on("jsdomError", e => {
+	virtualConsole.on("jsdomError", (e) => {
 		if (e.type === "unhandled exception" && !allowUnhandledExceptions) {
 			unhandledExceptions.push(e);
 
@@ -90,8 +90,8 @@ function createJSDOM(urlPrefix, testPath, expectFail) {
 		virtualConsole,
 		resources: new CustomResourceLoader(),
 		pretendToBeVisual: true,
-		storageQuota: 100000 // Filling the default quota takes about a minute between two WPTs
-	}).then(dom => {
+		storageQuota: 100000, // Filling the default quota takes about a minute between two WPTs
+	}).then((dom) => {
 		const { window } = dom;
 
 		return new Promise((resolve, reject) => {
@@ -105,7 +105,7 @@ function createJSDOM(urlPrefix, testPath, expectFail) {
 					// noop, otherwise failing tests just slowly timeout
 				};
 
-				window.add_result_callback(test => {
+				window.add_result_callback((test) => {
 					if (test.status === 1) {
 						errors.push(
 							`Failed in "${test.name}": \n${test.message}\n\n${test.stack}`

@@ -10,17 +10,17 @@ async function main() {
 	const accnamePath = path.resolve(__dirname, "../wpt/accname");
 	const files = await fs.readdir(accnamePath);
 	const testnames = files
-		.filter(filename => {
+		.filter((filename) => {
 			return filename.endsWith(".html");
 		})
-		.map(filename => {
+		.map((filename) => {
 			return path.basename(filename, ".html");
 		});
 
 	console.log(JSON.stringify(testnames, null, 2));
 }
 
-main().catch(error => {
+main().catch((error) => {
 	console.error(error);
 	process.exit();
 });

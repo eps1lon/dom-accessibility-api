@@ -11,11 +11,11 @@ const dnsLookup = q.denodeify(dns.lookup);
 const wptDir = path.resolve(__dirname, "../wpt");
 
 const configPaths = {
-	default: path.resolve(__dirname, "wpt-config.json")
+	default: path.resolve(__dirname, "wpt-config.json"),
 };
 
 const configs = {
-	default: require(configPaths.default)
+	default: require(configPaths.default),
 };
 
 module.exports = () => {
@@ -34,11 +34,11 @@ module.exports = () => {
 				const args = ["./wpt.py", "serve", "--config", configArg];
 				const python = childProcess.spawn("python", args, {
 					cwd: wptDir,
-					stdio: "inherit"
+					stdio: "inherit",
 				});
 
 				return new Promise((resolve, reject) => {
-					python.on("error", e => {
+					python.on("error", (e) => {
 						reject(
 							new Error("Error starting python server process:", e.message)
 						);
@@ -58,7 +58,7 @@ module.exports = () => {
 							),
 							pollForServer(
 								`https://${config.browser_host}:${config.ports.wss[0]}/`
-							)
+							),
 						])
 					);
 
@@ -87,7 +87,7 @@ function pollForServer(url) {
 			console.log(`WPT server at ${url} is up!`);
 			return url;
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.log(
 				`WPT server at ${url} is not up yet (${err.message}); trying again`
 			);

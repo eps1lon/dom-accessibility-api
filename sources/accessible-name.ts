@@ -9,7 +9,7 @@ import {
 	isHTMLInputElement,
 	isHTMLSelectElement,
 	isHTMLTextAreaElement,
-	safeWindow
+	safeWindow,
 } from "./util";
 
 /**
@@ -41,7 +41,7 @@ function createGetComputedStyle(
 		// window.getComputedStyle(elementFromAnotherWindow) or if I don't bind it
 		// the type declarations don't require a `this`
 		// eslint-disable-next-line no-restricted-properties
-		getComputedStyle = window.getComputedStyle.bind(window)
+		getComputedStyle = window.getComputedStyle.bind(window),
 	} = options;
 
 	return getComputedStyle;
@@ -71,7 +71,7 @@ function prohibitsNaming(node: Node): boolean {
 		"presentation",
 		"strong",
 		"subscript",
-		"superscript"
+		"superscript",
 	]);
 }
 
@@ -119,7 +119,7 @@ function idRefs(node: Node, attributeName: string): Element[] {
 			ids
 				// safe since it can't be null for an Element
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-				.map(id => node.ownerDocument!.getElementById(id))
+				.map((id) => node.ownerDocument!.getElementById(id))
 				.filter(
 					(element: Element | null): element is Element => element !== null
 					// TODO: why does this not narrow?
@@ -162,7 +162,7 @@ function hasAbstractRole(node: Node, role: string): node is Element {
 				"progressbar",
 				"scrollbar",
 				"slider",
-				"spinbutton"
+				"spinbutton",
 			]);
 		default:
 			throw new TypeError(
@@ -246,7 +246,7 @@ function allowsNameFromContent(node: Node): boolean {
 		"switch",
 		"tab",
 		"tooltip",
-		"treeitem"
+		"treeitem",
 	]);
 }
 
@@ -317,7 +317,7 @@ export function computeAccessibleName(
 			const result = computeTextAlternative(child, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
 				isReferenced: false,
-				recursion: true
+				recursion: true,
 			});
 			// TODO: Unclear why display affects delimiter
 			const display =
@@ -389,14 +389,14 @@ export function computeAccessibleName(
 
 		consultedNodes.add(input);
 		return ArrayFrom(labels)
-			.map(element => {
+			.map((element) => {
 				return computeTextAlternative(element, {
 					isEmbeddedInLabel: true,
 					isReferenced: false,
-					recursion: true
+					recursion: true,
 				});
 			})
-			.filter(label => {
+			.filter((label) => {
 				return label.length > 0;
 			})
 			.join(" ");
@@ -431,14 +431,14 @@ export function computeAccessibleName(
 		const labelElements = idRefs(current, "aria-labelledby");
 		if (!context.isReferenced && labelElements.length > 0) {
 			return labelElements
-				.map(element =>
+				.map((element) =>
 					computeTextAlternative(element, {
 						isEmbeddedInLabel: context.isEmbeddedInLabel,
 						isReferenced: true,
 						// thais isn't recursion as specified, otherwise we would skip
 						// `aria-label` in
 						// <input id="myself" aria-label="foo" aria-labelledby="myself"
-						recursion: false
+						recursion: false,
 					})
 				)
 				.join(" ");
@@ -485,11 +485,11 @@ export function computeAccessibleName(
 					return isHTMLInputElement(current) ? current.value : "";
 				}
 				return ArrayFrom(selectedOptions)
-					.map(selectedOption => {
+					.map((selectedOption) => {
 						return computeTextAlternative(selectedOption, {
 							isEmbeddedInLabel: context.isEmbeddedInLabel,
 							isReferenced: false,
-							recursion: true
+							recursion: true,
 						});
 					})
 					.join(" ");
@@ -525,7 +525,7 @@ export function computeAccessibleName(
 			consultedNodes.add(current);
 			return computeMiscTextAlternative(current, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
-				isReferenced: false
+				isReferenced: false,
 			});
 		}
 
@@ -538,7 +538,7 @@ export function computeAccessibleName(
 			consultedNodes.add(current);
 			return computeMiscTextAlternative(current, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
-				isReferenced: false
+				isReferenced: false,
 			});
 		}
 
@@ -557,7 +557,7 @@ export function computeAccessibleName(
 		computeTextAlternative(root, {
 			isEmbeddedInLabel: false,
 			isReferenced: false,
-			recursion: false
+			recursion: false,
 		})
 	);
 }

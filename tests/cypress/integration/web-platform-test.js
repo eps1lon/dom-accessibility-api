@@ -32,7 +32,7 @@ context("wpt", () => {
 		["name_from_content_of_labelledby_element-manual", "pass"],
 		[
 			"name_from_content_of_labelledby_elements_one_of_which_is_hidden-manual",
-			"pass"
+			"pass",
 		],
 		["name_heading-combobox-focusable-alternative-manual", "pass"],
 		["name_image-title-manual", "pass"],
@@ -151,7 +151,7 @@ context("wpt", () => {
 		["name_text-label-embedded-select-manual", "pass"],
 		["name_text-label-embedded-slider-manual", "pass"],
 		["name_text-label-embedded-spinbutton-manual", "pass"],
-		["name_text-title-manual", "pass"]
+		["name_text-title-manual", "pass"],
 	].forEach(([testBasename, result]) => {
 		it(`${result} ${testBasename}`, () => {
 			cy.visit(`http://localhost:5000/accname/${testBasename}`);
@@ -159,7 +159,7 @@ context("wpt", () => {
 			cy.get(
 				`#steps tr:nth-of-type(2) .api tr:nth-of-type(${2 + usedApiIndex})`
 			)
-				.then($row => {
+				.then(($row) => {
 					const [$apiName, $access, $name, $equality, $expected] = $row.find(
 						"td"
 					);
@@ -171,8 +171,8 @@ context("wpt", () => {
 
 					return $expected.textContent;
 				})
-				.then(expected => {
-					cy.get("#test").then($element => {
+				.then((expected) => {
+					cy.get("#test").then(($element) => {
 						if (result === "pass") {
 							expect($element[0]).to.have.accessibleName(expected);
 						} else if (result === "fail") {
