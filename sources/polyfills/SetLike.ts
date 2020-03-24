@@ -49,6 +49,4 @@ class SetLike<T> extends Set<T> {
 	}
 }
 
-// TODO: use Set if available
-// export default typeof Set === "undefined" ? Set : SetLike;
-export default SetLike;
+export default typeof Set === "undefined" ? Set : SetLike;
