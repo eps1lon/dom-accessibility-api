@@ -10,10 +10,22 @@ pr:
 pool:
   vmImage: "ubuntu-latest"
 
+# TODO we don't actually need this for karma or cypress tests
+# but it let's us use a single job. No need to split up jobs yet
+strategy:
+  matrix:
+    # active node versions
+    node_10_x:
+      node_version: 10.x
+    node_12_x:
+      node_version: 12.x
+    node_13_x:
+      node_version: 13.x
+
 steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: "12.11.x"
+      versionSpec: $(node_version)
     displayName: "Install Node.js"
 
   - script: |
@@ -44,6 +56,13 @@ steps:
     displayName: "kcd-rollup smoke tests of build"
     workingDirectory: tests/build/fixtures/kcd-rollup
 
+  - script: yarn start
+    displayName: "ES modules in node smoke tests of build"
+    workingDirectory: tests/build/fixtures/node-es-modules
+    # in node 12 we need to use a flag and I'm to lazy to branch even further
+    # running in node 13 is hopefully a sufficient smoke test
+    condition: startsWith(variables['node_version'], '13.')
+
   - script: yarn test:ci
     displayName: "Run jest tests"
 
@@ -70,15 +89,11 @@ steps:
   - script: yarn test:wpt:browser
     displayName: "Run wpt tests in browser"
 
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: "browser-test-screenshots"
-      targetPath: "tests/cypress/screenshots"
+  - publish: tests/cypress/screenshots
+    artifact: browser-test-screenshots-node-$(node_version)
     condition: failed()
     displayName: "Publish cypress screenshots"
 
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: "browser-test-videos"
-      targetPath: "tests/cypress/videos"
+  - publish: tests/cypress/videos
+    artifact: browser-test-videos-node-$(node_version)
     displayName: "Publish cypress screenshots"

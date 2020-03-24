@@ -1,8 +1,8 @@
 /**
  * implements https://w3c.github.io/accname/
  */
-import ArrayFrom from "core-js-pure/features/array/from";
-import Set from "core-js-pure/stable/set";
+import ArrayFrom from "./polyfills/array.from";
+import SetLike from "./polyfills/SetLike";
 import getRole from "./getRole";
 import {
 	isElement,
@@ -292,7 +292,7 @@ export function computeAccessibleName(
 	root: Element,
 	options: GetComputedStyleOptions = {}
 ): string {
-	const consultedNodes = new Set<Node>();
+	const consultedNodes = new SetLike<Node>();
 
 	if (prohibitsNaming(root)) {
 		return "" as FlatString;

@@ -8,6 +8,7 @@ module.exports = {
 		],
 		require.resolve("@babel/preset-typescript"),
 	],
+	plugins: [require.resolve("@babel/plugin-proposal-class-properties")],
 	env: {
 		cjs: {
 			plugins: [
@@ -17,6 +18,39 @@ module.exports = {
 					// not aware of a use case for enumerating imports though
 					{ loose: true },
 				],
+			],
+		},
+		esm: {
+			plugins: [
+				function rewriteRelativeImportsToMjs() {
+					const extension = "mjs";
+					/**
+					 *
+					 * @param {ImportDeclaration | ExportNamedDeclaration} declaration
+					 */
+					function rewriteRelativeImports(declaration) {
+						if (declaration.source === null) {
+							return;
+						}
+
+						const specifier = declaration.source.value;
+						const isRelativeSpecifier = specifier.startsWith(".");
+						if (isRelativeSpecifier) {
+							declaration.source.value = `${specifier}.${extension}`;
+						}
+					}
+
+					return {
+						visitor: {
+							ExportNamedDeclaration(path, state) {
+								rewriteRelativeImports(path.node);
+							},
+							ImportDeclaration(path, state) {
+								rewriteRelativeImports(path.node);
+							},
+						},
+					};
+				},
 			],
 		},
 	},
