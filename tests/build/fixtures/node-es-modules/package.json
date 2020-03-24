@@ -1,0 +1,11 @@
+{
+	"name": "build-fixture-node-es-modules",
+	"private": true,
+	"type": "module",
+	"dependencies": {
+		"dom-accessibility-api": "file:../../../../dom-accessibility-api.tgz"
+	},
+	"scripts": {
+		"start": "yarn install --no-lockfile && node index.js"
+	}
+}
