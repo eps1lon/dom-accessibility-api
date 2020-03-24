@@ -61,7 +61,7 @@ steps:
     workingDirectory: tests/build/fixtures/node-es-module
     # in node 12 we need to use a flag and I'm to lazy to branch even further
     # running in node 13 is hopefully a sufficient smoke test
-    condition: startsWith($(node_version), '13.')
+    condition: startsWith(variables['node_version'], '13.')
 
   - script: yarn test:ci
     displayName: "Run jest tests"
