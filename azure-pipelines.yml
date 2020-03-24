@@ -80,15 +80,11 @@ steps:
   - script: yarn test:wpt:browser
     displayName: "Run wpt tests in browser"
 
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: "browser-test-screenshots"
-      targetPath: "tests/cypress/screenshots"
+  - publish: tests/cypress/screenshots
+    artifact: browser-test-screenshots-node-$(node_version)
     condition: failed()
     displayName: "Publish cypress screenshots"
 
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: "browser-test-videos"
-      targetPath: "tests/cypress/videos"
+  - publish: tests/cypress/videos
+    artifact: browser-test-videos-node-$(node_version)
     displayName: "Publish cypress screenshots"
