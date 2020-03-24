@@ -4,17 +4,15 @@
 	"main": "dist/index.js",
 	"type": "commonjs",
 	"exports": {
-		"import": "dist/index.mjs",
-		"require": "dist/index.js"
+		"import": "./dist/index.mjs",
+		"require": "./dist/index.js"
 	},
 	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/eps1lon/dom-accessibility-api.git"
 	},
-	"dependencies": {
-		"core-js-pure": "^3.6.4"
-	},
+	"dependencies": {},
 	"files": [
 		".browserslistrc",
 		"dist/"
@@ -45,6 +43,7 @@
 	"devDependencies": {
 		"@babel/cli": "^7.8.4",
 		"@babel/core": "^7.9.0",
+		"@babel/plugin-proposal-class-properties": "^7.8.3",
 		"@babel/plugin-transform-modules-commonjs": "^7.9.0",
 		"@babel/preset-env": "^7.9.0",
 		"@babel/preset-typescript": "^7.9.0",

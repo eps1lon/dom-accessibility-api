@@ -8,6 +8,7 @@ module.exports = {
 		],
 		require.resolve("@babel/preset-typescript"),
 	],
+	plugins: [require.resolve("@babel/plugin-proposal-class-properties")],
 	env: {
 		cjs: {
 			plugins: [
