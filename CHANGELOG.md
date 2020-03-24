@@ -1,3 +1,5 @@
+# dom-accessibility-api changelog
+
 ## 0.4.2
 
 ### Minor Changes
