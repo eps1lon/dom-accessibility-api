@@ -10,10 +10,20 @@ pr:
 pool:
   vmImage: "ubuntu-latest"
 
+strategy:
+  matrix:
+    # active node versions
+    node_10_x:
+      node_version: 10.x
+    node_12_x:
+      node_version: 12.x
+    node_13_x:
+      node_version: 13.x
+
 steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: "12.11.x"
+      versionSpec: $(node_version)
     displayName: "Install Node.js"
 
   - script: |
