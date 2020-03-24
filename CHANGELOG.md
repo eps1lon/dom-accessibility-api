@@ -1,5 +1,13 @@
 # dom-accessibility-api changelog
 
+## 0.4.3
+
+### Patch Changes
+
+- [`b421d9e`](https://github.com/eps1lon/dom-accessibility-api/commit/b421d9e9709adf0f72e09cb5d7ea2a32ceefd8eb) [#168](https://github.com/eps1lon/dom-accessibility-api/pull/168) Thanks [@eps1lon](https://github.com/eps1lon)! - fix: Use relative paths in exports field
+
+  Fixes a crash when using ES modules in Node.
+
 ## 0.4.2
 
 ### Minor Changes
