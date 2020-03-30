@@ -872,13 +872,13 @@
     "@manypkg/get-packages" "^1.0.0"
     semver "^5.4.1"
 
-"@changesets/changelog-github@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@changesets/changelog-github/-/changelog-github-0.2.2.tgz#5093043f3898945b94598e7c66d4288698bb0e03"
-  integrity sha512-0Vy/xI6mf+5xtdKR4QXQUEThm1opXt8jmkI7rTnK21+mGzheF3I/eABaV60W19DjNRXzxiikgX2BothO5NMMEQ==
+"@changesets/changelog-github@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@changesets/changelog-github/-/changelog-github-0.2.3.tgz#0626479c3db43775ee9559da03984930548097ad"
+  integrity sha512-JUegOfKIvBuMq6s8gXmt7MMXp1v1YDGFeFTDxpIWj6fhe0FEWwAwGxrYQAYk7H6fAuIxGwNsfRoCO9qwGZXPKQ==
   dependencies:
-    "@changesets/get-github-info" "^0.4.1"
-    "@changesets/types" "^1.0.0"
+    "@changesets/get-github-info" "^0.4.2"
+    "@changesets/types" "^1.0.1"
     dotenv "^8.1.0"
 
 "@changesets/cli@^2.6.1":
@@ -943,10 +943,10 @@
     fs-extra "^7.0.1"
     semver "^5.4.1"
 
-"@changesets/get-github-info@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@changesets/get-github-info/-/get-github-info-0.4.1.tgz#359562fb9ad1ba38b90f8d097337c8e36372d96c"
-  integrity sha512-UtBaB7rS2mvEvvsJCpNsR86wLd5dPaupXBCHDdcYY1kDATpLBrvCNj+Qq8HVDQeaYb4BnTOVl7sGjtnzGEMaxQ==
+"@changesets/get-github-info@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@changesets/get-github-info/-/get-github-info-0.4.2.tgz#e265bbafe5fbdba2555b17ff227b4acb32afb542"
+  integrity sha512-V5UCDBQaDtmVIgkrHQZ+/2JVZQzAMTo1Xtv7cPtr7cGbd81O2NAGM2nHlVUdOhWAsnIvyCzeur/r9iw2ShukWg==
   dependencies:
     dataloader "^1.4.0"
     node-fetch "^2.5.0"
@@ -1020,10 +1020,10 @@
     fs-extra "^7.0.1"
     p-filter "^2.1.0"
 
-"@changesets/types@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@changesets/types/-/types-1.0.0.tgz#ea6ac9b9c8e8cd2d2058ea465781bfa9539a4770"
-  integrity sha512-pcgg3uoQG2036Sq0HW4LQIsqdV+am1ysQsuy7JdjvXT2BoJSduPISwSGxKS5gdikwXbizPw8NjDJAeNp1I8tPA==
+"@changesets/types@^1.0.0", "@changesets/types@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@changesets/types/-/types-1.0.1.tgz#9f4dfd88f3d3cf04273c161fda80f596c9735db1"
+  integrity sha512-hSNiAuCGyCLY8zjob8W8Jxzj4OWrLbFxXh85HjTDWyBGKnmbpJdob9Mmu7pddYV+8gHzKExSiz+D+tYNt24MmQ==
 
 "@changesets/write@^0.1.0":
   version "0.1.0"
