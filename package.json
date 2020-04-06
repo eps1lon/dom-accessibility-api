@@ -64,7 +64,7 @@
 		"minimatch": "^3.0.4",
 		"mocha": "^7.1.1",
 		"mocha-sugar-free": "^1.4.0",
-		"prettier": "^2.0.2",
+		"prettier": "^2.0.3",
 		"q": "^1.5.1",
 		"request": "^2.88",
 		"request-promise-native": "^1.0.8",
