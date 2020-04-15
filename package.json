@@ -2,6 +2,7 @@
 	"name": "dom-accessibility-api",
 	"version": "0.4.3",
 	"main": "dist/index.js",
+	"module": "dist/index.mjs",
 	"type": "commonjs",
 	"exports": {
 		"import": "./dist/index.mjs",
