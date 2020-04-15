@@ -1,21 +1,32 @@
 "use strict";
 const fs = require("fs");
 
-const EXPECTED_MANIFEST_VERSION = 6;
+const EXPECTED_MANIFEST_VERSION = 8;
 
 exports.getPossibleTestFilePaths = (manifest) => {
 	const manualTests = manifest.items.manual;
 
+	// Do a DFS to gather all test paths.
 	const allPaths = [];
-	for (const containerPath of Object.keys(manualTests)) {
-		const testFilePaths = manualTests[containerPath].map((value) => value[[0]]);
-		for (const testFilePath of testFilePaths) {
-			// Globally disable worker tests
-			if (testFilePath.startsWith("accname")) {
-				allPaths.push(testFilePath);
+	function addTests(test, path) {
+		for (const key of Object.keys(test)) {
+			if (Array.isArray(test[key])) {
+				const fallbackPath = path === "" ? key : `${path}/${key}`;
+
+				for (const [curPath] of test[key].slice(1)) {
+					const testPath = curPath === null ? fallbackPath : curPath;
+
+					if (testPath.startsWith("accname")) {
+						allPaths.push(testPath);
+					}
+				}
+			} else {
+				const curPath = path === "" ? key : `${path}/${key}`;
+				addTests(test[key], curPath);
 			}
 		}
 	}
+	addTests(manualTests, "");
 
 	return allPaths;
 };

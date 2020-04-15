@@ -9,6 +9,8 @@ $ yarn build
 
 ## tests
 
+To run web-platform-test make sure you've followed https://web-platform-tests.org/running-tests/from-local-system.html#system-setup
+
 ```bash
 $ yarn test
 $ yarn test:wpt:jsdom

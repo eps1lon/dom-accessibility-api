@@ -35,7 +35,7 @@
 		"test:wpt:browser:server": "serve tests/wpt",
 		"test:wpt:browser:open": "cypress open --project tests",
 		"wpt:init": "git submodule update --init --recursive",
-		"wpt:reset": "rimraf ./tests/wpt && yarn init-wpt",
+		"wpt:reset": "rimraf ./tests/wpt && yarn wpt:init",
 		"wpt:update": "git submodule update --recursive --remote && cd tests/wpt && python wpt.py manifest --path ../wpt-jsdom/wpt-manifest.json"
 	},
 	"devDependencies": {
