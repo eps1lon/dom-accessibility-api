@@ -2,7 +2,10 @@
 	"name": "build-fixture-kcd-rollup",
 	"private": true,
 	"dependencies": {
-		"dom-accessibility-api": "file:../../../../dom-accessibility-api.tgz",
+		"@babel/runtime": "^7.9.2",
+		"dom-accessibility-api": "file:../../../../dom-accessibility-api.tgz"
+	},
+	"devDependencies": {
 		"kcd-scripts": "^5.5.0"
 	},
 	"scripts": {
