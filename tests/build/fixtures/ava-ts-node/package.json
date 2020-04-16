@@ -1,0 +1,29 @@
+{
+	"name": "build-fixture-node-es-modules",
+	"private": true,
+	"dependencies": {
+		"@testing-library/react": "^10.0.2",
+		"@types/jsdom": "^16.2.1",
+		"@types/testing-library__react": "^10.0.1",
+		"ava": "^3.6.0",
+		"jsdom": "^16.2.2",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"ts-node": "^8.8.2",
+		"typescript": "^3.8.3"
+	},
+	"resolutions": {
+		"**/dom-accessibility-api": "file:../../../../dom-accessibility-api.tgz"
+	},
+	"scripts": {
+		"start": "yarn install --no-lockfile && yarn ava test.ts"
+	},
+	"ava": {
+		"extensions": [
+			"ts"
+		],
+		"require": [
+			"ts-node/register"
+		]
+	}
+}

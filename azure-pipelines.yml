@@ -57,6 +57,10 @@ steps:
     workingDirectory: tests/build/fixtures/kcd-rollup
 
   - script: yarn start
+    displayName: "ava+ts-node smoke tests of build"
+    workingDirectory: tests/build/fixtures/ava-ts-node
+
+  - script: yarn start
     displayName: "ES modules in node smoke tests of build"
     workingDirectory: tests/build/fixtures/node-es-modules
     # in node 12 we need to use a flag and I'm to lazy to branch even further
