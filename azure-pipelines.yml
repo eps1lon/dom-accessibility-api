@@ -69,7 +69,7 @@ steps:
   - script: yarn start
     displayName: "ES modules in node smoke tests of build"
     workingDirectory: tests/build/fixtures/node-es-modules
-    # in node 12 we need to use a flag and I'm to lazy to branch even further
+    # in node 12 we need to use a flag and I'm too lazy to branch even further
     # running in node >= 13 is hopefully a sufficient smoke test
     condition: or(startsWith(variables['node_version'], '13.'), startsWith(variables['node_version'], '14.'))
 
