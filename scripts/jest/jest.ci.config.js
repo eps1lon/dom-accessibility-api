@@ -4,7 +4,6 @@ const base = require("./jest.config");
 module.exports = {
 	...base,
 	collectCoverage: true,
-	coverageDirectory: path.resolve(__dirname, "./coverage"),
-	coverageReporters: ["cobertura", "lcov", "text"],
+	coverageReporters: ["cobertura"],
 	reporters: ["default", "jest-junit"],
 };
