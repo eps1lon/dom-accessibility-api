@@ -1,5 +1,5 @@
 ---
-"dom-accessibility-api": minor
+"dom-accessibility-api": patch
 ---
 
 Add `module` field
