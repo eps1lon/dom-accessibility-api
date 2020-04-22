@@ -1,6 +1,9 @@
+const path = require("path");
+
 // jest.config.js
 module.exports = {
-	rootDir: "sources",
+	coverageDirectory: path.resolve(__dirname, "../../coverage"),
+	rootDir: path.resolve(__dirname, "../../sources"),
 	testEnvironment: "jest-environment-jsdom-thirteen",
 	testPathIgnorePatterns: [
 		"/node_modules/",
@@ -9,5 +12,4 @@ module.exports = {
 		"__mocks__",
 	],
 	testURL: "http://localhost",
-	verbose: true,
 };
