@@ -64,7 +64,7 @@
 		"js-yaml": "^3.13.1",
 		"jsdom": "^16.2.2",
 		"minimatch": "^3.0.4",
-		"mocha": "^7.1.1",
+		"mocha": "^7.1.2",
 		"mocha-sugar-free": "^1.4.0",
 		"prettier": "^2.0.5",
 		"q": "^1.5.1",
