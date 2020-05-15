@@ -121,6 +121,11 @@ describe("to upstream", () => {
 			`<li data-test role="treeitem"><em>greek</em> pi</li>`,
 			"greek pi",
 		],
+		[
+			"fieldset",
+			`<fieldset data-test><legend><em>greek</em> rho</legend></fieldset>`,
+			"greek rho",
+		],
 	])(`role %s`, (_, markup, expectedAccessibleName) =>
 		testMarkup(markup, expectedAccessibleName)
 	);

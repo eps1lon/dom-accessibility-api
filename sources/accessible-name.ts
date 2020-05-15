@@ -10,6 +10,8 @@ import {
 	isHTMLSelectElement,
 	isHTMLTextAreaElement,
 	safeWindow,
+  isHTMLFieldSetElement,
+  isHTMLLegendElement,
 } from "./util";
 
 /**
@@ -369,6 +371,19 @@ export function computeAccessibleName(
 				isHTMLTextAreaElement(node)
 			)
 		) {
+			if (isHTMLFieldSetElement(node)) {
+				consultedNodes.add(node);
+				for (const child of queryChildNodes(node)) {
+					if (isHTMLLegendElement(child)) {
+						return computeTextAlternative(child, {
+							isEmbeddedInLabel: false,
+							isReferenced: false,
+							recursion: false,
+						});
+					}
+				}
+			}
+
 			return null;
 		}
 		const input = node;
