@@ -10,8 +10,8 @@ import {
 	isHTMLSelectElement,
 	isHTMLTextAreaElement,
 	safeWindow,
-  isHTMLFieldSetElement,
-  isHTMLLegendElement,
+	isHTMLFieldSetElement,
+	isHTMLLegendElement,
 } from "./util";
 
 /**
