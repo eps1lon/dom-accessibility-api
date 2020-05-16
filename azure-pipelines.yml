@@ -59,7 +59,7 @@ steps:
     displayName: "Prepare smoke tests of build"
 
   - publish: $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz
-    artifact: dom-accessibility-api.node$(node_version).tgz
+    artifact: dom-accessibility-api-node-$(node_version)
 
   - script: yarn start
     displayName: "kcd-rollup smoke tests of build"
