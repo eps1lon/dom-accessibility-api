@@ -39,17 +39,6 @@ steps:
     displayName: "Install packages"
 
   - script: |
-      yarn format
-      git diff --exit-code
-    displayName: "Check format"
-
-  - script: yarn lint
-    displayName: "Lint code"
-
-  - script: yarn test:types
-    displayName: "Test types"
-
-  - script: |
       yarn build
     displayName: "Build"
 
