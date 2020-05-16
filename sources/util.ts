@@ -44,3 +44,23 @@ export function safeWindow(node: Node): Window {
 	}
 	return defaultView;
 }
+
+export function isHTMLFieldSetElement(
+	node: Node | null
+): node is HTMLFieldSetElement {
+	return (
+		isElement(node) &&
+		// @ts-ignore
+		node instanceof node.ownerDocument.defaultView.HTMLFieldSetElement
+	);
+}
+
+export function isHTMLLegendElement(
+	node: Node | null
+): node is HTMLLegendElement {
+	return (
+		isElement(node) &&
+		// @ts-ignore
+		node instanceof node.ownerDocument.defaultView.HTMLLegendElement
+	);
+}

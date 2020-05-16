@@ -10,6 +10,8 @@ import {
 	isHTMLSelectElement,
 	isHTMLTextAreaElement,
 	safeWindow,
+	isHTMLFieldSetElement,
+	isHTMLLegendElement,
 } from "./util";
 
 /**
@@ -362,6 +364,21 @@ export function computeAccessibleName(
 	}
 
 	function computeElementTextAlternative(node: Node): string | null {
+		// https://w3c.github.io/html-aam/#fieldset-and-legend-elements
+		if (isHTMLFieldSetElement(node)) {
+			consultedNodes.add(node);
+			for (const child of ArrayFrom(node.childNodes)) {
+				if (isHTMLLegendElement(child)) {
+					return computeTextAlternative(child, {
+						isEmbeddedInLabel: false,
+						isReferenced: false,
+						recursion: false,
+					});
+				}
+			}
+			return null;
+		}
+
 		if (
 			!(
 				isHTMLInputElement(node) ||
