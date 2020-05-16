@@ -56,10 +56,26 @@ steps:
   - script: |
       npm pack
       mv dom-accessibility-api-*.tgz dom-accessibility-api.tgz
-    displayName: "Prepare smoke tests of build"
+    displayName: "Create tarball"
 
   - publish: $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz
+    displayName: "Publish tarball"
     artifact: dom-accessibility-api-node-$(node_version)
+
+  - download: specific
+    displayName: "Download tarball from master"
+    artifact: dom-accessibility-api-node-$(node_version)
+    path: $(System.DefaultWorkingDirectory)/dom-accessibility-api-master.tgz
+    runVersion: latestFromBranch
+    runBranch: refs/heads/master
+
+  - script: |
+      mkdir $(Agent.TempDirectory)/published-previous
+      mkdir $(Agent.TempDirectory)/published-current
+      tar xfvz $(System.DefaultWorkingDirectory)/dom-accessibility-api-master.tgz --directory $(Agent.TempDirectory)/published-previous
+      tar xfvz $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-current
+      diff $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current
+    displayName: "Diff tarballs"
 
   - script: yarn start
     displayName: "kcd-rollup smoke tests of build"
