@@ -48,8 +48,8 @@ function testMarkup(markup, accessibleName) {
 }
 
 describe("to upstream", () => {
+	// name from content
 	test.each([
-		// name from content
 		[
 			"cell",
 			`<div data-test role="cell"><em>greek</em> alpha</div>`,
@@ -121,12 +121,7 @@ describe("to upstream", () => {
 			`<li data-test role="treeitem"><em>greek</em> pi</li>`,
 			"greek pi",
 		],
-		[
-			"fieldset",
-			`<fieldset data-test><legend><em>greek</em> rho</legend></fieldset>`,
-			"greek rho",
-		],
-	])(`role %s`, (_, markup, expectedAccessibleName) =>
+	])(`role %s has name from content`, (_, markup, expectedAccessibleName) =>
 		testMarkup(markup, expectedAccessibleName)
 	);
 
@@ -194,6 +189,7 @@ describe("to upstream", () => {
 	});
 });
 
+// misc tests
 test.each([
 	[
 		`
@@ -285,6 +281,11 @@ test.each([
 	[
 		`<label for="textarea">A TextArea</label><textarea data-test id="textarea" />`,
 		"A TextArea",
+	],
+	// https://w3c.github.io/html-aam/#fieldset-and-legend-elements
+	[
+		`<fieldset data-test><legend><em>greek</em> rho</legend></fieldset>`,
+		"greek rho",
 	],
 ])(`test #%#`, testMarkup);
 
