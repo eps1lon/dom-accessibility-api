@@ -376,6 +376,7 @@ export function computeAccessibleName(
 					});
 				}
 			}
+			return null;
 		}
 
 		if (
