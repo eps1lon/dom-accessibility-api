@@ -1,38 +1,23 @@
 export function isElement(node: Node | null): node is Element {
-	return (
-		// @ts-ignore
-		node !== null && node instanceof node.ownerDocument.defaultView.Element
-	);
+	return node !== null && node.nodeType === node.ELEMENT_NODE;
 }
 
 export function isHTMLInputElement(
 	node: Node | null
 ): node is HTMLInputElement {
-	return (
-		isElement(node) &&
-		// @ts-ignore
-		node instanceof node.ownerDocument.defaultView.HTMLInputElement
-	);
+	return isElement(node) && node.tagName === "INPUT";
 }
 
 export function isHTMLSelectElement(
 	node: Node | null
 ): node is HTMLSelectElement {
-	return (
-		isElement(node) &&
-		// @ts-ignore
-		node instanceof node.ownerDocument.defaultView.HTMLSelectElement
-	);
+	return isElement(node) && node.tagName === "SELECT";
 }
 
 export function isHTMLTextAreaElement(
 	node: Node | null
 ): node is HTMLTextAreaElement {
-	return (
-		isElement(node) &&
-		// @ts-ignore
-		node instanceof node.ownerDocument.defaultView.HTMLTextAreaElement
-	);
+	return isElement(node) && node.tagName === "TEXTAREA";
 }
 
 export function safeWindow(node: Node): Window {
@@ -48,19 +33,11 @@ export function safeWindow(node: Node): Window {
 export function isHTMLFieldSetElement(
 	node: Node | null
 ): node is HTMLFieldSetElement {
-	return (
-		isElement(node) &&
-		// @ts-ignore
-		node instanceof node.ownerDocument.defaultView.HTMLFieldSetElement
-	);
+	return isElement(node) && node.tagName === "FIELDSET";
 }
 
 export function isHTMLLegendElement(
 	node: Node | null
 ): node is HTMLLegendElement {
-	return (
-		isElement(node) &&
-		// @ts-ignore
-		node instanceof node.ownerDocument.defaultView.HTMLLegendElement
-	);
+	return isElement(node) && node.tagName === "LEGEND";
 }
