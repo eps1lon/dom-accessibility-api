@@ -65,9 +65,9 @@ steps:
   - script: |
       mkdir $(Agent.TempDirectory)/published-previous
       mkdir $(Agent.TempDirectory)/published-current
-      tar xfvz $(Agent.TempDirectory)/artifacts-master/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-previous
-      tar xfvz $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-current
-      diff $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current
+      tar xfz $(Agent.TempDirectory)/artifacts-master/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-previous
+      tar xfz $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-current
+      diff -r $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current
     displayName: "Diff tarballs"
 
   - script: yarn start
