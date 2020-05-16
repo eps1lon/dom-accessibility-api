@@ -22,5 +22,27 @@
 				"property": "getComputedStyle"
 			}
 		]
-	}
+	},
+	"overrides": [
+		{
+			"files": ["**/*.js"],
+			"rules": {
+				// this rule is unfixable in untyped languages
+				// https://github.com/typescript-eslint/typescript-eslint/blob/v2.31.0/packages/eslint-plugin/docs/rules/explicit-function-return-type.md#configuring-in-a-mixed-jsts-codebase
+				"@typescript-eslint/explicit-function-return-type": "off"
+			}
+		},
+		{
+			"files": ["**/__tests__/**/*.js"],
+			"env": {
+				"browser": true
+			},
+			"extends": ["plugin:jest/recommended"],
+			"plugins": ["jest"],
+			"rules": {
+				// disable previous window.getComputedStyles restriction
+				"no-restricted-properties": "off"
+			}
+		}
+	]
 }
