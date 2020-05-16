@@ -41,6 +41,8 @@
 			"plugins": ["jest"],
 			"rules": {
 				// disable previous window.getComputedStyles restriction
+				// perf concerns for this aren't applicable to test
+				// since we specifically want to test them
 				"no-restricted-properties": "off"
 			}
 		}
