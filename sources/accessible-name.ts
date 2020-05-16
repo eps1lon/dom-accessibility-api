@@ -367,7 +367,7 @@ export function computeAccessibleName(
 		// https://w3c.github.io/html-aam/#fieldset-and-legend-elements
 		if (isHTMLFieldSetElement(node)) {
 			consultedNodes.add(node);
-			for (const child of queryChildNodes(node)) {
+			for (const child of ArrayFrom(node.childNodes)) {
 				if (isHTMLLegendElement(child)) {
 					return computeTextAlternative(child, {
 						isEmbeddedInLabel: false,

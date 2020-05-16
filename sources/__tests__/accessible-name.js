@@ -287,6 +287,10 @@ test.each([
 		`<fieldset data-test><legend><em>greek</em> rho</legend></fieldset>`,
 		"greek rho",
 	],
+	[
+		`<fieldset data-test aria-owns="legend"></fieldset><legend id="legend"><em>greek</em> rho</legend>`,
+		"",
+	],
 ])(`test #%#`, testMarkup);
 
 describe("prohibited naming", () => {
