@@ -26,7 +26,18 @@
 				// own implementation. See https://github.com/eps1lon/dom-accessibility-api/blob/eb868428a31a093aecc531bf2dd17e8547bd0c3b/sources/accessible-name.ts#L33
 				"property": "getComputedStyle"
 			}
-		]
+		],
+		"no-restricted-syntax": [
+			"error",
+			{
+				"selector": "ForOfStatement",
+				"message": "for-of assumes iterators which require heavy transpilation for es5. Use ArrayFrom(...).forEach instead."
+			}
+		],
+		// Babel transpiles array spread assuming iterators.
+		// If we know we have an array we cann use .apply instead.
+		// TypeScript will validate that claim.
+		"prefer-spread": "off"
 	},
 	"overrides": [
 		{
@@ -48,7 +59,10 @@
 				// disable previous window.getComputedStyles restriction
 				// perf concerns for this aren't applicable to test
 				// since we specifically want to test them
-				"no-restricted-properties": "off"
+				"no-restricted-properties": "off",
+				// disable previous for-of restriction
+				// over transpilation isn't a concern for tests
+				"no-restricted-syntax": "off"
 			}
 		}
 	]

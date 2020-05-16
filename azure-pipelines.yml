@@ -56,10 +56,33 @@ steps:
   - script: |
       npm pack
       mv dom-accessibility-api-*.tgz dom-accessibility-api.tgz
-    displayName: "Prepare smoke tests of build"
+    displayName: "Create tarball"
 
   - publish: $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz
+    displayName: "Publish tarball"
     artifact: dom-accessibility-api-node-$(node_version)
+
+  - task: DownloadPipelineArtifact@2
+    displayName: "Download tarball from master"
+    inputs:
+      artifact: dom-accessibility-api-node-$(node_version)
+      path: $(Agent.TempDirectory)/artifacts-master
+      source: specific
+      pipeline: $(System.DefinitionId)
+      project: $(System.TeamProject)
+      runVersion: latestFromBranch
+      runBranch: refs/heads/master
+
+  - script: |
+      mkdir $(Agent.TempDirectory)/published-previous
+      mkdir $(Agent.TempDirectory)/published-current
+      tar xfz $(Agent.TempDirectory)/artifacts-master/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-previous
+      tar xfz $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-current
+      # --no-index implies --exit-code
+      # This task is informative only.
+      # Diffs are almost always expected
+      git --no-pager diff --color --no-index $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current || exit 0
+    displayName: "Diff tarballs"
 
   - script: yarn start
     displayName: "kcd-rollup smoke tests of build"

@@ -183,11 +183,12 @@ function querySelectorAllSubtree(
 	element: Element,
 	selectors: string
 ): Element[] {
-	const elements = [];
+	const elements = ArrayFrom(element.querySelectorAll(selectors));
 
-	for (const root of [element, ...idRefs(element, "aria-owns")]) {
-		elements.push(...ArrayFrom(root.querySelectorAll(selectors)));
-	}
+	idRefs(element, "aria-owns").forEach((root) => {
+		// babel transpiles this assuming an iterator
+		elements.push.apply(elements, ArrayFrom(root.querySelectorAll(selectors)));
+	});
 
 	return elements;
 }
@@ -314,7 +315,7 @@ export function computeAccessibleName(
 		const childNodes = ArrayFrom(node.childNodes).concat(
 			idRefs(node, "aria-owns")
 		);
-		for (const child of childNodes) {
+		childNodes.forEach((child) => {
 			const result = computeTextAlternative(child, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
 				isReferenced: false,
@@ -326,7 +327,7 @@ export function computeAccessibleName(
 				createGetComputedStyle(node, options)(node).getPropertyValue("display");
 			const separator = display !== "inline" ? " " : "";
 			accumulatedText += `${separator}${result}`;
-		}
+		});
 
 		if (isElement(node)) {
 			const pseudoAfter = createGetComputedStyle(node, options)(node, ":after");
@@ -366,7 +367,9 @@ export function computeAccessibleName(
 		// https://w3c.github.io/html-aam/#fieldset-and-legend-elements
 		if (isHTMLFieldSetElement(node)) {
 			consultedNodes.add(node);
-			for (const child of ArrayFrom(node.childNodes)) {
+			const children = ArrayFrom(node.childNodes);
+			for (let i = 0; i < children.length; i += 1) {
+				const child = children[i];
 				if (isHTMLLegendElement(child)) {
 					return computeTextAlternative(child, {
 						isEmbeddedInLabel: false,
