@@ -210,6 +210,7 @@ function isMarkedPresentational(node: Node): node is Element {
  * TODO https://github.com/eps1lon/dom-accessibility-api/issues/99
  */
 function isNativeHostLanguageTextAlternativeElement(
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars -- not implemented yet
 	node: Node
 ): node is Element {
 	return false;
@@ -247,6 +248,7 @@ function allowsNameFromContent(node: Node): boolean {
  * TODO https://github.com/eps1lon/dom-accessibility-api/issues/100
  */
 function isDescendantOfNativeHostLanguageTextAlternativeElement(
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars -- not implemented yet
 	node: Node
 ): boolean {
 	return false;
@@ -255,6 +257,7 @@ function isDescendantOfNativeHostLanguageTextAlternativeElement(
 /**
  * TODO https://github.com/eps1lon/dom-accessibility-api/issues/101
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- not implemented yet
 function computeTooltipAttributeValue(node: Node): string | null {
 	return null;
 }

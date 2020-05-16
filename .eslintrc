@@ -5,6 +5,11 @@
 		"plugin:@typescript-eslint/recommended"
 	],
 	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		// trade off between having a warning without consequences on master
+		// and having no warning but non-descriptive errors when using typescript@^3.8 syntax
+		"warnOnUnsupportedTypeScriptVersion": false
+	},
 	"plugins": ["@typescript-eslint"],
 	"rules": {
 		// required for window.Element
