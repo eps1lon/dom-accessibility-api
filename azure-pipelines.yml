@@ -57,7 +57,7 @@ steps:
       npm pack
       mv dom-accessibility-api-*.tgz dom-accessibility-api.tgz
     displayName: "Prepare smoke tests of build"
-  
+
   - publish: $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz
     artifact: dom-accessibility-api.node$(node_version).tgz
 
