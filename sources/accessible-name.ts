@@ -133,6 +133,15 @@ function idRefs(node: Node, attributeName: string): Element[] {
 }
 
 /**
+ * All defined children. This include childNodes as well as owned (portaled) trees
+ * via aria-owns
+ * @param node
+ */
+function queryChildNodes(node: Node): Node[] {
+	return ArrayFrom(node.childNodes).concat(idRefs(node, "aria-owns"));
+}
+
+/**
  * @param {Node} node -
  * @returns {boolean} - As defined in step 2E of https://w3c.github.io/accname/#mapping_additional_nd_te
  */
@@ -306,7 +315,7 @@ export function computeAccessibleName(
 			accumulatedText = `${beforeContent} ${accumulatedText}`;
 		}
 
-		for (const child of ArrayFrom(node.childNodes)) {
+		for (const child of queryChildNodes(node)) {
 			const result = computeTextAlternative(child, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
 				isReferenced: false,
