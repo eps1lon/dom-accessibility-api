@@ -68,6 +68,8 @@ steps:
       artifact: dom-accessibility-api-node-$(node_version)
       path: $(System.DefaultWorkingDirectory)/dom-accessibility-api-master.tgz
       source: specific
+      pipeline: $(System.DefinitionId)
+      project: $(System.TeamProject)
       runVersion: latestFromBranch
       runBranch: refs/heads/master
 
