@@ -183,11 +183,11 @@ function querySelectorAllSubtree(
 	element: Element,
 	selectors: string
 ): Element[] {
-	const elements = [];
+	const elements = ArrayFrom(element.querySelectorAll(selectors));
 
-	for (const root of [element, ...idRefs(element, "aria-owns")]) {
+	idRefs(element, "aria-owns").forEach((root) => {
 		elements.push(...ArrayFrom(root.querySelectorAll(selectors)));
-	}
+	});
 
 	return elements;
 }
