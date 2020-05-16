@@ -186,7 +186,8 @@ function querySelectorAllSubtree(
 	const elements = ArrayFrom(element.querySelectorAll(selectors));
 
 	idRefs(element, "aria-owns").forEach((root) => {
-		elements.push(...ArrayFrom(root.querySelectorAll(selectors)));
+		// babel transpiles this assuming an iterator
+		elements.push.apply(elements, ArrayFrom(root.querySelectorAll(selectors)));
 	});
 
 	return elements;

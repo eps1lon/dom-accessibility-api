@@ -33,7 +33,11 @@
 				"selector": "ForOfStatement",
 				"message": "for-of assumes iterators which require heavy transpilation for es5. Use ArrayFrom(...).forEach instead."
 			}
-		]
+		],
+		// Babel transpiles array spread assuming iterators.
+		// If we know we have an array we cann use .apply instead.
+		// TypeScript will validate that claim.
+		"prefer-spread": "off"
 	},
 	"overrides": [
 		{
