@@ -67,7 +67,7 @@ steps:
       mkdir $(Agent.TempDirectory)/published-current
       tar xfz $(Agent.TempDirectory)/artifacts-master/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-previous
       tar xfz $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-current
-      diff -r $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current
+      git --no-pager diff --no-index $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current
     displayName: "Diff tarballs"
 
   - script: yarn start
