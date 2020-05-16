@@ -67,7 +67,10 @@ steps:
       mkdir $(Agent.TempDirectory)/published-current
       tar xfz $(Agent.TempDirectory)/artifacts-master/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-previous
       tar xfz $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-current
-      git --no-pager diff --no-index $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current
+    # --no-index implies --exit-code
+    # This task is informative only.
+    # Diffs are almost always expected
+      git --no-pager diff --no-index $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current || exit 0
     displayName: "Diff tarballs"
 
   - script: yarn start
