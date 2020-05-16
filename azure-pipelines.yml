@@ -66,7 +66,7 @@ steps:
     displayName: "Download tarball from master"
     inputs:
       artifact: dom-accessibility-api-node-$(node_version)
-      path: $(System.DefaultWorkingDirectory)/dom-accessibility-api-master.tgz
+      path: $(Agent.TempDirectory)/artifacts-master
       source: specific
       pipeline: $(System.DefinitionId)
       project: $(System.TeamProject)
@@ -74,9 +74,11 @@ steps:
       runBranch: refs/heads/master
 
   - script: |
+      ls $(Agent.TempDirectory)/artifacts-master
+      ls
       mkdir $(Agent.TempDirectory)/published-previous
       mkdir $(Agent.TempDirectory)/published-current
-      tar xfvz $(System.DefaultWorkingDirectory)/dom-accessibility-api-master.tgz --directory $(Agent.TempDirectory)/published-previous
+      tar xfvz $(Agent.TempDirectory)/artifacts-master/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-previous
       tar xfvz $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-current
       diff $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current
     displayName: "Diff tarballs"
