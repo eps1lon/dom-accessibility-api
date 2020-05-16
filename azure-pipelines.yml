@@ -57,6 +57,9 @@ steps:
       npm pack
       mv dom-accessibility-api-*.tgz dom-accessibility-api.tgz
     displayName: "Prepare smoke tests of build"
+  
+  - publish: $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz
+    artifact: dom-accessibility-api.tgz
 
   - script: yarn start
     displayName: "kcd-rollup smoke tests of build"
