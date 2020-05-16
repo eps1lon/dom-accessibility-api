@@ -70,7 +70,7 @@ steps:
       # --no-index implies --exit-code
       # This task is informative only.
       # Diffs are almost always expected
-      git --no-pager diff --no-index $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current || exit 0
+      git --no-pager diff --color --no-index $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current || exit 0
     displayName: "Diff tarballs"
 
   - script: yarn start
