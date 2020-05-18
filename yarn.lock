@@ -856,10 +856,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@changesets/apply-release-plan@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@changesets/apply-release-plan/-/apply-release-plan-3.0.0.tgz#691f745fdeff498b061d2ebd30c109072657b581"
-  integrity sha512-9SFJylB9YxoBC47jK+VI5CgAxR9Ma+q1q1EFkfm9lI/bCygMSKVPAa5eNbVbm0TvgxCqc20djYlniBHK3iljqA==
+"@changesets/apply-release-plan@^3.0.1":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@changesets/apply-release-plan/-/apply-release-plan-3.0.2.tgz#e8f77518f065181717cc998d60b9dcaeb7387870"
+  integrity sha512-uw0qtgAVN55fw7Jg1t/KI9y7WMP4/IWfl7yYo4Q9Xl7kT87I4bntcFd0fhAj5+97iA9Hd3wNJczmNNWj7iLd7g==
   dependencies:
     "@babel/runtime" "^7.4.4"
     "@changesets/config" "^1.1.0"
@@ -895,13 +895,13 @@
     "@changesets/types" "^3.0.0"
     dotenv "^8.1.0"
 
-"@changesets/cli@^2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@changesets/cli/-/cli-2.7.0.tgz#63c00144084424b24304ab2babead24414009f86"
-  integrity sha512-V93Bbg5EZN/QUYudzeK6+udmMk16H2xISJFQePG3r1pigfgxyA1Da+gTO/J2cwa7QC9TscPQkr9g8I4fuz09pw==
+"@changesets/cli@^2.7.1":
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/@changesets/cli/-/cli-2.7.1.tgz#2fd1038e8d3f03c2000dcd720d59a8120ed2394c"
+  integrity sha512-OoN92lT1LdqJHmjwnjsth0NQz4E8s4k0GMMG7q6SdVqEUhSachxbBzHrKS9/OMykiWzqtagDvym6s1drCxAJtg==
   dependencies:
     "@babel/runtime" "^7.4.4"
-    "@changesets/apply-release-plan" "^3.0.0"
+    "@changesets/apply-release-plan" "^3.0.1"
     "@changesets/assemble-release-plan" "^2.0.4"
     "@changesets/config" "^1.1.0"
     "@changesets/errors" "^0.1.4"
