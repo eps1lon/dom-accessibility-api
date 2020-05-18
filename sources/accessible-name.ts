@@ -6,12 +6,14 @@ import SetLike from "./polyfills/SetLike";
 import getRole from "./getRole";
 import {
 	isElement,
+	isHTMLTableCaptionElement,
 	isHTMLInputElement,
 	isHTMLSelectElement,
 	isHTMLTextAreaElement,
 	safeWindow,
 	isHTMLFieldSetElement,
 	isHTMLLegendElement,
+	isHTMLTableElement,
 } from "./util";
 
 /**
@@ -208,13 +210,19 @@ function isMarkedPresentational(node: Node): node is Element {
 }
 
 /**
- * TODO https://github.com/eps1lon/dom-accessibility-api/issues/99
+ * Elements specifically listed in html-aam
+ *
+ * We don't need this for `label` or `legend` elements.
+ * Their implicit roles already allow "naming from content".
+ *
+ * sources:
+ *
+ * - https://w3c.github.io/html-aam/#table-element
  */
 function isNativeHostLanguageTextAlternativeElement(
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars -- not implemented yet
 	node: Node
 ): node is Element {
-	return false;
+	return isHTMLTableCaptionElement(node);
 }
 
 /**
@@ -371,6 +379,23 @@ export function computeAccessibleName(
 			for (let i = 0; i < children.length; i += 1) {
 				const child = children[i];
 				if (isHTMLLegendElement(child)) {
+					return computeTextAlternative(child, {
+						isEmbeddedInLabel: false,
+						isReferenced: false,
+						recursion: false,
+					});
+				}
+			}
+			return null;
+		}
+
+		// https://w3c.github.io/html-aam/#table-element
+		if (isHTMLTableElement(node)) {
+			consultedNodes.add(node);
+			const children = ArrayFrom(node.childNodes);
+			for (let i = 0; i < children.length; i += 1) {
+				const child = children[i];
+				if (isHTMLTableCaptionElement(child)) {
 					return computeTextAlternative(child, {
 						isEmbeddedInLabel: false,
 						isReferenced: false,

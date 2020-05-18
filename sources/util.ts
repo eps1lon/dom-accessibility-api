@@ -2,6 +2,12 @@ export function isElement(node: Node | null): node is Element {
 	return node !== null && node.nodeType === node.ELEMENT_NODE;
 }
 
+export function isHTMLTableCaptionElement(
+	node: Node | null
+): node is HTMLTableCaptionElement {
+	return isElement(node) && node.tagName === "CAPTION";
+}
+
 export function isHTMLInputElement(
 	node: Node | null
 ): node is HTMLInputElement {
@@ -12,6 +18,12 @@ export function isHTMLSelectElement(
 	node: Node | null
 ): node is HTMLSelectElement {
 	return isElement(node) && node.tagName === "SELECT";
+}
+
+export function isHTMLTableElement(
+	node: Node | null
+): node is HTMLTableElement {
+	return isElement(node) && node.tagName === "TABLE";
 }
 
 export function isHTMLTextAreaElement(
