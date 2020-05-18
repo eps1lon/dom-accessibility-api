@@ -1,5 +1,47 @@
 # dom-accessibility-api changelog
 
+## 0.4.4
+
+### Patch Changes
+
+- [`e79f620`](https://github.com/eps1lon/dom-accessibility-api/commit/e79f6209667b3b2de656a73dec0eea37c65d48a9) [#208](https://github.com/eps1lon/dom-accessibility-api/pull/208) Thanks [@eps1lon](https://github.com/eps1lon)! - Add support for node 14
+
+* [`2c6a23b`](https://github.com/eps1lon/dom-accessibility-api/commit/2c6a23b3ec3e514d7db631e393749fac0ab33b5b) [#200](https://github.com/eps1lon/dom-accessibility-api/pull/200) Thanks [@eps1lon](https://github.com/eps1lon)! - Add `module` field
+
+- [`737dfae`](https://github.com/eps1lon/dom-accessibility-api/commit/737dfae2b88a4ce94d59144a6aabf69f0a671edc) [#234](https://github.com/eps1lon/dom-accessibility-api/pull/234) Thanks [@willamzv](https://github.com/willamzv)! - Consider `<legend>` for the name of its `<fieldset>` element.
+
+  ```html
+  <fieldset>
+  	<legend><em>my</em> fieldset</legend>
+  </fieldset>
+  ```
+
+  Computing the name for this fieldset would've returned an empty string previously. It now correctly computes `my fieldset` following the [accessible name computation for `fieldset` elements](https://w3c.github.io/html-aam/#fieldset-and-legend-elements)
+
+* [`969da7d`](https://github.com/eps1lon/dom-accessibility-api/commit/969da7d454b3d83dc7259d910f40e7e16a6eb560) [#240](https://github.com/eps1lon/dom-accessibility-api/pull/240) Thanks [@eps1lon](https://github.com/eps1lon)! - Reduce over-transpilation
+
+  Switched from
+
+  - `for-of` to `.forEach` or a basic `for` loop
+  - `array.push(...otherArray)` to `push.apply(array, otherArray)`
+
+  This removed a bunch of babel junk that wasn't needed.
+
+- [`d578329`](https://github.com/eps1lon/dom-accessibility-api/commit/d5783292ca49ae947bd95559030aa2c93c04565f) [#248](https://github.com/eps1lon/dom-accessibility-api/pull/248) Thanks [@eps1lon](https://github.com/eps1lon)! - Consider `<caption>` for the name of its `<table>` element.
+
+  ```html
+  <table>
+  	<caption>
+  		<em>my</em>
+  		table
+  	</caption>
+  </table>
+  ```
+
+  Computing the name for this table would've returned an empty string previously. It now correctly computes `my table` following the [accessible name computation for `table` elements](https://w3c.github.io/html-aam/#table-element)
+
+* [`f1b2bd0`](https://github.com/eps1lon/dom-accessibility-api/commit/f1b2bd0434cafe65812acfb0e3a2942309eb9726) [#237](https://github.com/eps1lon/dom-accessibility-api/pull/237) Thanks [@eps1lon](https://github.com/eps1lon)! - Use nodeType and tagName for element type checks
+
 ## 0.4.3
 
 ### Patch Changes
