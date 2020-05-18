@@ -291,6 +291,15 @@ test.each([
 		`<fieldset data-test aria-owns="legend"></fieldset><legend id="legend"><em>greek</em> rho</legend>`,
 		"",
 	],
+	// https://w3c.github.io/html-aam/#table-element
+	[
+		`<table data-test><caption><em>greek</em> rho</caption></caption>`,
+		"greek rho",
+	],
+	[
+		`<table data-test aria-owns="caption"></table><caption id="caption"><em>greek</em> rho</caption>`,
+		"",
+	],
 ])(`test #%#`, testMarkup);
 
 describe("prohibited naming", () => {
