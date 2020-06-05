@@ -96,10 +96,10 @@ context("wpt", () => {
 		["name_test_case_614-manual", "pass"],
 		["name_test_case_615-manual", "pass"],
 		["name_test_case_616-manual", "pass"],
-		["name_test_case_617-manual", "fail"], // whitespace, check if label children should be concetaned with a space
-		["name_test_case_618-manual", "fail"], // whitespace, see name_test_case_617-manual
-		["name_test_case_619-manual", "fail"], // whitespace, see name_test_case_617-manual
-		["name_test_case_620-manual", "fail"], // whitespace, see name_test_case_617-manual
+		["name_test_case_617-manual", "pass"],
+		["name_test_case_618-manual", "pass"],
+		["name_test_case_619-manual", "pass"],
+		["name_test_case_620-manual", "pass"],
 		["name_test_case_621-manual", "pass"],
 		["name_test_case_659-manual", "fail"], // wrong, ::before + [title] + ::after
 		["name_test_case_660-manual", "fail"], // wrong, ::before + [title] + ::after

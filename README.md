@@ -38,12 +38,12 @@ cloning. See [the test readme](/tests/README.md) for more info about the test se
 
 ### browser (Chrome)
 
-136/144 of which 5 are due to missing whitespace.
+140/144
 
 ### jsdom
 
 <details>
-<summary>report 126/159 passing of which 16 are due `::before { content }`, 14 are accessible desc, 7 are pathological </summary>
+<summary>report 124/159 passing of which 16 are due `::before { content }`, 15 are accessible desc, 4 are pathological </summary>
 
 ```bash
   web-platform-tests
