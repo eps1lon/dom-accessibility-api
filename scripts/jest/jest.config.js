@@ -4,7 +4,6 @@ const path = require("path");
 module.exports = {
 	coverageDirectory: path.resolve(__dirname, "../../coverage"),
 	rootDir: path.resolve(__dirname, "../../sources"),
-	testEnvironment: "jest-environment-jsdom-thirteen",
 	testPathIgnorePatterns: [
 		"/node_modules/",
 		"/fixtures/",
