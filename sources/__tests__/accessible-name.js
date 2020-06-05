@@ -302,6 +302,19 @@ test.each([
 	],
 ])(`test #%#`, testMarkup);
 
+test("text nodes are not concatenated by space", () => {
+	// how React would create `<h1>Hello {name}!</h1>`
+	// which transpiles to
+	// React.createElement('h1', 'Hello ', name, '!')
+	const heading = document.createElement("h1");
+	heading.appendChild(document.createTextNode("Hello "));
+	heading.appendChild(document.createTextNode("Jill"));
+	heading.appendChild(document.createTextNode("!"));
+	renderIntoDocument(heading);
+
+	expect(heading).toHaveAccessibleName("Hello Jill!");
+});
+
 describe("prohibited naming", () => {
 	test.each([
 		["caption", "<div data-test role='caption'>table</div>"],
@@ -401,7 +414,7 @@ describe("options.getComputedStyle", () => {
 		computeAccessibleName(container.querySelector("button"));
 
 		// also mixing in a regression test for the number of calls
-		expect(window.getComputedStyle).toHaveBeenCalledTimes(4);
+		expect(window.getComputedStyle).toHaveBeenCalledTimes(3);
 	});
 
 	it("can be mocked with a fake", () => {

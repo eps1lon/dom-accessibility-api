@@ -330,9 +330,13 @@ export function computeAccessibleName(
 				recursion: true,
 			});
 			// TODO: Unclear why display affects delimiter
-			const display =
-				isElement(node) &&
-				createGetComputedStyle(node, options)(node).getPropertyValue("display");
+			// see https://github.com/w3c/accname/issues/3
+			const display = isElement(child)
+				? createGetComputedStyle(
+						child,
+						options
+				  )(child).getPropertyValue("display")
+				: "inline";
 			const separator = display !== "inline" ? " " : "";
 			accumulatedText += `${separator}${result}`;
 		});
