@@ -335,6 +335,7 @@ export function computeAccessibleName(
 				? createGetComputedStyle(
 						child,
 						options
+						// eslint-disable-next-line no-mixed-spaces-and-tabs -- prettier bug?
 				  )(child).getPropertyValue("display")
 				: "inline";
 			const separator = display !== "inline" ? " " : "";
