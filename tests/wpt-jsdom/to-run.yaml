@@ -2,9 +2,9 @@ DIR: accname
 
 description_*.html: [fail, bridge not implemented]
 name_file-label-inline-block-elements-manual.html:
-  [fail, getComputedStyle display defaults not implemented]
+  [fail, whitespace issue, likely due to `display`]
 name_file-label-inline-block-styles-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
+  [fail, missing word, unknown]
 name_test_case_552-manual.html:
   [fail, getComputedStyle pseudo selector not implemented]
 name_test_case_553-manual.html:

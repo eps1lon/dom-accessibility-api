@@ -330,11 +330,17 @@ export function computeAccessibleName(
 				recursion: true,
 			});
 			// TODO: Unclear why display affects delimiter
-			const display =
-				isElement(node) &&
-				createGetComputedStyle(node, options)(node).getPropertyValue("display");
+			// see https://github.com/w3c/accname/issues/3
+			const display = isElement(child)
+				? createGetComputedStyle(
+						child,
+						options
+						// eslint-disable-next-line no-mixed-spaces-and-tabs -- prettier bug?
+				  )(child).getPropertyValue("display")
+				: "inline";
 			const separator = display !== "inline" ? " " : "";
-			accumulatedText += `${separator}${result}`;
+			// trailing separator for wpt tests
+			accumulatedText += `${separator}${result}${separator}`;
 		});
 
 		if (isElement(node)) {
