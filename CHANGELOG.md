@@ -1,5 +1,13 @@
 # dom-accessibility-api changelog
 
+## 0.4.5
+
+### Patch Changes
+
+- [`d668f72`](https://github.com/eps1lon/dom-accessibility-api/commit/d668f724aeb42cb71d720e0acd3518a03bbbee6e) [#273](https://github.com/eps1lon/dom-accessibility-api/pull/273) Thanks [@eps1lon](https://github.com/eps1lon)! - fix: Concatenate text nodes without space
+
+  Fixes `<h1>Hello {name}!</h1>` in `react` computing `"Hello name !"` instead of `Hello name!`.
+
 ## 0.4.4
 
 ### Patch Changes
