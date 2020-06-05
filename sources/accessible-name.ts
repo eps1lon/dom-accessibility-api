@@ -339,7 +339,8 @@ export function computeAccessibleName(
 				  )(child).getPropertyValue("display")
 				: "inline";
 			const separator = display !== "inline" ? " " : "";
-			accumulatedText += `${separator}${result}`;
+			// trailing separator for wpt tests
+			accumulatedText += `${separator}${result}${separator}`;
 		});
 
 		if (isElement(node)) {
