@@ -1,6 +1,7 @@
 DIR: accname
 
-description_*.html: [fail, bridge not implemented]
+# description_*.html: [pass]
+# name_*.html: [fail-slow, skip]
 name_file-label-inline-block-elements-manual.html:
   [fail, whitespace issue, likely due to `display`]
 name_file-label-inline-block-styles-manual.html:

@@ -3,8 +3,8 @@
  */
 import ArrayFrom from "./polyfills/array.from";
 import SetLike from "./polyfills/SetLike";
-import getRole from "./getRole";
 import {
+	hasAnyConcreteRoles,
 	isElement,
 	isHTMLTableCaptionElement,
 	isHTMLInputElement,
@@ -28,28 +28,8 @@ type FlatString = string & {
  * interface for an options-bag where `window.getComputedStyle` can be mocked
  */
 export interface ComputeTextAlternativeOptions {
+	compute?: "description" | "name";
 	getComputedStyle?: typeof window.getComputedStyle;
-}
-/**
- * Small utility that handles all the JS quirks with `this` which is important
- * if no mock is provided.
- * @param element
- * @param options - These are not optional to prevent accidentally calling it without options in `computeAccessibleName`
- */
-function createGetComputedStyle(
-	element: Element,
-	options: ComputeTextAlternativeOptions
-): typeof window.getComputedStyle {
-	const window = safeWindow(element);
-	const {
-		// This might be overengineered. I don't know what happens if I call
-		// window.getComputedStyle(elementFromAnotherWindow) or if I don't bind it
-		// the type declarations don't require a `this`
-		// eslint-disable-next-line no-restricted-properties
-		getComputedStyle = window.getComputedStyle.bind(window),
-	} = options;
-
-	return getComputedStyle;
 }
 
 /**
@@ -62,25 +42,6 @@ function asFlatString(s: string): FlatString {
 }
 
 /**
- * https://w3c.github.io/aria/#namefromprohibited
- */
-function prohibitsNaming(node: Node): boolean {
-	return hasAnyConcreteRoles(node, [
-		"caption",
-		"code",
-		"deletion",
-		"emphasis",
-		"generic",
-		"insertion",
-		"paragraph",
-		"presentation",
-		"strong",
-		"subscript",
-		"superscript",
-	]);
-}
-
-/**
  *
  * @param node -
  * @param options - These are not optional to prevent accidentally calling it without options in `computeAccessibleName`
@@ -88,7 +49,7 @@ function prohibitsNaming(node: Node): boolean {
  */
 function isHidden(
 	node: Node,
-	options: ComputeTextAlternativeOptions
+	getComputedStyleImplementation: typeof window.getComputedStyle
 ): node is Element {
 	if (!isElement(node)) {
 		return false;
@@ -101,7 +62,7 @@ function isHidden(
 		return true;
 	}
 
-	const style = createGetComputedStyle(node, options)(node);
+	const style = getComputedStyleImplementation(node);
 	return (
 		style.getPropertyValue("display") === "none" ||
 		style.getPropertyValue("visibility") === "hidden"
@@ -138,16 +99,6 @@ function hasAbstractRole(node: Node, role: string): node is Element {
 				`No knowledge about abstract role '${role}'. This is likely a bug :(`
 			);
 	}
-}
-
-function hasAnyConcreteRoles(
-	node: Node,
-	roles: Array<string | null>
-): node is Element {
-	if (isElement(node)) {
-		return roles.indexOf(getRole(node)) !== -1;
-	}
-	return false;
 }
 
 /**
@@ -273,9 +224,15 @@ export function computeTextAlternative(
 ): string {
 	const consultedNodes = new SetLike<Node>();
 
-	if (prohibitsNaming(root)) {
-		return "" as FlatString;
-	}
+	const window = safeWindow(root);
+	const {
+		compute = "name",
+		// This might be overengineered. I don't know what happens if I call
+		// window.getComputedStyle(elementFromAnotherWindow) or if I don't bind it
+		// the type declarations don't require a `this`
+		// eslint-disable-next-line no-restricted-properties
+		getComputedStyle = window.getComputedStyle.bind(window),
+	} = options;
 
 	// 2F.i
 	function computeMiscTextAlternative(
@@ -284,10 +241,7 @@ export function computeTextAlternative(
 	): string {
 		let accumulatedText = "";
 		if (isElement(node)) {
-			const pseudoBefore = createGetComputedStyle(node, options)(
-				node,
-				"::before"
-			);
+			const pseudoBefore = getComputedStyle(node, "::before");
 			const beforeContent = getTextualContent(pseudoBefore);
 			accumulatedText = `${beforeContent} ${accumulatedText}`;
 		}
@@ -306,11 +260,7 @@ export function computeTextAlternative(
 			// TODO: Unclear why display affects delimiter
 			// see https://github.com/w3c/accname/issues/3
 			const display = isElement(child)
-				? createGetComputedStyle(
-						child,
-						options
-						// eslint-disable-next-line no-mixed-spaces-and-tabs -- prettier bug?
-				  )(child).getPropertyValue("display")
+				? getComputedStyle(child).getPropertyValue("display")
 				: "inline";
 			const separator = display !== "inline" ? " " : "";
 			// trailing separator for wpt tests
@@ -318,7 +268,7 @@ export function computeTextAlternative(
 		});
 
 		if (isElement(node)) {
-			const pseudoAfter = createGetComputedStyle(node, options)(node, ":after");
+			const pseudoAfter = getComputedStyle(node, ":after");
 			const afterContent = getTextualContent(pseudoAfter);
 			accumulatedText = `${accumulatedText} ${afterContent}`;
 		}
@@ -446,14 +396,18 @@ export function computeTextAlternative(
 		}
 
 		// 2A
-		if (isHidden(current, options) && !context.isReferenced) {
+		if (isHidden(current, getComputedStyle) && !context.isReferenced) {
 			consultedNodes.add(current);
 			return "" as FlatString;
 		}
 
 		// 2B
 		const labelElements = queryIdRefs(current, "aria-labelledby");
-		if (!context.isReferenced && labelElements.length > 0) {
+		if (
+			compute === "name" &&
+			!context.isReferenced &&
+			labelElements.length > 0
+		) {
 			return labelElements
 				.map((element) =>
 					computeTextAlternative(element, {
@@ -471,13 +425,14 @@ export function computeTextAlternative(
 		// 2C
 		// Changed from the spec in anticipation of https://github.com/w3c/accname/issues/64
 		// spec says we should only consider skipping if we have a non-empty label
-		const skipToStep2E = context.recursion && isControl(current);
+		const skipToStep2E =
+			context.recursion && isControl(current) && compute === "name";
 		if (!skipToStep2E) {
 			const ariaLabel = (
 				(isElement(current) && current.getAttribute("aria-label")) ||
 				""
 			).trim();
-			if (ariaLabel !== "") {
+			if (ariaLabel !== "" && compute === "name") {
 				consultedNodes.add(current);
 				return ariaLabel;
 			}
@@ -580,7 +535,8 @@ export function computeTextAlternative(
 	return asFlatString(
 		computeTextAlternative(root, {
 			isEmbeddedInLabel: false,
-			isReferenced: false,
+			// by spec computeAccessibleDescription starts with the referenced elements as roots
+			isReferenced: compute === "description",
 			recursion: false,
 		})
 	);

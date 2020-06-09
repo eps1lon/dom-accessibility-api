@@ -30,6 +30,12 @@ class ATTAcomm {
 								assert_equals(actual, expected);
 								continue;
 							}
+						} else if (name === descriptionPropertyName[implementation]) {
+							const actual = computeAccessibleDescription(element);
+							if (equality === "is") {
+								assert_equals(actual, expected);
+								continue;
+							}
 						}
 					}
 
