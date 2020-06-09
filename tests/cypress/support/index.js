@@ -1,9 +1,11 @@
-import { computeAccessibleName } from "../../../dist";
+import {
+	computeAccessibleName,
+	computeAccessibleDescription,
+} from "../../../dist";
 
 chai.use((_chai, _utils) => {
 	function assertAccessibleName(expected) {
 		const element = _utils.flag(this, "object");
-		console.log(element);
 		const actual = computeAccessibleName(element);
 
 		this.assert(
@@ -14,4 +16,20 @@ chai.use((_chai, _utils) => {
 	}
 
 	_chai.Assertion.addMethod("accessibleName", assertAccessibleName);
+
+	function assertAccessibleDescription(expected) {
+		const element = _utils.flag(this, "object");
+		const actual = computeAccessibleDescription(element);
+
+		this.assert(
+			expected === actual,
+			`expected to have accessible description '${expected}' but got '${actual}'`,
+			`expected to not have accessible description ${expected}`
+		);
+	}
+
+	_chai.Assertion.addMethod(
+		"accessibleDescription",
+		assertAccessibleDescription
+	);
 });

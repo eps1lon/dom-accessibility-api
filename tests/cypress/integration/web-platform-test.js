@@ -174,23 +174,36 @@ context("wpt", () => {
 				`#steps tr:nth-of-type(2) .api tr:nth-of-type(${2 + usedApiIndex})`
 			)
 				.then(($row) => {
-					const [$apiName, $access, $name, $equality, $expected] = $row.find(
-						"td"
-					);
+					const [
+						$apiName,
+						$access,
+						$property,
+						$equality,
+						$expected,
+					] = $row.find("td");
 
 					// these cases are handled
 					expect($apiName.textContent).to.equal("ATK");
 					expect($access.textContent).to.equal("property");
+					expect($property.textContent).to.be.oneOf(["name", "description"]);
 					expect($equality.textContent).to.equal("is");
 
-					return $expected.textContent;
+					return [$property.textContent, $expected.textContent];
 				})
-				.then((expected) => {
+				.then(([property, expected]) => {
 					cy.get("#test").then(($element) => {
-						if (result === "pass") {
-							expect($element[0]).to.have.accessibleName(expected);
-						} else if (result === "fail") {
-							expect($element[0]).not.to.have.accessibleName(expected);
+						if (property === "name") {
+							if (result === "pass") {
+								expect($element[0]).to.have.accessibleName(expected);
+							} else if (result === "fail") {
+								expect($element[0]).not.to.have.accessibleName(expected);
+							}
+						} else if (property === "description") {
+							if (result === "pass") {
+								expect($element[0]).to.have.accessibleDescription(expected);
+							} else if (result === "fail") {
+								expect($element[0]).not.to.have.accessibleDescription(expected);
+							}
 						}
 					});
 				});
