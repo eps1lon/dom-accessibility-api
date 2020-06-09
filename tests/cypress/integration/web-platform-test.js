@@ -4,6 +4,20 @@ const usedApiIndex = 0; // ATK
 
 context("wpt", () => {
 	[
+		["description_1.0_combobox-focusable-manual.html", "fail"],
+		["description_from_content_of_describedby_element-manual.html", "fail"],
+		["description_link-with-label-manual.html", "pass"],
+		["description_test_case_557-manual.html", "pass"],
+		["description_test_case_664-manual.html", "pass"],
+		["description_test_case_665-manual.html", "pass"],
+		["description_test_case_666-manual.html", "pass"],
+		["description_test_case_772-manual.html", "pass"],
+		["description_test_case_773-manual.html", "pass"],
+		["description_test_case_774-manual.html", "pass"],
+		["description_test_case_838-manual.html", "pass"],
+		["description_test_case_broken_reference-manual.html", "pass"],
+		["description_test_case_one_valid_reference-manual.html", "pass"],
+		["description_title-same-element-manual.html", "pass"],
 		["name_1.0_combobox-focusable-alternative-manual", "pass"],
 		["name_1.0_combobox-focusable-manual", "pass"],
 		["name_checkbox-label-embedded-combobox-manual", "pass"],
@@ -160,23 +174,36 @@ context("wpt", () => {
 				`#steps tr:nth-of-type(2) .api tr:nth-of-type(${2 + usedApiIndex})`
 			)
 				.then(($row) => {
-					const [$apiName, $access, $name, $equality, $expected] = $row.find(
-						"td"
-					);
+					const [
+						$apiName,
+						$access,
+						$property,
+						$equality,
+						$expected,
+					] = $row.find("td");
 
 					// these cases are handled
 					expect($apiName.textContent).to.equal("ATK");
 					expect($access.textContent).to.equal("property");
+					expect($property.textContent).to.be.oneOf(["name", "description"]);
 					expect($equality.textContent).to.equal("is");
 
-					return $expected.textContent;
+					return [$property.textContent, $expected.textContent];
 				})
-				.then((expected) => {
+				.then(([property, expected]) => {
 					cy.get("#test").then(($element) => {
-						if (result === "pass") {
-							expect($element[0]).to.have.accessibleName(expected);
-						} else if (result === "fail") {
-							expect($element[0]).not.to.have.accessibleName(expected);
+						if (property === "name") {
+							if (result === "pass") {
+								expect($element[0]).to.have.accessibleName(expected);
+							} else if (result === "fail") {
+								expect($element[0]).not.to.have.accessibleName(expected);
+							}
+						} else if (property === "description") {
+							if (result === "pass") {
+								expect($element[0]).to.have.accessibleDescription(expected);
+							} else if (result === "fail") {
+								expect($element[0]).not.to.have.accessibleDescription(expected);
+							}
 						}
 					});
 				});

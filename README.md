@@ -4,7 +4,7 @@
 [![Build Status](https://dev.azure.com/silbermannsebastian/dom-accessibility-api/_apis/build/status/eps1lon.dom-accessibility-api?branchName=master)](https://dev.azure.com/silbermannsebastian/dom-accessibility-api/_build/latest?definitionId=6&branchName=master)
 ![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/silbermannsebastian/dom-accessibility-api/6)
 
-Computes the accessible name of a given DOM Element.
+Computes the accessible name or description of a given DOM Element.
 https://w3c.github.io/accname/ implemented in JavaScript for testing.
 
 ```bash
@@ -12,7 +12,10 @@ $ yarn add dom-accessibility-api
 ```
 
 ```js
-import { computeAccessibleName } from "dom-accessibility-api";
+import {
+	computeAccessibleName,
+	computeAccessibleDescription,
+} from "dom-accessibility-api";
 ```
 
 I'm not an editor of any of the referenced specs (nor very experience with using them) so if you got any insights, something catches
@@ -38,30 +41,30 @@ cloning. See [the test readme](/tests/README.md) for more info about the test se
 
 ### browser (Chrome)
 
-140/144
+153/159
 
 ### jsdom
 
 <details>
-<summary>report 124/159 passing of which 16 are due `::before { content }`, 15 are accessible desc, 4 are pathological </summary>
+<summary>report 138/159 passing of which 15 are due `::before { content }`, one might a wrong test, 5 are pathological </summary>
 
 ```bash
   web-platform-tests
     accname
       ✓ [expected fail] description_1.0_combobox-focusable-manual.html
       ✓ [expected fail] description_from_content_of_describedby_element-manual.html
-      ✓ [expected fail] description_link-with-label-manual.html
-      ✓ [expected fail] description_test_case_557-manual.html
-      ✓ [expected fail] description_test_case_664-manual.html
-      ✓ [expected fail] description_test_case_665-manual.html
-      ✓ [expected fail] description_test_case_666-manual.html
-      ✓ [expected fail] description_test_case_772-manual.html
-      ✓ [expected fail] description_test_case_773-manual.html
-      ✓ [expected fail] description_test_case_774-manual.html
-      ✓ [expected fail] description_test_case_838-manual.html
-      ✓ [expected fail] description_test_case_broken_reference-manual.html
-      ✓ [expected fail] description_test_case_one_valid_reference-manual.html
-      ✓ [expected fail] description_title-same-element-manual.html
+      ✓ description_link-with-label-manual.html
+      ✓ description_test_case_557-manual.html
+      ✓ description_test_case_664-manual.html
+      ✓ description_test_case_665-manual.html
+      ✓ description_test_case_666-manual.html
+      ✓ description_test_case_772-manual.html
+      ✓ description_test_case_773-manual.html
+      ✓ description_test_case_774-manual.html
+      ✓ description_test_case_838-manual.html
+      ✓ description_test_case_broken_reference-manual.html
+      ✓ description_test_case_one_valid_reference-manual.html
+      ✓ description_title-same-element-manual.html
       ✓ name_1.0_combobox-focusable-alternative-manual.html
       ✓ name_1.0_combobox-focusable-manual.html
       ✓ name_checkbox-label-embedded-combobox-manual.html
