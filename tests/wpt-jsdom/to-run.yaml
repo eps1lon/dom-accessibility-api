@@ -1,11 +1,12 @@
 DIR: accname
 
-# description_*.html: [pass]
-# name_*.html: [fail-slow, skip]
+description_1.0_combobox-focusable-manual.html:
+  [fail, title already used for name]
+description_from_content_of_describedby_element-manual.html:
+  [fail, test considers aria-label for description which is wrong IMO]
 name_file-label-inline-block-elements-manual.html:
   [fail, whitespace issue, likely due to `display`]
-name_file-label-inline-block-styles-manual.html:
-  [fail, missing word, unknown]
+name_file-label-inline-block-styles-manual.html: [fail, missing word, unknown]
 name_test_case_552-manual.html:
   [fail, getComputedStyle pseudo selector not implemented]
 name_test_case_553-manual.html:
@@ -36,4 +37,3 @@ name_test_case_759-manual.html:
   [fail, getComputedStyle pseudo selector not implemented]
 name_test_case_76*-manual.html:
   [fail, getComputedStyle pseudo selector not implemented]
-#name_*.html: [pass]

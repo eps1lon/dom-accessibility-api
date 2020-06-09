@@ -53,7 +53,11 @@ describe("wpt copies", () => {
 			`<img src="foo.jpg" data-test alt="test" aria-describedby="t1"><span id="t1" role="presentation">foo</span>`,
 			"foo",
 		],
-	])(`%#`, (markup, expectedAccessibleName) =>
+		[
+			`<a data-test href="#" aria-label="California" title="San Francisco" >United States</a>`,
+			"San Francisco",
+		],
+	])(`#%#`, (markup, expectedAccessibleName) =>
 		testMarkup(markup, expectedAccessibleName)
 	);
 });

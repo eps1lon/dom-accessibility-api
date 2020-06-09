@@ -14,11 +14,7 @@ export function computeAccessibleDescription(
 	root: Element,
 	options: ComputeTextAlternativeOptions = {}
 ): string {
-	if (!root.hasAttribute("aria-describedBy")) {
-		return "";
-	}
-
-	return queryIdRefs(root, "aria-describedby")
+	let description = queryIdRefs(root, "aria-describedby")
 		.map((element) => {
 			return computeTextAlternative(element, {
 				...options,
@@ -26,4 +22,16 @@ export function computeAccessibleDescription(
 			});
 		})
 		.join(" ");
+
+	// TODO: Technically we need to make sure that node wasn't used for the accessible name
+	//       This causes `description_1.0_combobox-focusable-manual` to fail
+	// 
+	// https://www.w3.org/TR/html-aam-1.0/#accessible-name-and-description-computation
+	// says for so many elements to use the `title` that we assume all elements are considered
+	if (description === "") {
+		const title = root.getAttribute("title");
+		description = title === null ? "" : title;
+	}
+
+	return description;
 }

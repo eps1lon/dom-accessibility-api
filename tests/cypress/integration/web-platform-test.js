@@ -4,6 +4,20 @@ const usedApiIndex = 0; // ATK
 
 context("wpt", () => {
 	[
+		["description_1.0_combobox-focusable-manual.html", "fail"],
+		["description_from_content_of_describedby_element-manual.html", "fail"],
+		["description_link-with-label-manual.html", "pass"],
+		["description_test_case_557-manual.html", "pass"],
+		["description_test_case_664-manual.html", "pass"],
+		["description_test_case_665-manual.html", "pass"],
+		["description_test_case_666-manual.html", "pass"],
+		["description_test_case_772-manual.html", "pass"],
+		["description_test_case_773-manual.html", "pass"],
+		["description_test_case_774-manual.html", "pass"],
+		["description_test_case_838-manual.html", "pass"],
+		["description_test_case_broken_reference-manual.html", "pass"],
+		["description_test_case_one_valid_reference-manual.html", "pass"],
+		["description_title-same-element-manual.html", "pass"],
 		["name_1.0_combobox-focusable-alternative-manual", "pass"],
 		["name_1.0_combobox-focusable-manual", "pass"],
 		["name_checkbox-label-embedded-combobox-manual", "pass"],
