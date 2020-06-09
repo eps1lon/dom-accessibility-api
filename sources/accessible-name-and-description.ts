@@ -14,6 +14,7 @@ import {
 	isHTMLFieldSetElement,
 	isHTMLLegendElement,
 	isHTMLTableElement,
+	queryIdRefs,
 } from "./util";
 
 /**
@@ -108,33 +109,6 @@ function isHidden(
 }
 
 /**
- *
- * @param {Node} node -
- * @param {string} attributeName -
- * @returns {Element[]} -
- */
-function idRefs(node: Node, attributeName: string): Element[] {
-	if (isElement(node) && node.hasAttribute(attributeName)) {
-		// safe due to hasAttribute check
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		const ids = node.getAttribute(attributeName)!.split(" ");
-
-		return (
-			ids
-				// safe since it can't be null for an Element
-				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-				.map((id) => node.ownerDocument!.getElementById(id))
-				.filter(
-					(element: Element | null): element is Element => element !== null
-					// TODO: why does this not narrow?
-				) as Element[]
-		);
-	}
-
-	return [];
-}
-
-/**
  * @param {Node} node -
  * @returns {boolean} - As defined in step 2E of https://w3c.github.io/accname/#mapping_additional_nd_te
  */
@@ -187,7 +161,7 @@ function querySelectorAllSubtree(
 ): Element[] {
 	const elements = ArrayFrom(element.querySelectorAll(selectors));
 
-	idRefs(element, "aria-owns").forEach((root) => {
+	queryIdRefs(element, "aria-owns").forEach((root) => {
 		// babel transpiles this assuming an iterator
 		elements.push.apply(elements, ArrayFrom(root.querySelectorAll(selectors)));
 	});
@@ -321,7 +295,7 @@ export function computeTextAlternative(
 		// FIXME: This is not defined in the spec
 		// But it is required in the web-platform-test
 		const childNodes = ArrayFrom(node.childNodes).concat(
-			idRefs(node, "aria-owns")
+			queryIdRefs(node, "aria-owns")
 		);
 		childNodes.forEach((child) => {
 			const result = computeTextAlternative(child, {
@@ -478,7 +452,7 @@ export function computeTextAlternative(
 		}
 
 		// 2B
-		const labelElements = idRefs(current, "aria-labelledby");
+		const labelElements = queryIdRefs(current, "aria-labelledby");
 		if (!context.isReferenced && labelElements.length > 0) {
 			return labelElements
 				.map((element) =>
