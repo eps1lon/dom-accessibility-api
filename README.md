@@ -23,6 +23,9 @@ your eye please open an issue.
 
 ## Supported environments
 
+WARNING: Only [active node versions](https://nodejs.org/en/about/releases/) are supported.
+Inactive node versions can stop working in a SemVer MINOR release.
+
 ```bash
 ie 11
 edge >= 14

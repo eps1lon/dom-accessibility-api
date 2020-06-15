@@ -21,12 +21,12 @@ strategy:
     # EOL: 	2022-04-30
     node_12_x:
       node_version: 12.x
-    # EOL: 2020-06-01
-    node_13_x:
-      node_version: 13.x
     # EOL: 2023-04-30
     node_14_x:
       node_version: 14.x
+    # Release: 2020-10-21
+    # node_15_x:
+    #   node_version: 15.x
 
 steps:
   - task: NodeTool@0
@@ -96,8 +96,8 @@ steps:
     displayName: "ES modules in node smoke tests of build"
     workingDirectory: tests/build/fixtures/node-es-modules
     # in node 12 we need to use a flag and I'm too lazy to branch even further
-    # running in node >= 13 is hopefully a sufficient smoke test
-    condition: or(startsWith(variables['node_version'], '13.'), startsWith(variables['node_version'], '14.'))
+    # not running in node < 13 is hopefully a sufficient smoke test
+    condition: not(or(startsWith(variables['node_version'], '10.'), startsWith(variables['node_version'], '12.')))
 
   - script: yarn test:ci
     displayName: "Run jest tests"
