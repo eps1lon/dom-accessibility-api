@@ -1367,10 +1367,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@testing-library/dom@^7.15.0":
-  version "7.15.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.15.0.tgz#f47d2c391406846177ad5153f51bd5c5ef0c972e"
-  integrity sha512-H+cQksHNYjxTS62S+exT5ZcBZeJXE3NDHUKs6MTopp4cMgd8DHX78IUohyUGqJRD1AthtgnKujrPTxYdWZ/w9w==
+"@testing-library/dom@^7.16.2":
+  version "7.16.2"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.16.2.tgz#f7a20b5548817e5c7ed26077913372d977be90af"
+  integrity sha512-4fT5l5L+5gfNhUZVCg0wnSszbRJ7A1ZHEz32v7OzH3mcY5lUsK++brI3IB2L9F5zO4kSDc2TRGEVa8v2hgl9vA==
   dependencies:
     "@babel/runtime" "^7.10.2"
     aria-query "^4.0.2"
