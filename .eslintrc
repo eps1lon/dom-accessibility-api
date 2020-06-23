@@ -6,7 +6,7 @@
 	],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
-		// trade off between having a warning without consequences on master
+		// trade off between having a warning without consequences on main
 		// and having no warning but non-descriptive errors when using typescript@^3.8 syntax
 		"warnOnUnsupportedTypeScriptVersion": false
 	},

@@ -1,5 +1,5 @@
 trigger:
-  - master
+  - main
 
 # https://developercommunity.visualstudio.com/comments/949241/view.html
 pr:
@@ -63,20 +63,20 @@ steps:
     artifact: dom-accessibility-api-node-$(node_version)
 
   - task: DownloadPipelineArtifact@2
-    displayName: "Download tarball from master"
+    displayName: "Download tarball from main"
     inputs:
       artifact: dom-accessibility-api-node-$(node_version)
-      path: $(Agent.TempDirectory)/artifacts-master
+      path: $(Agent.TempDirectory)/artifacts-main
       source: specific
       pipeline: $(System.DefinitionId)
       project: $(System.TeamProject)
       runVersion: latestFromBranch
-      runBranch: refs/heads/master
+      runBranch: refs/heads/main
 
   - script: |
       mkdir $(Agent.TempDirectory)/published-previous
       mkdir $(Agent.TempDirectory)/published-current
-      tar xfz $(Agent.TempDirectory)/artifacts-master/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-previous
+      tar xfz $(Agent.TempDirectory)/artifacts-main/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-previous
       tar xfz $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-current
       # --no-index implies --exit-code
       # This task is informative only.
