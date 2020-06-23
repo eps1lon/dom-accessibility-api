@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@babel/cli@^7.10.1":
-  version "7.10.1"
-  resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.10.1.tgz#b6e5cd43a17b8f639442ab027976408ebe6d79a0"
-  integrity sha512-cVB+dXeGhMOqViIaZs3A9OUAe4pKw4SBNdMw6yHJMYR7s4TB+Cei7ThquV/84O19PdIFWuwe03vxxES0BHUm5g==
+"@babel/cli@^7.10.3":
+  version "7.10.3"
+  resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.10.3.tgz#4ea83bd997d2a41c78d07263ada3ec466fb3764b"
+  integrity sha512-lWB3yH5/fWY8pi2Kj5/fA+17guJ9feSBw5DNjTju3/nRi9sXnl1JPh7aKQOSvdNbiDbkzzoGYtsr46M8dGmXDQ==
   dependencies:
     commander "^4.0.1"
     convert-source-map "^1.1.0"
@@ -18,7 +18,7 @@
   optionalDependencies:
     chokidar "^2.1.8"
 
-"@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.3":
+"@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.1", "@babel/code-frame@^7.10.3":
   version "7.10.3"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.10.3.tgz#324bcfd8d35cd3d47dae18cde63d752086435e9a"
   integrity sha512-fDx9eNW0qz0WkUeqL6tXEXzVlPh6Y5aCDEZesl0xBGA8ndRukX91Uk44ZqnkECp01NAZUdCAl+aiQNGi0k88Eg==
@@ -56,7 +56,7 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/generator@^7.10.3":
+"@babel/generator@^7.10.1", "@babel/generator@^7.10.3":
   version "7.10.3"
   resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.10.3.tgz#32b9a0d963a71d7a54f5f6c15659c3dbc2a523a5"
   integrity sha512-drt8MUHbEqRzNR0xnF8nMehbY11b1SDkRw03PSNH/3Rb2Z35oxkddVSi3rcaak0YJQ86PCuE7Qx1jSFhbLNBMA==
@@ -307,7 +307,7 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.10.2.tgz#871807f10442b92ff97e4783b9b54f6a0ca812d0"
   integrity sha512-PApSXlNMJyB4JiGVhCOlzKIif+TKFTvu0aQAhnTvfP/z3vVSN6ZypH5bfUNwFXXjRQtUEBNFd2PtmCmG2Py3qQ==
 
-"@babel/parser@^7.10.3":
+"@babel/parser@^7.10.1", "@babel/parser@^7.10.3":
   version "7.10.3"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.10.3.tgz#7e71d892b0d6e7d04a1af4c3c79d72c1f10f5315"
   integrity sha512-oJtNJCMFdIMwXGmx+KxuaD7i3b8uS7TTFYW/FNG2BT8m+fmGHoiPYoH0Pe3gya07WuFmM5FCDIr1x0irkD/hyA==
