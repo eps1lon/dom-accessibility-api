@@ -62,27 +62,27 @@ steps:
     displayName: "Publish tarball"
     artifact: dom-accessibility-api-node-$(node_version)
 
-  - task: DownloadPipelineArtifact@2
-    displayName: "Download tarball from main"
-    inputs:
-      artifact: dom-accessibility-api-node-$(node_version)
-      path: $(Agent.TempDirectory)/artifacts-main
-      source: specific
-      pipeline: $(System.DefinitionId)
-      project: $(System.TeamProject)
-      runVersion: latestFromBranch
-      runBranch: refs/heads/main
+  # - task: DownloadPipelineArtifact@2
+  #   displayName: "Download tarball from main"
+  #   inputs:
+  #     artifact: dom-accessibility-api-node-$(node_version)
+  #     path: $(Agent.TempDirectory)/artifacts-main
+  #     source: specific
+  #     pipeline: $(System.DefinitionId)
+  #     project: $(System.TeamProject)
+  #     runVersion: latestFromBranch
+  #     runBranch: refs/heads/main
 
-  - script: |
-      mkdir $(Agent.TempDirectory)/published-previous
-      mkdir $(Agent.TempDirectory)/published-current
-      tar xfz $(Agent.TempDirectory)/artifacts-main/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-previous
-      tar xfz $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-current
-      # --no-index implies --exit-code
-      # This task is informative only.
-      # Diffs are almost always expected
-      git --no-pager diff --color --no-index $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current || exit 0
-    displayName: "Diff tarballs"
+  # - script: |
+  #     mkdir $(Agent.TempDirectory)/published-previous
+  #     mkdir $(Agent.TempDirectory)/published-current
+  #     tar xfz $(Agent.TempDirectory)/artifacts-main/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-previous
+  #     tar xfz $(System.DefaultWorkingDirectory)/dom-accessibility-api.tgz --directory $(Agent.TempDirectory)/published-current
+  #     # --no-index implies --exit-code
+  #     # This task is informative only.
+  #     # Diffs are almost always expected
+  #     git --no-pager diff --color --no-index $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current || exit 0
+  #   displayName: "Diff tarballs"
 
   - script: yarn start
     displayName: "kcd-rollup smoke tests of build"
