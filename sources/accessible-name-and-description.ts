@@ -49,7 +49,8 @@ function asFlatString(s: string): FlatString {
  */
 function isHidden(
 	node: Node,
-	getComputedStyleImplementation: typeof window.getComputedStyle
+	getComputedStyleImplementation: typeof window.getComputedStyle,
+	nodeComputedStyle: CSSStyleDeclaration | undefined
 ): node is Element {
 	if (!isElement(node)) {
 		return false;
@@ -62,7 +63,7 @@ function isHidden(
 		return true;
 	}
 
-	const style = getComputedStyleImplementation(node);
+	const style = nodeComputedStyle || getComputedStyleImplementation(node);
 	return (
 		style.getPropertyValue("display") === "none" ||
 		style.getPropertyValue("visibility") === "hidden"
@@ -252,15 +253,22 @@ export function computeTextAlternative(
 			queryIdRefs(node, "aria-owns")
 		);
 		childNodes.forEach((child) => {
-			const result = computeTextAlternative(child, {
-				isEmbeddedInLabel: context.isEmbeddedInLabel,
-				isReferenced: false,
-				recursion: true,
-			});
+			const childComputedStyle = isElement(child)
+				? getComputedStyle(child)
+				: undefined;
+			const result = computeTextAlternative(
+				child,
+				{
+					isEmbeddedInLabel: context.isEmbeddedInLabel,
+					isReferenced: false,
+					recursion: true,
+				},
+				childComputedStyle
+			);
 			// TODO: Unclear why display affects delimiter
 			// see https://github.com/w3c/accname/issues/3
-			const display = isElement(child)
-				? getComputedStyle(child).getPropertyValue("display")
+			const display = childComputedStyle
+				? childComputedStyle.getPropertyValue("display")
 				: "inline";
 			const separator = display !== "inline" ? " " : "";
 			// trailing separator for wpt tests
@@ -382,7 +390,8 @@ export function computeTextAlternative(
 			isEmbeddedInLabel: boolean;
 			isReferenced: boolean;
 			recursion: boolean;
-		}
+		},
+		nodeComputedStyle?: CSSStyleDeclaration
 	): string {
 		if (consultedNodes.has(current)) {
 			return "";
@@ -396,7 +405,10 @@ export function computeTextAlternative(
 		}
 
 		// 2A
-		if (isHidden(current, getComputedStyle) && !context.isReferenced) {
+		if (
+			isHidden(current, getComputedStyle, nodeComputedStyle) &&
+			!context.isReferenced
+		) {
 			consultedNodes.add(current);
 			return "" as FlatString;
 		}
