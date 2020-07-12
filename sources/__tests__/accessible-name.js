@@ -300,6 +300,11 @@ test.each([
 		`<table data-test aria-owns="caption"></table><caption id="caption"><em>greek</em> rho</caption>`,
 		"",
 	],
+	// https://www.w3.org/TR/svg-aam-1.0/
+	[
+		`<svg data-test><title><em>greek</em> rho</title></svg>`,
+		"greek rho",
+	],
 ])(`test #%#`, testMarkup);
 
 test("text nodes are not concatenated by space", () => {

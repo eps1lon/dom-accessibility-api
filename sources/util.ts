@@ -56,6 +56,18 @@ export function isHTMLLegendElement(
 	return isElement(node) && node.tagName === "LEGEND";
 }
 
+export function isHTMLSvgElement(
+	node: Node | null
+): node is SVGElement {
+	return isElement(node) && node.tagName === "svg";
+}
+
+export function isHTMLSvgTitleElement(
+	node: Node | null
+): node is SVGTitleElement {
+	return isElement(node) && node.tagName === "title";
+}
+
 /**
  *
  * @param {Node} node -
