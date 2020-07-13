@@ -11,6 +11,4 @@ function cleanup() {
 	document.body.innerHTML = "";
 }
 
-afterEach(cleanup);
-
 export { render, renderIntoDocument, cleanup };

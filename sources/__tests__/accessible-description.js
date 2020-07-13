@@ -1,5 +1,5 @@
 import { computeAccessibleDescription } from "../accessible-description";
-import { renderIntoDocument } from "./helpers/test-utils";
+import { cleanup, renderIntoDocument } from "./helpers/test-utils";
 import { prettyDOM } from "@testing-library/dom";
 import diff from "jest-diff";
 
@@ -46,6 +46,8 @@ function testMarkup(markup, accessibleDescription) {
 	const testNode = container.querySelector("[data-test]");
 	expect(testNode).toHaveAccessibleDescription(accessibleDescription);
 }
+
+afterEach(cleanup);
 
 describe("wpt copies", () => {
 	test.each([

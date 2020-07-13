@@ -1,5 +1,5 @@
 import { computeAccessibleName } from "../accessible-name";
-import { renderIntoDocument } from "./helpers/test-utils";
+import { cleanup, renderIntoDocument } from "./helpers/test-utils";
 import { prettyDOM } from "@testing-library/dom";
 import diff from "jest-diff";
 
@@ -46,6 +46,8 @@ function testMarkup(markup, accessibleName) {
 	const testNode = container.querySelector("[data-test]");
 	expect(testNode).toHaveAccessibleName(accessibleName);
 }
+
+afterEach(cleanup);
 
 describe("to upstream", () => {
 	// name from content
