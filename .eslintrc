@@ -44,6 +44,9 @@
 			"files": ["**/*.js"],
 			"rules": {
 				// this rule is unfixable in untyped languages
+				// https://github.com/typescript-eslint/typescript-eslint/blob/v3.4.0/packages/eslint-plugin/docs/rules/explicit-module-boundary-types.md#configuring-in-a-mixed-jsts-codebase
+				"@typescript-eslint/explicit-module-boundary-types": "off",
+				// this rule is unfixable in untyped languages
 				// https://github.com/typescript-eslint/typescript-eslint/blob/v2.31.0/packages/eslint-plugin/docs/rules/explicit-function-return-type.md#configuring-in-a-mixed-jsts-codebase
 				"@typescript-eslint/explicit-function-return-type": "off"
 			}
