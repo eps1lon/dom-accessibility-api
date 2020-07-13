@@ -123,8 +123,7 @@ function getImplicitRole(element: Element): string | null {
 
 function getExplicitRole(element: Element): string | null {
 	if (element.hasAttribute("role")) {
-		// safe due to hasAttribute check
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- safe due to hasAttribute check
 		const [explicitRole] = element.getAttribute("role")!.trim().split(" ");
 		if (explicitRole !== undefined && explicitRole.length > 0) {
 			return explicitRole;

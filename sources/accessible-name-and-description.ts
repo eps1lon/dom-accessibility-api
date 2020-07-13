@@ -491,13 +491,11 @@ export function computeTextAlternative(
 			if (hasAbstractRole(current, "range")) {
 				consultedNodes.add(current);
 				if (current.hasAttribute("aria-valuetext")) {
-					// safe due to hasAttribute guard
-					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- safe due to hasAttribute guard
 					return current.getAttribute("aria-valuetext")!;
 				}
 				if (current.hasAttribute("aria-valuenow")) {
-					// safe due to hasAttribute guard
-					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- safe due to hasAttribute guard
 					return current.getAttribute("aria-valuenow")!;
 				}
 				// Otherwise, use the value as specified by a host language attribute.

@@ -76,20 +76,15 @@ export function isSVGTitleElement(node: Node | null): node is SVGTitleElement {
  */
 export function queryIdRefs(node: Node, attributeName: string): Element[] {
 	if (isElement(node) && node.hasAttribute(attributeName)) {
-		// safe due to hasAttribute check
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- safe due to hasAttribute check
 		const ids = node.getAttribute(attributeName)!.split(" ");
 
-		return (
-			ids
-				// safe since it can't be null for an Element
-				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-				.map((id) => node.ownerDocument!.getElementById(id))
-				.filter(
-					(element: Element | null): element is Element => element !== null
-					// TODO: why does this not narrow?
-				) as Element[]
-		);
+		return ids
+			.map((id) => node.ownerDocument.getElementById(id))
+			.filter(
+				(element: Element | null): element is Element => element !== null
+				// TODO: why does this not narrow?
+			) as Element[];
 	}
 
 	return [];
