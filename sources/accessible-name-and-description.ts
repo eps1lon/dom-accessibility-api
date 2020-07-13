@@ -14,6 +14,8 @@ import {
 	isHTMLFieldSetElement,
 	isHTMLLegendElement,
 	isHTMLTableElement,
+	isSVGSVGElement,
+	isSVGTitleElement,
 	queryIdRefs,
 } from "./util";
 
@@ -331,6 +333,19 @@ export function computeTextAlternative(
 						isReferenced: false,
 						recursion: false,
 					});
+				}
+			}
+			return null;
+		}
+
+		// https://www.w3.org/TR/svg-aam-1.0/
+		if (isSVGSVGElement(node)) {
+			consultedNodes.add(node);
+			const children = ArrayFrom(node.childNodes);
+			for (let i = 0; i < children.length; i += 1) {
+				const child = children[i];
+				if (isSVGTitleElement(child)) {
+					return child.textContent;
 				}
 			}
 			return null;
