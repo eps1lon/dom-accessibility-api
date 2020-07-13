@@ -56,14 +56,16 @@ export function isHTMLLegendElement(
 	return isElement(node) && node.tagName === "LEGEND";
 }
 
-export function isHTMLSvgElement(node: Node | null): node is SVGElement {
+export function isSVGElement(node: Node | null): node is SVGElement {
+	return isElement(node) && node.ownerSVGElement !== undefined;
+}
+
+export function isSVGSVGElement(node: Node | null): node is SVGSVGElement {
 	return isElement(node) && node.tagName === "svg";
 }
 
-export function isHTMLSvgTitleElement(
-	node: Node | null
-): node is SVGTitleElement {
-	return isElement(node) && node.tagName === "title";
+export function isSVGTitleElement(node: Node | null): node is SVGTitleElement {
+	return isSVGElement(node) && node.tagName === "title";
 }
 
 /**

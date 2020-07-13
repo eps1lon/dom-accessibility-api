@@ -14,8 +14,8 @@ import {
 	isHTMLFieldSetElement,
 	isHTMLLegendElement,
 	isHTMLTableElement,
-	isHTMLSvgElement,
-	isHTMLSvgTitleElement,
+	isSVGSVGElement,
+	isSVGTitleElement,
 	queryIdRefs,
 } from "./util";
 
@@ -339,12 +339,12 @@ export function computeTextAlternative(
 		}
 
 		// https://www.w3.org/TR/svg-aam-1.0/
-		if (isHTMLSvgElement(node)) {
+		if (isSVGSVGElement(node)) {
 			consultedNodes.add(node);
 			const children = ArrayFrom(node.childNodes);
 			for (let i = 0; i < children.length; i += 1) {
 				const child = children[i];
-				if (isHTMLSvgTitleElement(child)) {
+				if (isSVGTitleElement(child)) {
 					return child.textContent;
 				}
 			}
