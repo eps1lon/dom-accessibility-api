@@ -57,7 +57,7 @@ export function isHTMLLegendElement(
 }
 
 export function isSVGElement(node: Node | null): node is SVGElement {
-	return isElement(node) && node.ownerSVGElement !== undefined;
+	return isElement(node) && (node as any).ownerSVGElement !== undefined;
 }
 
 export function isSVGSVGElement(node: Node | null): node is SVGSVGElement {
