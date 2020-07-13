@@ -1,5 +1,35 @@
 # dom-accessibility-api changelog
 
+## 0.4.6
+
+### Patch Changes
+
+- [`85f0032`](https://github.com/eps1lon/dom-accessibility-api/commit/85f0032e0ec9203df7e4e5d0c3c8a206ac1968c1) [#324](https://github.com/eps1lon/dom-accessibility-api/pull/324) Thanks [@juanca](https://github.com/juanca)! - Consider `<title>` for the name of its `<svg>` element.
+
+* [`f7c1981`](https://github.com/eps1lon/dom-accessibility-api/commit/f7c19812307e8847dbe1b678a3bafdc6dbf7f23b) [#288](https://github.com/eps1lon/dom-accessibility-api/pull/288) Thanks [@eps1lon](https://github.com/eps1lon)! - Drop node 13 support
+
+  We only stopped testing. Probability of breakage should be very low.
+
+  **New policy**:
+
+  > Only [active node versions](https://nodejs.org/en/about/releases/) are supported.
+  > Inactive node versions can stop working in a SemVer MINOR release.
+
+- [`fa53c51`](https://github.com/eps1lon/dom-accessibility-api/commit/fa53c510d8aab6cf3561c91949f1df3a52a500a8) [#210](https://github.com/eps1lon/dom-accessibility-api/pull/210) Thanks [@eps1lon](https://github.com/eps1lon)! - Implement accessbile description computation
+
+  ```ts
+  import { computeAccessibleDescription } from "dom-accessibility-api";
+
+  const description = computeAccessibleDescription(element);
+  ```
+
+  Warning: It always considers `title` attributes if the description is empty.
+  Even if the `title` attribute was already used for the accessible name.
+  This is fails a web-platform-test.
+  The other failing test is due to `aria-label` being ignored for the description which is correct by spec.
+  It's likely an issue with wpt.
+  The other tests are passing (13/15).
+
 ## 0.4.5
 
 ### Patch Changes
