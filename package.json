@@ -46,7 +46,7 @@
 		"@babel/preset-env": "^7.10.4",
 		"@babel/preset-typescript": "^7.10.4",
 		"@changesets/changelog-github": "^0.2.6",
-		"@changesets/cli": "^2.9.1",
+		"@changesets/cli": "^2.9.2",
 		"@testing-library/dom": "^7.20.1",
 		"@types/jest": "^26.0.3",
 		"@typescript-eslint/eslint-plugin": "^3.5.0",
