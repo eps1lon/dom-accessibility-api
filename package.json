@@ -70,7 +70,7 @@
 		"request-promise-native": "^1.0.8",
 		"rimraf": "^3.0.2",
 		"serve": "^11.3.2",
-		"typescript": "^3.9.6"
+		"typescript": "^3.9.7"
 	},
 	"resolutions": {
 		"**/kind-of": "^6.0.3",
