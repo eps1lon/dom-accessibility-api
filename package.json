@@ -55,7 +55,7 @@
 		"cross-env": "^7.0.2",
 		"cypress": "^4.10.0",
 		"eslint": "^7.5.0",
-		"eslint-plugin-jest": "^23.18.0",
+		"eslint-plugin-jest": "^23.18.2",
 		"jest": "^26.1.0",
 		"jest-diff": "^26.1.0",
 		"jest-junit": "^11.1.0",
