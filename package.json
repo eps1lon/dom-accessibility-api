@@ -48,7 +48,7 @@
 		"@changesets/changelog-github": "^0.2.6",
 		"@changesets/cli": "^2.9.2",
 		"@testing-library/dom": "^7.21.1",
-		"@types/jest": "^26.0.5",
+		"@types/jest": "^26.0.7",
 		"@typescript-eslint/eslint-plugin": "^3.6.1",
 		"@typescript-eslint/parser": "^3.6.1",
 		"concurrently": "^5.2.0",
