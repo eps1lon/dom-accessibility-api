@@ -67,7 +67,7 @@
 		"prettier": "^2.0.5",
 		"q": "^1.5.1",
 		"request": "^2.88",
-		"request-promise-native": "^1.0.8",
+		"request-promise-native": "^1.0.9",
 		"rimraf": "^3.0.2",
 		"serve": "^11.3.2",
 		"typescript": "^3.9.7"
