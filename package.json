@@ -40,7 +40,7 @@
 		"wpt:update": "git submodule update --recursive --remote && cd tests/wpt && python wpt.py manifest --path ../wpt-jsdom/wpt-manifest.json"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.10.4",
+		"@babel/cli": "^7.10.5",
 		"@babel/core": "^7.10.4",
 		"@babel/plugin-proposal-class-properties": "^7.10.4",
 		"@babel/preset-env": "^7.10.4",
