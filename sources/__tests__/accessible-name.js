@@ -453,7 +453,7 @@ describe("old browser support", () => {
 		// HTMLLabelElement.control not supported in Edge < 18: https://developer.mozilla.org/en-US/docs/Web/API/HTMLLabelElement/control
 		jest
 			.spyOn(HTMLLabelElement.prototype, "control", "get")
-			// technically the property doesn't exist in IE 11 which is a bit different than returning undefined
+			// technically the property doesn't exist in Edge 17 which is a bit different than returning undefined
 			// works for our implementation though
 			.mockImplementation(function edge15ControlGetter() {
 				return undefined;
