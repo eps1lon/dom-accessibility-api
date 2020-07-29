@@ -1,5 +1,13 @@
 # dom-accessibility-api changelog
 
+## 0.4.7
+
+### Patch Changes
+
+- [`d6c4455`](https://github.com/eps1lon/dom-accessibility-api/commit/d6c44558250e898caa68e7b3eaa2f4d505078b3e) [#352](https://github.com/eps1lon/dom-accessibility-api/pull/352) Thanks [@eps1lon](https://github.com/eps1lon)! - Support native labels in IE 11
+
+  Also affects Edge < 18 and Firefox < 56.
+
 ## 0.4.6
 
 ### Patch Changes
