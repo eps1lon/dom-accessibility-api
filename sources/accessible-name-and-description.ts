@@ -215,6 +215,92 @@ function getTextualContent(declaration: CSSStyleDeclaration): string {
 }
 
 /**
+ * https://html.spec.whatwg.org/multipage/forms.html#category-label
+ * TODO: form-associated custom elements
+ * @param element
+ */
+function isLabelableElement(element: Element): boolean {
+	const tagName = element.tagName;
+
+	return (
+		tagName === "BUTTON" ||
+		(tagName === "INPUT" && element.getAttribute("type") !== "hidden") ||
+		tagName === "METER" ||
+		tagName === "OUTPUT" ||
+		tagName === "PROGRESS" ||
+		tagName === "SELECT" ||
+		tagName === "TEXTAREA"
+	);
+}
+
+/**
+ * > [...], then the first such descendant in tree order is the label element's labeled control.
+ * -- https://html.spec.whatwg.org/multipage/forms.html#labeled-control
+ * @param element
+ */
+function findLabelableElement(element: Element): Element | null {
+	if (isLabelableElement(element)) {
+		return element;
+	}
+	let labelableElement: Element | null = null;
+	element.childNodes.forEach((childNode) => {
+		if (labelableElement === null && isElement(childNode)) {
+			const descendantLabelableElement = findLabelableElement(childNode);
+			if (descendantLabelableElement !== null) {
+				labelableElement = descendantLabelableElement;
+			}
+		}
+	});
+
+	return labelableElement;
+}
+
+/**
+ * Polyfill of HTMLLabelElement.control
+ * https://html.spec.whatwg.org/multipage/forms.html#labeled-control
+ * @param label
+ */
+function getControlOfLabel(label: HTMLLabelElement): Element | null {
+	if (label.control !== undefined) {
+		return label.control;
+	}
+
+	const htmlFor = label.getAttribute("for");
+	if (htmlFor !== null) {
+		return label.ownerDocument.getElementById(htmlFor);
+	}
+
+	return findLabelableElement(label);
+}
+
+/**
+ * Polyfill of HTMLInputElement.labels
+ * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/labels
+ * @param element
+ */
+function getLabels(element: Element): HTMLLabelElement[] | null {
+	const labelsProperty = (element as any).labels as
+		| undefined
+		| null
+		| NodeListOf<HTMLLabelElement>;
+	if (labelsProperty === null) {
+		return labelsProperty;
+	}
+	if (labelsProperty !== undefined) {
+		return ArrayFrom(labelsProperty);
+	}
+
+	if (!isLabelableElement(element)) {
+		return null;
+	}
+	const document = element.ownerDocument;
+
+	return ArrayFrom(document.querySelectorAll("label")).filter((label) => {
+		return getControlOfLabel(label) === element;
+	});
+}
+
+/**
  * implements https://w3c.github.io/accname/#mapping_additional_nd_te
  * @param root
  * @param [options]
@@ -370,9 +456,8 @@ export function computeTextAlternative(
 			return "Reset";
 		}
 
-		const { labels } = input;
-		// IE11 does not implement labels, TODO: verify with caniuse instead of mdn
-		if (labels === null || labels === undefined || labels.length === 0) {
+		const labels = getLabels(input);
+		if (labels === null || labels.length === 0) {
 			return null;
 		}
 

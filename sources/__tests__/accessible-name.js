@@ -439,3 +439,78 @@ describe("options.getComputedStyle", () => {
 		expect(window.getComputedStyle).not.toHaveBeenCalled();
 	});
 });
+
+describe("old browser support", () => {
+	beforeEach(() => {
+		// HTMLInputElement.labels not supported in IE11: https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/labels
+		jest
+			.spyOn(HTMLInputElement.prototype, "labels", "get")
+			// technically the property doesn't exist in IE 11 which is a bit different than returning undefined
+			// works for our implementation though
+			.mockImplementation(function ie11LabelsGetter() {
+				return undefined;
+			});
+		// HTMLLabelElement.control not supported in Edge < 18: https://developer.mozilla.org/en-US/docs/Web/API/HTMLLabelElement/control
+		jest
+			.spyOn(HTMLLabelElement.prototype, "control", "get")
+			// technically the property doesn't exist in Edge 17 which is a bit different than returning undefined
+			// works for our implementation though
+			.mockImplementation(function edge15ControlGetter() {
+				return undefined;
+			});
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
+
+	// native label
+	test.each([
+		[
+			`
+<label for="foo">4 Stars</label>
+<input data-test id="foo" type="radio" />
+`,
+			"4 Stars",
+		],
+		[
+			`
+<label for="foo">
+	4 Stars
+	<input data-test id="foo" type="radio" />
+</label>
+`,
+			"4 Stars",
+		],
+		[
+			`
+<label>
+	4 Stars
+	<input data-test type="radio" />
+</label>
+`,
+			"4 Stars",
+		],
+		[
+			`
+<label>
+	4 Stars
+	<input type="radio" />
+	<input data-test type="radio" />
+</label>
+`,
+			"",
+		],
+		[
+			`
+<label>
+	4 Stars
+	<div>
+		<input data-test type="radio" />
+	</div>
+</label>
+`,
+			"4 Stars",
+		],
+	])(`native label #%#`, testMarkup);
+});
