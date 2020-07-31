@@ -23,7 +23,7 @@ your eye please open an issue.
 
 ## Supported environments
 
-WARNING: Only [active node versions](https://nodejs.org/en/about/releases/) are supported.
+**WARNING**: Only [active node versions](https://nodejs.org/en/about/releases/) are supported.
 Inactive node versions can stop working in a SemVer MINOR release.
 
 ```bash
@@ -49,7 +49,7 @@ cloning. See [the test readme](/tests/README.md) for more info about the test se
 ### jsdom
 
 <details>
-<summary>report 138/159 passing of which 15 are due `::before { content }`, one might a wrong test, 5 are pathological </summary>
+<summary>report 138/159 passing of which 15 are due `::before { content }`, one might be a wrong test, 5 are pathological </summary>
 
 ```bash
   web-platform-tests
