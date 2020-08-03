@@ -5033,10 +5033,10 @@ mocha-sugar-free@^1.4.0:
   dependencies:
     xtend "^4.0.0"
 
-mocha@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/mocha/-/mocha-8.0.1.tgz#fe01f0530362df271aa8f99510447bc38b88d8ed"
-  integrity sha512-vefaXfdYI8+Yo8nPZQQi0QO2o+5q9UIMX1jZ1XMmK3+4+CQjc7+B0hPdUeglXiTlr8IHMVRo63IhO9Mzt6fxOg==
+mocha@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/mocha/-/mocha-8.1.0.tgz#e651d05dcc5e42389f3412c2173ca13352a8bacd"
+  integrity sha512-sI0gaI1I/jPVu3KFpnveWGadfe3JNBAENqgTUPgLZAUppu725zS2mrVztzAgIR8DUscuS4doEBTx9LATC+HSeA==
   dependencies:
     ansi-colors "4.1.1"
     browser-stdout "1.3.1"
@@ -5054,7 +5054,7 @@ mocha@^8.0.1:
     ms "2.1.2"
     object.assign "4.1.0"
     promise.allsettled "1.0.2"
-    serialize-javascript "3.0.0"
+    serialize-javascript "4.0.0"
     strip-json-comments "3.0.1"
     supports-color "7.1.0"
     which "2.0.2"
@@ -5062,7 +5062,7 @@ mocha@^8.0.1:
     workerpool "6.0.0"
     yargs "13.3.2"
     yargs-parser "13.1.2"
-    yargs-unparser "1.6.0"
+    yargs-unparser "1.6.1"
 
 moment@2.26.0:
   version "2.26.0"
@@ -5689,6 +5689,13 @@ ramda@0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
+randombytes@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/randombytes/-/randombytes-2.1.0.tgz#df6f84372f0270dc65cdf6291349ab7a473d4f2a"
+  integrity sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==
+  dependencies:
+    safe-buffer "^5.1.0"
+
 range-parser@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
@@ -6055,6 +6062,11 @@ safe-buffer@^5.0.1, safe-buffer@^5.1.2:
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.0.tgz#b74daec49b1148f88c64b68d49b1e815c1f2f519"
   integrity sha512-fZEwUGbVl7kouZs1jCdMLdt95hdIv0ZeHg6L7qPeciMZhZ+/gdesW4wgTARkrFWEpspjEATAzUGPG8N2jJiwbg==
 
+safe-buffer@^5.1.0:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
+  integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
+
 safe-regex@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/safe-regex/-/safe-regex-1.1.0.tgz#40a3669f3b077d1e943d44629e157dd48023bf2e"
@@ -6109,10 +6121,12 @@ semver@^7.2.1, semver@^7.3.2:
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.2.tgz#604962b052b81ed0786aae84389ffba70ffd3938"
   integrity sha512-OrOb32TeeambH6UrhtShmF7CRDqhL6/5XpPNp2DuRH6+9QLw/orhp72j87v8Qa1ScDkvrrBNpZcDejAirJmfXQ==
 
-serialize-javascript@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-3.0.0.tgz#492e489a2d77b7b804ad391a5f5d97870952548e"
-  integrity sha512-skZcHYw2vEX4bw90nAr2iTTsz6x2SrHEnfxgKYmZlvJYBEZrvbKtobJWlQ20zczKb3bsHHXXTYt48zBA7ni9cw==
+serialize-javascript@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-4.0.0.tgz#b525e1238489a5ecfc42afacc3fe99e666f4b1aa"
+  integrity sha512-GaNA54380uFefWghODBWEGisLZFj00nS5ACs6yHa9nLqlLpVLO8ChDGeKRjZnV4Nh4n0Qi7nhYZD/9fCPzEqkw==
+  dependencies:
+    randombytes "^2.1.0"
 
 serve-handler@6.1.3:
   version "6.1.3"
@@ -7142,10 +7156,10 @@ yargs-parser@^10.0.0:
   dependencies:
     camelcase "^4.1.0"
 
-yargs-parser@^15.0.0:
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-15.0.0.tgz#cdd7a97490ec836195f59f3f4dbe5ea9e8f75f08"
-  integrity sha512-xLTUnCMc4JhxrPEPUYD5IBR1mWCK/aT6+RJ/K29JY2y1vD+FhtgKK0AXRWvI262q3QSffAQuTouFIKUuHX89wQ==
+yargs-parser@^15.0.1:
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-15.0.1.tgz#54786af40b820dcb2fb8025b11b4d659d76323b3"
+  integrity sha512-0OAMV2mAZQrs3FkNpDQcBk1x5HXb8X4twADss4S0Iuk+2dGnLOE/fRHrsYm542GduMveyA77OF4wrNJuanRCWw==
   dependencies:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
@@ -7158,14 +7172,16 @@ yargs-parser@^18.1.1:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
 
-yargs-unparser@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/yargs-unparser/-/yargs-unparser-1.6.0.tgz#ef25c2c769ff6bd09e4b0f9d7c605fb27846ea9f"
-  integrity sha512-W9tKgmSn0DpSatfri0nx52Joq5hVXgeLiqR/5G0sZNDoLZFOr/xjBUDcShCOGNsBnEMNo1KAMBkTej1Hm62HTw==
+yargs-unparser@1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/yargs-unparser/-/yargs-unparser-1.6.1.tgz#bd4b0ee05b4c94d058929c32cb09e3fce71d3c5f"
+  integrity sha512-qZV14lK9MWsGCmcr7u5oXGH0dbGqZAIxTDrWXZDo5zUr6b6iUmelNKO6x6R1dQT24AH3LgRxJpr8meWy2unolA==
   dependencies:
+    camelcase "^5.3.1"
+    decamelize "^1.2.0"
     flat "^4.1.0"
-    lodash "^4.17.15"
-    yargs "^13.3.0"
+    is-plain-obj "^1.1.0"
+    yargs "^14.2.3"
 
 yargs@13.3.2, yargs@^13.2.4, yargs@^13.3.0:
   version "13.3.2"
@@ -7183,10 +7199,10 @@ yargs@13.3.2, yargs@^13.2.4, yargs@^13.3.0:
     y18n "^4.0.0"
     yargs-parser "^13.1.2"
 
-yargs@^14.2.0:
-  version "14.2.2"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-14.2.2.tgz#2769564379009ff8597cdd38fba09da9b493c4b5"
-  integrity sha512-/4ld+4VV5RnrynMhPZJ/ZpOCGSCeghMykZ3BhdFBDa9Wy/RH6uEGNWDJog+aUlq+9OM1CFTgtYRW5Is1Po9NOA==
+yargs@^14.2.0, yargs@^14.2.3:
+  version "14.2.3"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-14.2.3.tgz#1a1c3edced1afb2a2fea33604bc6d1d8d688a414"
+  integrity sha512-ZbotRWhF+lkjijC/VhmOT9wSgyBQ7+zr13+YLkhfsSiTriYsMzkTUFP18pFhWwBeMa5gUc1MzbhrO6/VB7c9Xg==
   dependencies:
     cliui "^5.0.0"
     decamelize "^1.2.0"
@@ -7198,7 +7214,7 @@ yargs@^14.2.0:
     string-width "^3.0.0"
     which-module "^2.0.0"
     y18n "^4.0.0"
-    yargs-parser "^15.0.0"
+    yargs-parser "^15.0.1"
 
 yargs@^15.3.1:
   version "15.3.1"
