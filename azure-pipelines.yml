@@ -111,7 +111,7 @@ steps:
   - task: PublishCodeCoverageResults@1
     inputs:
       codeCoverageTool: Cobertura
-      summaryFileLocation: "$(System.DefaultWorkingDirectory)/coverage/*coverage.xml"
+      summaryFileLocation: "$(System.DefaultWorkingDirectory)/scripts/jest/coverage/*coverage.xml"
 
   - script: |
       yarn wpt:init
