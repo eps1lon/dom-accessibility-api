@@ -1,5 +1,6 @@
 /coverage
 /dist
+/scripts/jest/coverage
 /tests/build/fixtures/kcd-rollup/dist
 /tests/wpt
 /tests/wpt-jsdom/wpt-manifest.json

@@ -4,6 +4,6 @@ tests/cypress/screenshots
 tests/cypress/videos
 # jest results
 /junit.xml
-/coverage
+/scripts/jest/coverage
 /yarn-error.log
 /dom-accessibility-api.tgz
