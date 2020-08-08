@@ -1,14 +1,9 @@
 const path = require("path");
 
-// jest.config.js
 module.exports = {
-	coverageDirectory: path.resolve(__dirname, "../../coverage"),
-	rootDir: path.resolve(__dirname, "../../sources"),
-	testPathIgnorePatterns: [
-		"/node_modules/",
-		"/fixtures/",
-		"/__tests__/helpers/",
-		"__mocks__",
+	projects: [
+		path.resolve(__dirname, "./jest.mock-edge14.config.js"),
+		path.resolve(__dirname, "./jest.mock-ie11.config.js"),
+		path.resolve(__dirname, "./jest.jsdom.config.js"),
 	],
-	testURL: "http://localhost",
 };

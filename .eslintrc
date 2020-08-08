@@ -67,6 +67,16 @@
 				// over transpilation isn't a concern for tests
 				"no-restricted-syntax": "off"
 			}
+		},
+		{
+			"files": ["scripts/jest/**/*.js"],
+			"env": {
+				"node": true
+			},
+			"rules": {
+				// jest uses commonJS
+				"@typescript-eslint/no-var-requires": "off"
+			}
 		}
 	]
 }
