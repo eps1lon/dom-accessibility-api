@@ -1,5 +1,7 @@
 // https://w3c.github.io/html-aria/#document-conformance-requirements-for-use-of-aria-attributes-in-html
 
+import { getLocalName } from "./util";
+
 export default function getRole(element: Element): string | null {
 	const explicitRole = getExplicitRole(element);
 	if (explicitRole !== null) {
@@ -9,76 +11,76 @@ export default function getRole(element: Element): string | null {
 	return getImplicitRole(element);
 }
 
-const tagToRoleMappings: Record<string, string | undefined> = {
-	ARTICLE: "article",
-	ASIDE: "complementary",
-	BODY: "document",
-	BUTTON: "button",
-	DATALIST: "listbox",
-	DD: "definition",
-	DETAILS: "group",
-	DIALOG: "dialog",
-	DT: "term",
-	FIELDSET: "group",
-	FIGURE: "figure",
+const localNameToRoleMappings: Record<string, string | undefined> = {
+	article: "article",
+	aside: "complementary",
+	body: "document",
+	button: "button",
+	datalist: "listbox",
+	dd: "definition",
+	details: "group",
+	dialog: "dialog",
+	dt: "term",
+	fieldset: "group",
+	figure: "figure",
 	// WARNING: Only with an accessible name
-	FORM: "form",
-	FOOTER: "contentinfo",
-	H1: "heading",
-	H2: "heading",
-	H3: "heading",
-	H4: "heading",
-	H5: "heading",
-	H6: "heading",
-	HEADER: "banner",
-	HR: "separator",
-	LEGEND: "legend",
-	LI: "listitem",
-	MATH: "math",
-	MAIN: "main",
-	MENU: "list",
-	NAV: "navigation",
-	OL: "list",
-	OPTGROUP: "group",
+	form: "form",
+	footer: "contentinfo",
+	h1: "heading",
+	h2: "heading",
+	h3: "heading",
+	h4: "heading",
+	h5: "heading",
+	h6: "heading",
+	header: "banner",
+	hr: "separator",
+	legend: "legend",
+	li: "listitem",
+	math: "math",
+	main: "main",
+	menu: "list",
+	nav: "navigation",
+	ol: "list",
+	optgroup: "group",
 	// WARNING: Only in certain context
-	OPTION: "option",
-	OUTPUT: "status",
-	PROGRESS: "progressbar",
+	option: "option",
+	output: "status",
+	progress: "progressbar",
 	// WARNING: Only with an accessible name
-	SECTION: "region",
-	SUMMARY: "button",
-	TABLE: "table",
-	TBODY: "rowgroup",
-	TEXTAREA: "textbox",
-	TFOOT: "rowgroup",
+	section: "region",
+	summary: "button",
+	table: "table",
+	tbody: "rowgroup",
+	textarea: "textbox",
+	tfoot: "rowgroup",
 	// WARNING: Only in certain context
-	TD: "cell",
-	TH: "columnheader",
-	THEAD: "rowgroup",
-	TR: "row",
-	UL: "list",
+	td: "cell",
+	th: "columnheader",
+	thead: "rowgroup",
+	tr: "row",
+	ul: "list",
 };
 
 function getImplicitRole(element: Element): string | null {
-	const mappedByTag = tagToRoleMappings[element.tagName];
+	const mappedByTag = localNameToRoleMappings[getLocalName(element)];
 	if (mappedByTag !== undefined) {
 		return mappedByTag;
 	}
 
-	switch (element.tagName) {
-		case "A":
-		case "AREA":
-		case "LINK":
+	switch (getLocalName(element)) {
+		case "a":
+		case "area":
+		case "link":
 			if (element.hasAttribute("href")) {
 				return "link";
 			}
 			break;
-		case "IMG":
+		case "img":
 			if ((element.getAttribute("alt") || "").length > 0) {
 				return "img";
 			}
 			break;
-		case "INPUT": {
+		case "input": {
 			const { type } = element as HTMLInputElement;
 			switch (type) {
 				case "button":
@@ -109,7 +111,7 @@ function getImplicitRole(element: Element): string | null {
 					return null;
 			}
 		}
-		case "SELECT":
+		case "select":
 			if (
 				element.hasAttribute("multiple") ||
 				(element as HTMLSelectElement).size > 1

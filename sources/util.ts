@@ -1,5 +1,17 @@
 import getRole from "./getRole";
 
+/**
+ * Safe Element.localName for all supported environments
+ * @param element
+ */
+export function getLocalName(element: Element): string {
+	return (
+		element.localName ??
+		// eslint-disable-next-line no-restricted-properties -- required for the fallback
+		element.tagName.toLowerCase()
+	);
+}
+
 export function isElement(node: Node | null): node is Element {
 	return node !== null && node.nodeType === node.ELEMENT_NODE;
 }
@@ -7,31 +19,31 @@ export function isElement(node: Node | null): node is Element {
 export function isHTMLTableCaptionElement(
 	node: Node | null
 ): node is HTMLTableCaptionElement {
-	return isElement(node) && node.tagName === "CAPTION";
+	return isElement(node) && getLocalName(node) === "caption";
 }
 
 export function isHTMLInputElement(
 	node: Node | null
 ): node is HTMLInputElement {
-	return isElement(node) && node.tagName === "INPUT";
+	return isElement(node) && getLocalName(node) === "input";
 }
 
 export function isHTMLSelectElement(
 	node: Node | null
 ): node is HTMLSelectElement {
-	return isElement(node) && node.tagName === "SELECT";
+	return isElement(node) && getLocalName(node) === "select";
 }
 
 export function isHTMLTableElement(
 	node: Node | null
 ): node is HTMLTableElement {
-	return isElement(node) && node.tagName === "TABLE";
+	return isElement(node) && getLocalName(node) === "table";
 }
 
 export function isHTMLTextAreaElement(
 	node: Node | null
 ): node is HTMLTextAreaElement {
-	return isElement(node) && node.tagName === "TEXTAREA";
+	return isElement(node) && getLocalName(node) === "textarea";
 }
 
 export function safeWindow(node: Node): Window {
@@ -47,13 +59,13 @@ export function safeWindow(node: Node): Window {
 export function isHTMLFieldSetElement(
 	node: Node | null
 ): node is HTMLFieldSetElement {
-	return isElement(node) && node.tagName === "FIELDSET";
+	return isElement(node) && getLocalName(node) === "fieldset";
 }
 
 export function isHTMLLegendElement(
 	node: Node | null
 ): node is HTMLLegendElement {
-	return isElement(node) && node.tagName === "LEGEND";
+	return isElement(node) && getLocalName(node) === "legend";
 }
 
 export function isSVGElement(node: Node | null): node is SVGElement {
@@ -61,11 +73,11 @@ export function isSVGElement(node: Node | null): node is SVGElement {
 }
 
 export function isSVGSVGElement(node: Node | null): node is SVGSVGElement {
-	return isElement(node) && node.tagName === "svg";
+	return isElement(node) && getLocalName(node) === "svg";
 }
 
 export function isSVGTitleElement(node: Node | null): node is SVGTitleElement {
-	return isSVGElement(node) && node.tagName === "title";
+	return isSVGElement(node) && getLocalName(node) === "title";
 }
 
 /**

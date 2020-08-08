@@ -17,6 +17,7 @@ import {
 	isSVGSVGElement,
 	isSVGTitleElement,
 	queryIdRefs,
+	getLocalName,
 } from "./util";
 
 /**
@@ -220,16 +221,16 @@ function getTextualContent(declaration: CSSStyleDeclaration): string {
  * @param element
  */
 function isLabelableElement(element: Element): boolean {
-	const tagName = element.tagName;
+	const localName = getLocalName(element);
 
 	return (
-		tagName === "BUTTON" ||
-		(tagName === "INPUT" && element.getAttribute("type") !== "hidden") ||
-		tagName === "METER" ||
-		tagName === "OUTPUT" ||
-		tagName === "PROGRESS" ||
-		tagName === "SELECT" ||
-		tagName === "TEXTAREA"
+		localName === "button" ||
+		(localName === "input" && element.getAttribute("type") !== "hidden") ||
+		localName === "meter" ||
+		localName === "output" ||
+		localName === "progress" ||
+		localName === "select" ||
+		localName === "textarea"
 	);
 }
 
