@@ -25,6 +25,12 @@
 				// we only access it from a point where the library user can inject their
 				// own implementation. See https://github.com/eps1lon/dom-accessibility-api/blob/eb868428a31a093aecc531bf2dd17e8547bd0c3b/sources/accessible-name.ts#L33
 				"property": "getComputedStyle"
+			},
+			{
+				// tagName is oftentimes more expensive since it requires a toAsciiUpperCase of the local name.
+				// It certainly is in JSDOM: https://github.com/jsdom/jsdom/pull/3008
+				"property": "tagName",
+				"message": "Please use `getLocalName` instead because `tagName` is oftentimes more expensive since it requires a toAsciiUpperCase of the local name."
 			}
 		],
 		"no-restricted-syntax": [
