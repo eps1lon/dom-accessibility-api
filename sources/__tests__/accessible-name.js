@@ -440,3 +440,42 @@ describe("options.getComputedStyle", () => {
 		expect(window.getComputedStyle).not.toHaveBeenCalled();
 	});
 });
+
+describe("options.computedStyleSupportsPseudoElements", () => {
+	beforeEach(() => {
+		jest.spyOn(console, "error").mockImplementation(() => {
+			// swallow
+		});
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
+
+	it("`false` prevents errors in JSDOM from being logged", () => {
+		const container = renderIntoDocument("<button>test</button>");
+
+		computeAccessibleName(container.querySelector("button"), {
+			computedStyleSupportsPseudoElements: false,
+		});
+
+		expect(console.error).not.toHaveBeenCalled();
+	});
+
+	it("`true` will lead JSDOM to log console errors", () => {
+		const container = renderIntoDocument("<button>test</button>");
+
+		computeAccessibleName(container.querySelector("button"), {
+			computedStyleSupportsPseudoElements: true,
+		});
+
+		// one for ::before, one for ::after
+		expect(console.error).toHaveBeenCalledTimes(2);
+		expect(console.error.mock.calls[0][0]).toMatch(
+			"Error: Not implemented: window.computedStyle(elt, pseudoElt)"
+		);
+		expect(console.error.mock.calls[1][0]).toMatch(
+			"Error: Not implemented: window.computedStyle(elt, pseudoElt)"
+		);
+	});
+});

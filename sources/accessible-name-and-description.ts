@@ -32,6 +32,11 @@ type FlatString = string & {
  */
 export interface ComputeTextAlternativeOptions {
 	compute?: "description" | "name";
+	/**
+	 * Set to true if window.computedStyle supports the second argument.
+	 * This should be false in JSDOM. Otherwise JSDOM will log console errors.
+	 */
+	computedStyleSupportsPseudoElements?: boolean;
 	getComputedStyle?: typeof window.getComputedStyle;
 }
 
@@ -312,17 +317,12 @@ export function computeTextAlternative(
 	options: ComputeTextAlternativeOptions = {}
 ): string {
 	const consultedNodes = new SetLike<Node>();
-	// JSDOM issues warnings so that (estimated) .0001% of the elements don't return a wrong value
-	// I'm fine with that.
-	const computedStyleSupportsPseudoArg =
-		// custom implementations have to intercept it themselves
-		options.getComputedStyle !== undefined ||
-		// simply check for a property that looks like it came from JSDOm
-		(root as any)._version !== undefined;
 
 	const window = safeWindow(root);
 	const {
 		compute = "name",
+		computedStyleSupportsPseudoElements = options.getComputedStyle !==
+			undefined,
 		// This might be overengineered. I don't know what happens if I call
 		// window.getComputedStyle(elementFromAnotherWindow) or if I don't bind it
 		// the type declarations don't require a `this`
@@ -336,7 +336,7 @@ export function computeTextAlternative(
 		context: { isEmbeddedInLabel: boolean; isReferenced: boolean }
 	): string {
 		let accumulatedText = "";
-		if (isElement(node) && computedStyleSupportsPseudoArg) {
+		if (isElement(node) && computedStyleSupportsPseudoElements) {
 			const pseudoBefore = getComputedStyle(node, "::before");
 			const beforeContent = getTextualContent(pseudoBefore);
 			accumulatedText = `${beforeContent} ${accumulatedText}`;
@@ -363,7 +363,7 @@ export function computeTextAlternative(
 			accumulatedText += `${separator}${result}${separator}`;
 		});
 
-		if (isElement(node) && computedStyleSupportsPseudoArg) {
+		if (isElement(node) && computedStyleSupportsPseudoElements) {
 			const pseudoAfter = getComputedStyle(node, "::after");
 			const afterContent = getTextualContent(pseudoAfter);
 			accumulatedText = `${accumulatedText} ${afterContent}`;
