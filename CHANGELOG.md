@@ -1,5 +1,45 @@
 # dom-accessibility-api changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- [`9e46c51`](https://github.com/eps1lon/dom-accessibility-api/commit/9e46c51b51993c65237efd4b0d046f1a35c3e76a) [#380](https://github.com/eps1lon/dom-accessibility-api/pull/380) Thanks [@eps1lon](https://github.com/eps1lon)! - **BREAKING CHANGE**
+
+  Ignore `::before` and `::after` by default.
+
+  This was necessary to prevent excessive warnings in `jsdom@^16.4.0`.
+  If you use this package in a browser that supports the second argument of `window.getComputedStyle` you can set the `computedStyleSupportsPseudoElements` option to true:
+
+  ```ts
+  computeAccessibleName(element, {
+  	computedStyleSupportsPseudoElements: true
+  });
+
+  computeAccessibleDescription(element, {
+  	computedStyleSupportsPseudoElements: true
+  });
+  ```
+
+  If you pass a custom implementation of `getComputedStyle` then this option defaults to `true`.
+  The following two calls are equivalent:
+
+  ```ts
+  computeAccessibleName(element, {
+  	computedStyleSupportsPseudoElements: true
+  });
+
+  computeAccessibleName(element, {
+  	getComputedStyle: (element, pseudoElement) => {
+  		// custom implementation
+  	}
+  });
+  ```
+
+### Patch Changes
+
+- [`5db24b1`](https://github.com/eps1lon/dom-accessibility-api/commit/5db24b1fa0c75a5914526de1c58da54db294f405) [#368](https://github.com/eps1lon/dom-accessibility-api/pull/368) Thanks [@eps1lon](https://github.com/eps1lon)! - Use `localName` to determine elements instead of `tagName`.
+
 ## 0.4.7
 
 ### Patch Changes
