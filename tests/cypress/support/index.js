@@ -6,7 +6,9 @@ import {
 chai.use((_chai, _utils) => {
 	function assertAccessibleName(expected) {
 		const element = _utils.flag(this, "object");
-		const actual = computeAccessibleName(element);
+		const actual = computeAccessibleName(element, {
+			computedStyleSupportsPseudoElements: true,
+		});
 
 		this.assert(
 			expected === actual,
@@ -19,7 +21,9 @@ chai.use((_chai, _utils) => {
 
 	function assertAccessibleDescription(expected) {
 		const element = _utils.flag(this, "object");
-		const actual = computeAccessibleDescription(element);
+		const actual = computeAccessibleDescription(element, {
+			computedStyleSupportsPseudoElements: true,
+		});
 
 		this.assert(
 			expected === actual,
