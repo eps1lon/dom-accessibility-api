@@ -418,7 +418,8 @@ describe("options.getComputedStyle", () => {
 		computeAccessibleName(container.querySelector("button"));
 
 		// also mixing in a regression test for the number of calls
-		expect(window.getComputedStyle).toHaveBeenCalledTimes(3);
+		// 2 calls for ::after and ::before are skipped in JSDOM
+		expect(window.getComputedStyle).toHaveBeenCalledTimes(1);
 	});
 
 	it("can be mocked with a fake", () => {
