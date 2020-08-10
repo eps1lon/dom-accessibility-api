@@ -1,5 +1,5 @@
 ---
-"dom-accessibility-api": feature
+"dom-accessibility-api": minor
 ---
 
 **BREAKING CHANGE**
