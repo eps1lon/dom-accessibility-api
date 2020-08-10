@@ -8,7 +8,7 @@
 
   Ignore `::before` and `::after` by default.
 
-  This was necessary to prevent excessive warnings in `jsdom@^16.3.0`.
+  This was necessary to prevent excessive warnings in `jsdom@^16.4.0`.
   If you use this package in a browser that supports the second argument of `window.getComputedStyle` you can set the `computedStyleSupportsPseudoElements` option to true:
 
   ```ts
