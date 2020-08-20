@@ -304,6 +304,7 @@ test.each([
 	],
 	// https://www.w3.org/TR/svg-aam-1.0/
 	[`<svg data-test><title><em>greek</em> rho</title></svg>`, "greek rho"],
+	[`<button title="" data-test>click me</button>`, "click me"],
 ])(`test #%#`, testMarkup);
 
 test("text nodes are not concatenated by space", () => {
