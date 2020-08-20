@@ -378,7 +378,11 @@ export function computeTextAlternative(
 		}
 
 		const titleAttribute = node.getAttributeNode("title");
-		if (titleAttribute !== null && !consultedNodes.has(titleAttribute)) {
+		if (
+			titleAttribute !== null &&
+			titleAttribute.value.trim() !== "" &&
+			!consultedNodes.has(titleAttribute)
+		) {
 			consultedNodes.add(titleAttribute);
 			return titleAttribute.value;
 		}
