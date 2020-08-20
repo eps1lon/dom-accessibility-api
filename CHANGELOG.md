@@ -1,5 +1,13 @@
 # dom-accessibility-api changelog
 
+## 0.5.1
+
+### Patch Changes
+
+- [`fcc66ae`](https://github.com/eps1lon/dom-accessibility-api/commit/fcc66aef833b8c7546921800e09cbb2096ef9601) [#394](https://github.com/eps1lon/dom-accessibility-api/pull/394) Thanks [@marcosvega91](https://github.com/marcosvega91)! - Ignore `title` attribute if it is empty.
+
+  Previously `<button title="">Hello, Dave!</button>` would wrongly compute an empty name.
+
 ## 0.5.0
 
 ### Minor Changes
