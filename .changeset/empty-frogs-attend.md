@@ -2,8 +2,17 @@
 "dom-accessibility-api": patch
 ---
 
-Prefer input value when type is reset or submit.
+Fix various issues for input types `submit`, `reset` and `image`
 
-Previously `<input type="submit" value="Submit values" />` would have a computed accessible name `"Submit"`.
-But the `value` has priority for `reset` and `submit`.
-`computeAccessibleName` now correctly returns `"Submit values"` for these elements.
+Prefer input `value` when `type` is `reset` or `submit`:
+
+```diff
+<input type="submit" value="Submit values">
+-// accessible name: "Submit"
++// accessible name: "Submit values"
+<input type="reset" value="Reset form">
+-// accessible name: "Reset"
++// accessible name: "Reset form"
+```
+
+For input `type` `image` consider `alt` attribute or fall back to `"Submit query"`.
