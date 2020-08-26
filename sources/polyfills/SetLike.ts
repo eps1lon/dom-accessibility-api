@@ -17,7 +17,7 @@ declare global {
 }
 
 // for environments without Set we fallback to arrays with unique members
-class SetLike<T> extends Set<T> {
+class SetLike<T> implements Set<T> {
 	private items: T[] = [];
 
 	add(value: T): this {
