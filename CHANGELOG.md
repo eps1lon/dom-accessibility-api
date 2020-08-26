@@ -1,5 +1,24 @@
 # dom-accessibility-api changelog
 
+## 0.5.2
+
+### Patch Changes
+
+- [`03273b7`](https://github.com/eps1lon/dom-accessibility-api/commit/03273b7d91a156a6dd9c727293a491cd2d1f02f1) [#406](https://github.com/eps1lon/dom-accessibility-api/pull/406) Thanks [@eps1lon](https://github.com/eps1lon)! - Fix various issues for input types `submit`, `reset` and `image`
+
+  Prefer input `value` when `type` is `reset` or `submit`:
+
+  ```diff
+  <input type="submit" value="Submit values">
+  -// accessible name: "Submit"
+  +// accessible name: "Submit values"
+  <input type="reset" value="Reset form">
+  -// accessible name: "Reset"
+  +// accessible name: "Reset form"
+  ```
+
+  For input `type` `image` consider `alt` attribute or fall back to `"Submit query"`.
+
 ## 0.5.1
 
 ### Patch Changes
