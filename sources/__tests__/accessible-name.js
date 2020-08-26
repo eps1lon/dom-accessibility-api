@@ -305,6 +305,11 @@ test.each([
 	// https://www.w3.org/TR/svg-aam-1.0/
 	[`<svg data-test><title><em>greek</em> rho</title></svg>`, "greek rho"],
 	[`<button title="" data-test>click me</button>`, "click me"],
+	// https://w3c.github.io/html-aam/#input-type-button-input-type-submit-and-input-type-reset-accessible-name-computation
+	[`<input data-test value="Submit form" type="submit" />`, "Submit form"],
+	// https://w3c.github.io/html-aam/#input-type-image
+	[`<input data-test alt="Select an image" type="image" />`, "Select an image"],
+	[`<input data-test alt="" type="image" />`, "Submit Query"],
 ])(`test #%#`, testMarkup);
 
 test("text nodes are not concatenated by space", () => {

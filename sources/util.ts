@@ -6,6 +6,7 @@ import getRole from "./getRole";
  */
 export function getLocalName(element: Element): string {
 	return (
+		// eslint-disable-next-line no-restricted-properties -- actual guard for environments without localName
 		element.localName ??
 		// eslint-disable-next-line no-restricted-properties -- required for the fallback
 		element.tagName.toLowerCase()

@@ -27,10 +27,16 @@
 				"property": "getComputedStyle"
 			},
 			{
-				// tagName is oftentimes more expensive since it requires a toAsciiUpperCase of the local name.
+				// `tagName` is oftentimes more expensive since it requires a toAsciiUpperCase of the local name.
 				// It certainly is in JSDOM: https://github.com/jsdom/jsdom/pull/3008
 				"property": "tagName",
 				"message": "Please use `getLocalName` instead because `tagName` is oftentimes more expensive since it requires a toAsciiUpperCase of the local name."
+			},
+			{
+				// `localName` is not available in all supported environments.
+				// We have a cross-browser helper with `getLocalName`
+				"property": "localName",
+				"message": "Please use `getLocalName` which implements .localName for older environments."
 			}
 		],
 		"no-restricted-syntax": [

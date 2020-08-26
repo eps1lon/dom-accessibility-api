@@ -372,36 +372,33 @@ export function computeTextAlternative(
 		return accumulatedText;
 	}
 
-	function computeAttributeTextAlternative(node: Node): string | null {
+	function computeElementTextAlternative(node: Node): string | null {
 		if (!isElement(node)) {
 			return null;
 		}
 
-		const titleAttribute = node.getAttributeNode("title");
-		if (
-			titleAttribute !== null &&
-			titleAttribute.value.trim() !== "" &&
-			!consultedNodes.has(titleAttribute)
-		) {
-			consultedNodes.add(titleAttribute);
-			return titleAttribute.value;
+		/**
+		 *
+		 * @param element
+		 * @param attributeName
+		 * @returns A string non-empty string or `null`
+		 */
+		function useAttribute(
+			element: Element,
+			attributeName: string
+		): string | null {
+			const attribute = element.getAttributeNode(attributeName);
+			if (
+				attribute !== null &&
+				!consultedNodes.has(attribute) &&
+				attribute.value.trim() !== ""
+			) {
+				consultedNodes.add(attribute);
+				return attribute.value;
+			}
+			return null;
 		}
 
-		const altAttribute = node.getAttributeNode("alt");
-		if (altAttribute !== null && !consultedNodes.has(altAttribute)) {
-			consultedNodes.add(altAttribute);
-			return altAttribute.value;
-		}
-
-		if (isHTMLInputElement(node) && node.type === "button") {
-			consultedNodes.add(node);
-			return node.getAttribute("value") || "";
-		}
-
-		return null;
-	}
-
-	function computeElementTextAlternative(node: Node): string | null {
 		// https://w3c.github.io/html-aam/#fieldset-and-legend-elements
 		if (isHTMLFieldSetElement(node)) {
 			consultedNodes.add(node);
@@ -416,11 +413,8 @@ export function computeTextAlternative(
 					});
 				}
 			}
-			return null;
-		}
-
-		// https://w3c.github.io/html-aam/#table-element
-		if (isHTMLTableElement(node)) {
+		} else if (isHTMLTableElement(node)) {
+			// https://w3c.github.io/html-aam/#table-element
 			consultedNodes.add(node);
 			const children = ArrayFrom(node.childNodes);
 			for (let i = 0; i < children.length; i += 1) {
@@ -433,11 +427,8 @@ export function computeTextAlternative(
 					});
 				}
 			}
-			return null;
-		}
-
-		// https://www.w3.org/TR/svg-aam-1.0/
-		if (isSVGSVGElement(node)) {
+		} else if (isSVGSVGElement(node)) {
+			// https://www.w3.org/TR/svg-aam-1.0/
 			consultedNodes.add(node);
 			const children = ArrayFrom(node.childNodes);
 			for (let i = 0; i < children.length; i += 1) {
@@ -447,45 +438,81 @@ export function computeTextAlternative(
 				}
 			}
 			return null;
+		} else if (getLocalName(node) === "img" || getLocalName(node) === "area") {
+			// https://w3c.github.io/html-aam/#area-element
+			// https://w3c.github.io/html-aam/#img-element
+			const nameFromAlt = useAttribute(node, "alt");
+			if (nameFromAlt !== null) {
+				return nameFromAlt;
+			}
 		}
 
 		if (
-			!(
-				isHTMLInputElement(node) ||
-				isHTMLSelectElement(node) ||
-				isHTMLTextAreaElement(node)
-			)
+			isHTMLInputElement(node) &&
+			(node.type === "button" ||
+				node.type === "submit" ||
+				node.type === "reset")
 		) {
-			return null;
-		}
-		const input = node;
+			// https://w3c.github.io/html-aam/#input-type-text-input-type-password-input-type-search-input-type-tel-input-type-email-input-type-url-and-textarea-element-accessible-description-computation
+			const nameFromValue = useAttribute(node, "value");
+			if (nameFromValue !== null) {
+				return nameFromValue;
+			}
 
-		// https://w3c.github.io/html-aam/#input-type-text-input-type-password-input-type-search-input-type-tel-input-type-email-input-type-url-and-textarea-element-accessible-description-computation
-		if (input.type === "submit") {
-			return "Submit";
-		}
-		if (input.type === "reset") {
-			return "Reset";
-		}
-
-		const labels = getLabels(input);
-		if (labels === null || labels.length === 0) {
-			return null;
+			// TODO: l10n
+			if (node.type === "submit") {
+				return "Submit";
+			}
+			// TODO: l10n
+			if (node.type === "reset") {
+				return "Reset";
+			}
 		}
 
-		consultedNodes.add(input);
-		return ArrayFrom(labels)
-			.map((element) => {
-				return computeTextAlternative(element, {
-					isEmbeddedInLabel: true,
-					isReferenced: false,
-					recursion: true,
-				});
-			})
-			.filter((label) => {
-				return label.length > 0;
-			})
-			.join(" ");
+		if (
+			isHTMLInputElement(node) ||
+			isHTMLSelectElement(node) ||
+			isHTMLTextAreaElement(node)
+		) {
+			const input = node;
+
+			const labels = getLabels(input);
+			if (labels !== null && labels.length !== 0) {
+				consultedNodes.add(input);
+				return ArrayFrom(labels)
+					.map((element) => {
+						return computeTextAlternative(element, {
+							isEmbeddedInLabel: true,
+							isReferenced: false,
+							recursion: true,
+						});
+					})
+					.filter((label) => {
+						return label.length > 0;
+					})
+					.join(" ");
+			}
+		}
+
+		// https://w3c.github.io/html-aam/#input-type-image-accessible-name-computation
+		// TODO: wpt test consider label elements but html-aam does not mention them
+		// We follow existing implementations over spec
+		if (isHTMLInputElement(node) && node.type === "image") {
+			const nameFromAlt = useAttribute(node, "alt");
+			if (nameFromAlt !== null) {
+				return nameFromAlt;
+			}
+
+			const nameFromTitle = useAttribute(node, "title");
+			if (nameFromTitle !== null) {
+				return nameFromTitle;
+			}
+
+			// TODO: l10n
+			return "Submit Query";
+		}
+
+		return useAttribute(node, "title");
 	}
 
 	function computeTextAlternative(
@@ -555,13 +582,6 @@ export function computeTextAlternative(
 				if (elementTextAlternative !== null) {
 					consultedNodes.add(current);
 					return elementTextAlternative;
-				}
-				const attributeTextAlternative = computeAttributeTextAlternative(
-					current
-				);
-				if (attributeTextAlternative !== null) {
-					consultedNodes.add(current);
-					return attributeTextAlternative;
 				}
 			}
 		}
