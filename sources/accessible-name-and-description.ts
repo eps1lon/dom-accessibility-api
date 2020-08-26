@@ -377,6 +377,28 @@ export function computeTextAlternative(
 			return null;
 		}
 
+		/**
+		 *
+		 * @param element
+		 * @param attributeName
+		 * @returns A string non-empty string or `null`
+		 */
+		function useAttribute(
+			element: Element,
+			attributeName: string
+		): string | null {
+			const attribute = element.getAttributeNode(attributeName);
+			if (
+				attribute !== null &&
+				!consultedNodes.has(attribute) &&
+				attribute.value.trim() !== ""
+			) {
+				consultedNodes.add(attribute);
+				return attribute.value;
+			}
+			return null;
+		}
+
 		// https://w3c.github.io/html-aam/#fieldset-and-legend-elements
 		if (isHTMLFieldSetElement(node)) {
 			consultedNodes.add(node);
@@ -419,10 +441,9 @@ export function computeTextAlternative(
 		} else if (getLocalName(node) === "img" || getLocalName(node) === "area") {
 			// https://w3c.github.io/html-aam/#area-element
 			// https://w3c.github.io/html-aam/#img-element
-			const altAttribute = node.getAttributeNode("alt");
-			if (altAttribute !== null && !consultedNodes.has(altAttribute)) {
-				consultedNodes.add(altAttribute);
-				return altAttribute.value;
+			const nameFromAlt = useAttribute(node, "alt");
+			if (nameFromAlt !== null) {
+				return nameFromAlt;
 			}
 		}
 
@@ -433,15 +454,16 @@ export function computeTextAlternative(
 				node.type === "reset")
 		) {
 			// https://w3c.github.io/html-aam/#input-type-text-input-type-password-input-type-search-input-type-tel-input-type-email-input-type-url-and-textarea-element-accessible-description-computation
-			const valueAttribute = node.getAttributeNode("value");
-			if (valueAttribute !== null && valueAttribute.value.trim() !== "") {
-				consultedNodes.add(valueAttribute);
-				return valueAttribute.value;
+			const nameFromValue = useAttribute(node, "value");
+			if (nameFromValue !== null) {
+				return nameFromValue;
 			}
 
+			// TODO: l10n
 			if (node.type === "submit") {
 				return "Submit";
 			}
+			// TODO: l10n
 			if (node.type === "reset") {
 				return "Reset";
 			}
@@ -472,17 +494,25 @@ export function computeTextAlternative(
 			}
 		}
 
-		const titleAttribute = node.getAttributeNode("title");
-		if (
-			titleAttribute !== null &&
-			titleAttribute.value.trim() !== "" &&
-			!consultedNodes.has(titleAttribute)
-		) {
-			consultedNodes.add(titleAttribute);
-			return titleAttribute.value;
+		// https://w3c.github.io/html-aam/#input-type-image-accessible-name-computation
+		// TODO: wpt test consider label elements but html-aam does not mention them
+		// We follow existing implementations over spec
+		if (isHTMLInputElement(node) && node.type === "image") {
+			const nameFromAlt = useAttribute(node, "alt");
+			if (nameFromAlt !== null) {
+				return nameFromAlt;
+			}
+
+			const nameFromTitle = useAttribute(node, "title");
+			if (nameFromTitle !== null) {
+				return nameFromTitle;
+			}
+
+			// TODO: l10n
+			return "Submit Query";
 		}
 
-		return null;
+		return useAttribute(node, "title");
 	}
 
 	function computeTextAlternative(
