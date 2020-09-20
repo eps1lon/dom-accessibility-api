@@ -76,7 +76,8 @@ function getImplicitRole(element: Element): string | null {
 			}
 			break;
 		case "img":
-			if ((element.getAttribute("alt") || "").length > 0) {
+			const alt: string | null = element.getAttribute("alt");
+			if (alt === null || alt.length > 0) {
 				return "img";
 			}
 			break;

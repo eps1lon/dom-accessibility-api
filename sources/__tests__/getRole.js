@@ -89,6 +89,7 @@ const cases = [
 	["html", null, createElementFactory("html", {})],
 	["iframe", null, createElementFactory("iframe", {})],
 	["img with alt=\"some text\"", "img", createElementFactory("img", {alt: "text"})],
+	["img with missing alt", "img", createElementFactory("img", {})],
 	["img with alt=\"\"", null, createElementFactory("img", {alt: ""})],
 	["input type=button", "button", createElementFactory("input", {type: "button"})],
 	["input type=checkbox", "checkbox", createElementFactory("input", {type: "checkbox"})],
