@@ -1,6 +1,7 @@
 declare global {
 	class Set<T> {
 		// es2015.collection.d.ts
+		constructor(items?: T[]);
 		add(value: T): this;
 		clear(): void;
 		delete(value: T): boolean;
@@ -18,7 +19,11 @@ declare global {
 
 // for environments without Set we fallback to arrays with unique members
 class SetLike<T> implements Set<T> {
-	private items: T[] = [];
+	private items: T[];
+
+	constructor(items: T[] = []) {
+		this.items = items;
+	}
 
 	add(value: T): this {
 		if (this.has(value) === false) {

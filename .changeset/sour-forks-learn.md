@@ -1,8 +1,8 @@
 ---
-"dom-accessibility-api": patch
+"dom-accessibility-api": minor
 ---
 
-Treat presentational images with role="presentation".
+Resolve presentational role conflicts when global WAI-ARIA states or properties (ARIA attributes) are used.
 
 `<img alt="" />` and `<img />` used to have no role.
-[By spec](https://w3c.github.io/html-aam/#el-img-empty-alt) they should have `role="presentation"` instead.
+[By spec](https://w3c.github.io/html-aam/#el-img-empty-alt) they should have `role="presentation"` with no ARIA attributes or `role="img"` [otherwise](https://rawgit.com/w3c/aria/stable/#conflict_resolution_presentation_none).

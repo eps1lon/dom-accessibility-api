@@ -2,15 +2,6 @@
 
 import { getLocalName } from "./util";
 
-export default function getRole(element: Element): string | null {
-	const explicitRole = getExplicitRole(element);
-	if (explicitRole !== null) {
-		return explicitRole;
-	}
-
-	return getImplicitRole(element);
-}
-
 const localNameToRoleMappings: Record<string, string | undefined> = {
 	article: "article",
 	aside: "complementary",
@@ -61,6 +52,81 @@ const localNameToRoleMappings: Record<string, string | undefined> = {
 	ul: "list",
 };
 
+const prohibitedAttributes: Record<string, Set<string>> = {
+	caption: new Set(["aria-label", "aria-labelledby"]),
+	code: new Set(["aria-label", "aria-labelledby"]),
+	deletion: new Set(["aria-label", "aria-labelledby"]),
+	emphasis: new Set(["aria-label", "aria-labelledby"]),
+	generic: new Set(["aria-label", "aria-labelledby", "aria-roledescription"]),
+	insertion: new Set(["aria-label", "aria-labelledby"]),
+	paragraph: new Set(["aria-label", "aria-labelledby"]),
+	presentation: new Set(["aria-label", "aria-labelledby"]),
+	strong: new Set(["aria-label", "aria-labelledby"]),
+	subscript: new Set(["aria-label", "aria-labelledby"]),
+	superscript: new Set(["aria-label", "aria-labelledby"]),
+};
+
+/**
+ *
+ * @param element
+ * @param role The role used for this element. This is specified to control whether you want to use the implicit or explicit role.
+ */
+function hasGlobalAriaAttributes(element: Element, role: string): boolean {
+	// https://rawgit.com/w3c/aria/stable/#global_states
+	// commented attributes are deprecated
+	return [
+		"aria-atomic",
+		"aria-busy",
+		"aria-controls",
+		"aria-current",
+		"aria-describedby",
+		"aria-details",
+		// "disabled",
+		"aria-dropeffect",
+		// "errormessage",
+		"aria-flowto",
+		"aria-grabbed",
+		// "haspopup",
+		"aria-hidden",
+		// "invalid",
+		"aria-keyshortcuts",
+		"aria-label",
+		"aria-labelledby",
+		"aria-live",
+		"aria-owns",
+		"aria-relevant",
+		"aria-roledescription",
+	].some((attributeName) => {
+		return (
+			element.hasAttribute(attributeName) &&
+			!prohibitedAttributes[role]?.has(attributeName)
+		);
+	});
+}
+
+function ignorePresentationalRole(
+	element: Element,
+	implicitRole: string
+): boolean {
+	// https://rawgit.com/w3c/aria/stable/#conflict_resolution_presentation_none
+	return hasGlobalAriaAttributes(element, implicitRole);
+}
+
+export default function getRole(element: Element): string | null {
+	const explicitRole = getExplicitRole(element);
+	if (explicitRole === null || explicitRole === "presentation") {
+		const implicitRole = getImplicitRole(element);
+		if (
+			explicitRole !== "presentation" ||
+			ignorePresentationalRole(element, implicitRole || "")
+		) {
+			return implicitRole;
+		}
+	}
+
+	return explicitRole;
+}
+
 function getImplicitRole(element: Element): string | null {
 	const mappedByTag = localNameToRoleMappings[getLocalName(element)];
 	if (mappedByTag !== undefined) {
@@ -76,10 +142,13 @@ function getImplicitRole(element: Element): string | null {
 			}
 			break;
 		case "img":
-			if ((element.getAttribute("alt") || "").length > 0) {
-				return "img";
+			if (
+				(element.getAttribute("alt") || "").length === 0 &&
+				!ignorePresentationalRole(element, "img")
+			) {
+				return "presentation";
 			}
-			return "presentation";
+			return "img";
 		case "input": {
 			const { type } = element as HTMLInputElement;
 			switch (type) {
