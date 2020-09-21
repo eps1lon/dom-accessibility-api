@@ -75,12 +75,13 @@ function getImplicitRole(element: Element): string | null {
 				return "link";
 			}
 			break;
-		case "img":
+		case "img": {
 			const alt: string | null = element.getAttribute("alt");
 			if (alt === null || alt.length > 0) {
 				return "img";
 			}
 			break;
+		}
 		case "input": {
 			const { type } = element as HTMLInputElement;
 			switch (type) {
