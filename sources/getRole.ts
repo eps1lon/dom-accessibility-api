@@ -142,10 +142,7 @@ function getImplicitRole(element: Element): string | null {
 			}
 			break;
 		case "img":
-			if (
-				(element.getAttribute("alt") || "").length === 0 &&
-				!ignorePresentationalRole(element, "img")
-			) {
+			if (element.getAttribute("alt") === "") {
 				return "presentation";
 			}
 			return "img";
