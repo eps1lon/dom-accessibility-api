@@ -264,7 +264,7 @@ test.each([
 	[`<img data-test alt="an image" />`, "an image"],
 	// this would require a custom matcher
 	[
-		`<div id="label"><em>the</em> logo</div><img data-test aria-labelledby="label" />`,
+		`<div id="label"><em>the</em> logo</div><img data-test aria-labelledby="label" alt="the logo alt that's ignored" />`,
 		"the logo",
 	],
 	// byDisplayValue isn't solvable by accessibleName
