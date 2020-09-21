@@ -125,9 +125,16 @@ steps:
   - script: yarn test:wpt:browser
     displayName: "Run wpt tests in browser"
 
+  - bash: |
+      if [ -d tests/cypress/screenshots ]; then
+        echo "##vso[task.setVariable variable=CY_SCREENSHOTS_EXIST]true"
+      fi
+    condition: always()
+    displayName: Check if cypress screenshots were created
+
   - publish: tests/cypress/screenshots
     artifact: browser-test-screenshots-node-$(node_version)
-    condition: failed()
+    condition: and(failed(), eq(variables.CY_SCREENSHOTS_EXIST, 'true'))
     displayName: "Publish cypress screenshots"
 
   - publish: tests/cypress/videos
