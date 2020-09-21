@@ -90,7 +90,7 @@ const cases = [
 	["iframe", null, createElementFactory("iframe", {})],
 	["img with alt=\"some text\"", "img", createElementFactory("img", {alt: "text"})],
 	["img with missing alt", "img", createElementFactory("img", {})],
-	["img with alt=\"\"", null, createElementFactory("img", {alt: ""})],
+	["img with alt=\"\"", "presentation", createElementFactory("img", {alt: ""})],
 	["input type=button", "button", createElementFactory("input", {type: "button"})],
 	["input type=checkbox", "checkbox", createElementFactory("input", {type: "checkbox"})],
 	["input type=color", null, createElementFactory("input", {type: "color"})],
@@ -172,6 +172,11 @@ const cases = [
 	["track", null, createElementFactory("track", {})],
 	["ul", "list", createElementFactory("ul", {})],
 	["video", null, createElementFactory("video", {})],
+	// https://rawgit.com/w3c/aria/stable/#conflict_resolution_presentation_none
+	["presentational <img /> with accessible name", "img", createElementFactory("img", {alt: "", 'aria-label': "foo"})],
+	["presentational <h1 /> global aria attributes", "heading", createElementFactory("h1", {'aria-describedby': "comment-1", role: "presentation"})],
+	// <div /> isn't mapped to `"generic"` yet so implicit semantics are `No role`
+	["presentational <div /> with prohibited aria attributes", null, createElementFactory("div", {'aria-label': "hello", role: "presentation"})],
 ];
 
 it.each(cases)("%s has the role %s", (name, role, elementFactory) => {
