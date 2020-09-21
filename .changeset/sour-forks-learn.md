@@ -1,5 +1,5 @@
 ---
-"dom-accessibility-api": minor
+"dom-accessibility-api": patch
 ---
 
 Resolve presentational role conflicts when global WAI-ARIA states or properties (ARIA attributes) are used.
