@@ -111,7 +111,7 @@ steps:
   - task: PublishCodeCoverageResults@1
     inputs:
       codeCoverageTool: Cobertura
-      failIfCoverageEmpty: true
+      failIfCoverageEmpty: true 
       summaryFileLocation: "$(System.DefaultWorkingDirectory)/scripts/jest/coverage/*coverage.xml"
 
   - script: |
