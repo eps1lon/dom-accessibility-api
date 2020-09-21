@@ -1,5 +1,19 @@
 # dom-accessibility-api changelog
 
+## 0.5.3
+
+### Patch Changes
+
+- [`76e8f93`](https://github.com/eps1lon/dom-accessibility-api/commit/76e8f93ccd8d6d3464d1b362a22163c501b9ea37) [#430](https://github.com/eps1lon/dom-accessibility-api/pull/430) Thanks [@ckundo](https://github.com/ckundo)! - Maintain `img` role for `img` with missing `alt` attribute.
+
+  Previously `<img />` would be treated the same as `<img alt />`.
+  `<img />` is now treated as `role="img"` [as specified](https://w3c.github.io/html-aam/#el-img-empty-alt).
+
+* [`96d4438`](https://github.com/eps1lon/dom-accessibility-api/commit/96d443855b897fccb9fa09d5f595c502b23e6cf9) [#436](https://github.com/eps1lon/dom-accessibility-api/pull/436) Thanks [@eps1lon](https://github.com/eps1lon)! - Resolve presentational role conflicts when global WAI-ARIA states or properties (ARIA attributes) are used.
+
+  `<img alt="" />` used to have no role.
+  [By spec](https://w3c.github.io/html-aam/#el-img-empty-alt) it should have `role="presentation"` with no ARIA attributes or `role="img"` [otherwise](https://rawgit.com/w3c/aria/stable/#conflict_resolution_presentation_none).
+
 ## 0.5.2
 
 ### Patch Changes
