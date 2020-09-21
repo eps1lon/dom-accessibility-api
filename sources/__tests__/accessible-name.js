@@ -310,7 +310,10 @@ test.each([
 	// https://w3c.github.io/html-aam/#input-type-image
 	[`<input data-test alt="Select an image" type="image" />`, "Select an image"],
 	[`<input data-test alt="" type="image" />`, "Submit Query"],
-	[`<img data-test alt="" aria-label="a logo" role="presentation" /> />`, "a logo"],
+	[
+		`<img data-test alt="" aria-label="a logo" role="presentation" /> />`,
+		"a logo",
+	],
 ])(`test #%#`, testMarkup);
 
 test("text nodes are not concatenated by space", () => {
