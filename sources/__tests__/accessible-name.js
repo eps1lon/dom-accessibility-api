@@ -50,7 +50,9 @@ function testMarkup(markup, accessibleName) {
 function testShadowDomMarkup(markup, accessibleName) {
 	const container = renderIntoDocument(markup);
 
-	const testNode = container.querySelector("[data-test]").shadowRoot.querySelector('[data-test]');
+	const testNode = container
+		.querySelector("[data-root]")
+		.shadowRoot.querySelector("[data-test]");
 	expect(testNode).toHaveAccessibleName(accessibleName);
 }
 
@@ -226,20 +228,20 @@ describe("slots", () => {
 	test.each([
 		[
 			"no default content",
-			`<custom-button data-test>Custom name</custom-button>`,
+			`<custom-button data-root>Custom name</custom-button>`,
 			"Custom name",
 		],
 		[
 			"default content",
-			`<custom-button-with-default data-test></custom-button>`,
+			`<custom-button-with-default data-root></custom-button>`,
 			"Default name",
 		],
 		[
 			"overridden default content",
-			`<custom-button-with-default data-test>Custom name</custom-button>`,
+			`<custom-button-with-default data-root>Custom name</custom-button>`,
 			"Custom name",
 		],
-	])("slot with %s has name", (_, markup, expectedAccessibleName) => 
+	])("slot with %s has name", (_, markup, expectedAccessibleName) =>
 		testShadowDomMarkup(markup, expectedAccessibleName)
 	);
 });

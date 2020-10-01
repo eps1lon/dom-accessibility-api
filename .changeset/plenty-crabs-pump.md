@@ -4,7 +4,7 @@
 
 Correctly determine accessible name when element contains a slot.
 
-Previously, computing the accessible name would only examine child nodes. However, content placed in a slot is is an assigned node, not a child node. 
+Previously, computing the accessible name would only examine child nodes. However, content placed in a slot is is an assigned node, not a child node.
 
 If you have a custom element `custom-button` with a slot:
 
@@ -27,4 +27,4 @@ If you have a custom element `custom-button-default` with default content in the
 <custom-button-default></custom-button-default>
 ```
 
-This is not currently defined in the accname spec but reflects current browser behavior. 
+This is not currently defined in the accname spec but reflects current browser behavior.

@@ -69,9 +69,7 @@ export function isHTMLLegendElement(
 	return isElement(node) && getLocalName(node) === "legend";
 }
 
-export function isHTMLSlotElement(
-	node: Node | null
-): node is HTMLSlotElement {
+export function isHTMLSlotElement(node: Node | null): node is HTMLSlotElement {
 	return isElement(node) && getLocalName(node) === "slot";
 }
 
