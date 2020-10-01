@@ -69,6 +69,12 @@ export function isHTMLLegendElement(
 	return isElement(node) && getLocalName(node) === "legend";
 }
 
+export function isHTMLSlotElement(
+	node: Node | null
+): node is HTMLSlotElement {
+	return isElement(node) && getLocalName(node) === "slot";
+}
+
 export function isSVGElement(node: Node | null): node is SVGElement {
 	return isElement(node) && (node as SVGElement).ownerSVGElement !== undefined;
 }
