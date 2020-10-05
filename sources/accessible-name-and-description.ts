@@ -14,6 +14,7 @@ import {
 	isHTMLFieldSetElement,
 	isHTMLLegendElement,
 	isHTMLTableElement,
+	isHTMLSlotElement,
 	isSVGSVGElement,
 	isSVGTitleElement,
 	queryIdRefs,
@@ -307,10 +308,26 @@ function getLabels(element: Element): HTMLLabelElement[] | null {
 }
 
 /**
+ * Gets the contents of a slot used for computing the accname
+ * @param slot
+ */
+function getSlotContents(slot: HTMLSlotElement): Node[] {
+	// Computing the accessible name for elements containing slots is not
+	// currently defined in the spec. This implementation reflects the
+	// behavior of NVDA 2020.2/Firefox 81 and iOS VoiceOver/Safari 13.6.
+	const assignedNodes = slot.assignedNodes();
+	if (assignedNodes.length === 0) {
+		// if no nodes are assigned to the slot, it displays the default content
+		return ArrayFrom(slot.childNodes);
+	}
+	return assignedNodes;
+}
+
+/**
  * implements https://w3c.github.io/accname/#mapping_additional_nd_te
  * @param root
  * @param [options]
- * @parma [options.getComputedStyle] - mock window.getComputedStyle. Needs `content`, `display` and `visibility`
+ * @param [options.getComputedStyle] - mock window.getComputedStyle. Needs `content`, `display` and `visibility`
  */
 export function computeTextAlternative(
 	root: Element,
@@ -342,11 +359,11 @@ export function computeTextAlternative(
 			accumulatedText = `${beforeContent} ${accumulatedText}`;
 		}
 
-		// FIXME: This is not defined in the spec
+		// FIXME: Including aria-owns is not defined in the spec
 		// But it is required in the web-platform-test
-		const childNodes = ArrayFrom(node.childNodes).concat(
-			queryIdRefs(node, "aria-owns")
-		);
+		const childNodes = isHTMLSlotElement(node)
+			? getSlotContents(node)
+			: ArrayFrom(node.childNodes).concat(queryIdRefs(node, "aria-owns"));
 		childNodes.forEach((child) => {
 			const result = computeTextAlternative(child, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,

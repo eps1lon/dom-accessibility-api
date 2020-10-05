@@ -47,6 +47,15 @@ function testMarkup(markup, accessibleName) {
 	expect(testNode).toHaveAccessibleName(accessibleName);
 }
 
+function testShadowDomMarkup(markup, accessibleName) {
+	const container = renderIntoDocument(markup);
+
+	const testNode = container
+		.querySelector("[data-root]")
+		.shadowRoot.querySelector("[data-test]");
+	expect(testNode).toHaveAccessibleName(accessibleName);
+}
+
 afterEach(cleanup);
 
 describe("to upstream", () => {
@@ -189,6 +198,52 @@ describe("to upstream", () => {
 	])(`coverage for %s`, (_, markup, expectedAccessibleName) => {
 		return testMarkup(markup, expectedAccessibleName);
 	});
+});
+
+describe("slots", () => {
+	beforeAll(() => {
+		customElements.define(
+			"custom-button",
+			class extends HTMLElement {
+				constructor() {
+					super();
+					const shadowRoot = this.attachShadow({ mode: "open" });
+					shadowRoot.innerHTML = `<button data-test><slot></slot></button>`;
+				}
+			}
+		);
+
+		customElements.define(
+			"custom-button-with-default",
+			class extends HTMLElement {
+				constructor() {
+					super();
+					const shadowRoot = this.attachShadow({ mode: "open" });
+					shadowRoot.innerHTML = `<button data-test><slot>Default name</slot></button>`;
+				}
+			}
+		);
+	});
+
+	test.each([
+		[
+			"no default content",
+			`<custom-button data-root>Custom name</custom-button>`,
+			"Custom name",
+		],
+		[
+			"default content",
+			`<custom-button-with-default data-root></custom-button>`,
+			"Default name",
+		],
+		[
+			"overridden default content",
+			`<custom-button-with-default data-root>Custom name</custom-button>`,
+			"Custom name",
+		],
+	])("slot with %s has name", (_, markup, expectedAccessibleName) =>
+		testShadowDomMarkup(markup, expectedAccessibleName)
+	);
 });
 
 // misc tests
