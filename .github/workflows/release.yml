@@ -1,4 +1,4 @@
-name: Release
+name: CD
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  release:
-    name: Release
+  prepare-release:
+    name: Prepare release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -28,3 +28,24 @@ jobs:
         uses: changesets/action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+
+      - name: Setup Node.js 12.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 12.x
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Publish
+        run: |
+          yarn changeset publish
+          git push --follow-tags
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
