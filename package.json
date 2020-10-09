@@ -1,5 +1,6 @@
 {
 	"name": "dom-accessibility-api",
+	"description": "Implements https://w3c.github.io/accname/",
 	"version": "0.5.4",
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",
