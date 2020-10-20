@@ -25,8 +25,11 @@ strategy:
     node_14_x:
       node_version: 14.x
     # Release: 2020-10-21
+    node_15_x:
+      node_version: 15.x
+    # Release: 2021-04-20
     # node_15_x:
-    #   node_version: 15.x
+    #   node_version: 16.x
 
 steps:
   - task: NodeTool@0
