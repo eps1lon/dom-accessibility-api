@@ -88,8 +88,6 @@ steps:
       # Diffs are almost always expected
       git --no-pager diff --color --no-index $(Agent.TempDirectory)/published-previous $(Agent.TempDirectory)/published-current || exit 0
     displayName: "Diff tarballs"
-    # TODO: Remove once we finish node15 on `main`
-    continueOnError: true
 
   - script: yarn start
     displayName: "kcd-rollup smoke tests of build"
