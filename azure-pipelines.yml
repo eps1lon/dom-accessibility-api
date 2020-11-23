@@ -67,7 +67,6 @@ steps:
 
   - task: DownloadPipelineArtifact@2
     displayName: "Download tarball from main"
-    continueOnError: true
     inputs:
       artifact: dom-accessibility-api-node-$(node_version)
       path: $(Agent.TempDirectory)/artifacts-main
