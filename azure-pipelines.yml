@@ -8,7 +8,7 @@ pr:
       - "*"
 
 pool:
-  vmImage: "ubuntu-latest"
+  vmImage: "ubuntu-20.04"
 
 # TODO we don't actually need this for karma or cypress tests
 # but it let's us use a single job. No need to split up jobs yet
@@ -71,12 +71,13 @@ steps:
       artifact: dom-accessibility-api-node-$(node_version)
       path: $(Agent.TempDirectory)/artifacts-main
       source: specific
+      # Otherwise green builds (with tasks that have `continueOnError`) are not considered.
+      # We need `continueOnError` if we add a new matrix entry.
+      allowPartiallySucceededBuilds: true
       pipeline: $(System.DefinitionId)
       project: $(System.TeamProject)
       runVersion: latestFromBranch
       runBranch: refs/heads/main
-    # TODO: Remove once we finish node15 on `main`
-    continueOnError: true
 
   - script: |
       mkdir $(Agent.TempDirectory)/published-previous
