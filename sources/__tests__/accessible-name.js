@@ -376,7 +376,7 @@ test.each([
 		`<img data-test alt="" aria-label="a logo" role="presentation" /> />`,
 		"a logo",
 	],
-])(`test #%#`, (markup, expectedAccessibleName) => {
+])(`misc test #%#`, (markup, expectedAccessibleName) => {
 	expect(markup).toHaveAccessibleName(expectedAccessibleName);
 });
 
