@@ -350,7 +350,7 @@ export function computeTextAlternative(
 	// 2F.i
 	function computeMiscTextAlternative(
 		node: Node,
-		context: { isEmbeddedInLabel: boolean; isReferenced: boolean }
+		context: { isEmbeddedInLabel: null | Element; isReferenced: null | Element }
 	): string {
 		let accumulatedText = "";
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
@@ -367,7 +367,7 @@ export function computeTextAlternative(
 		childNodes.forEach((child) => {
 			const result = computeTextAlternative(child, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
-				isReferenced: false,
+				isReferenced: null,
 				recursion: true,
 			});
 			// TODO: Unclear why display affects delimiter
@@ -424,8 +424,8 @@ export function computeTextAlternative(
 				const child = children[i];
 				if (isHTMLLegendElement(child)) {
 					return computeTextAlternative(child, {
-						isEmbeddedInLabel: false,
-						isReferenced: false,
+						isEmbeddedInLabel: null,
+						isReferenced: null,
 						recursion: false,
 					});
 				}
@@ -438,8 +438,8 @@ export function computeTextAlternative(
 				const child = children[i];
 				if (isHTMLTableCaptionElement(child)) {
 					return computeTextAlternative(child, {
-						isEmbeddedInLabel: false,
-						isReferenced: false,
+						isEmbeddedInLabel: null,
+						isReferenced: null,
 						recursion: false,
 					});
 				}
@@ -499,8 +499,8 @@ export function computeTextAlternative(
 				return ArrayFrom(labels)
 					.map((element) => {
 						return computeTextAlternative(element, {
-							isEmbeddedInLabel: true,
-							isReferenced: false,
+							isEmbeddedInLabel: input,
+							isReferenced: null,
 							recursion: true,
 						});
 					})
@@ -535,8 +535,8 @@ export function computeTextAlternative(
 	function computeTextAlternative(
 		current: Node,
 		context: {
-			isEmbeddedInLabel: boolean;
-			isReferenced: boolean;
+			isEmbeddedInLabel: null | Element;
+			isReferenced: null | Element;
 			recursion: boolean;
 		}
 	): string {
@@ -568,7 +568,9 @@ export function computeTextAlternative(
 				.map((element) =>
 					computeTextAlternative(element, {
 						isEmbeddedInLabel: context.isEmbeddedInLabel,
-						isReferenced: true,
+						// `current` can only have `labelElements` if it has an `aria-labelledby` attribute.
+						// Only Element can have an attribute.
+						isReferenced: current as Element,
 						// thais isn't recursion as specified, otherwise we would skip
 						// `aria-label` in
 						// <input id="myself" aria-label="foo" aria-labelledby="myself"
@@ -584,7 +586,12 @@ export function computeTextAlternative(
 		const skipToStep2E =
 			context.recursion && isControl(current) && compute === "name";
 		// 2E
-		if (skipToStep2E || context.isEmbeddedInLabel || context.isReferenced) {
+		if (
+			skipToStep2E ||
+			(context.isEmbeddedInLabel !== null &&
+				context.isEmbeddedInLabel !== current) ||
+			(context.isReferenced !== null && context.isReferenced !== current)
+		) {
 			if (hasAnyConcreteRoles(current, ["combobox", "listbox"])) {
 				consultedNodes.add(current);
 				const selectedOptions = querySelectedOptions(current);
@@ -596,7 +603,7 @@ export function computeTextAlternative(
 					.map((selectedOption) => {
 						return computeTextAlternative(selectedOption, {
 							isEmbeddedInLabel: context.isEmbeddedInLabel,
-							isReferenced: false,
+							isReferenced: null,
 							recursion: true,
 						});
 					})
@@ -649,7 +656,7 @@ export function computeTextAlternative(
 			consultedNodes.add(current);
 			return computeMiscTextAlternative(current, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
-				isReferenced: false,
+				isReferenced: null,
 			});
 		}
 
@@ -662,7 +669,7 @@ export function computeTextAlternative(
 			consultedNodes.add(current);
 			return computeMiscTextAlternative(current, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
-				isReferenced: false,
+				isReferenced: null,
 			});
 		}
 
@@ -679,9 +686,10 @@ export function computeTextAlternative(
 
 	return asFlatString(
 		computeTextAlternative(root, {
-			isEmbeddedInLabel: false,
+			isEmbeddedInLabel: null,
 			// by spec computeAccessibleDescription starts with the referenced elements as roots
-			isReferenced: compute === "description",
+			// TODO: pass referencing element how?
+			isReferenced: compute === "description" ? root : null,
 			recursion: false,
 		})
 	);
