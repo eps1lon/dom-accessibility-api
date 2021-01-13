@@ -583,26 +583,6 @@ export function computeTextAlternative(
 		// spec says we should only consider skipping if we have a non-empty label
 		const skipToStep2E =
 			context.recursion && isControl(current) && compute === "name";
-		if (!skipToStep2E) {
-			const ariaLabel = (
-				(isElement(current) && current.getAttribute("aria-label")) ||
-				""
-			).trim();
-			if (ariaLabel !== "" && compute === "name") {
-				consultedNodes.add(current);
-				return ariaLabel;
-			}
-
-			// 2D
-			if (!isMarkedPresentational(current)) {
-				const elementTextAlternative = computeElementTextAlternative(current);
-				if (elementTextAlternative !== null) {
-					consultedNodes.add(current);
-					return elementTextAlternative;
-				}
-			}
-		}
-
 		// 2E
 		if (skipToStep2E || context.isEmbeddedInLabel || context.isReferenced) {
 			if (hasAnyConcreteRoles(current, ["combobox", "listbox"])) {
@@ -638,6 +618,24 @@ export function computeTextAlternative(
 			if (hasAnyConcreteRoles(current, ["textbox"])) {
 				consultedNodes.add(current);
 				return getValueOfTextbox(current);
+			}
+		}
+
+		const ariaLabel = (
+			(isElement(current) && current.getAttribute("aria-label")) ||
+			""
+		).trim();
+		if (ariaLabel !== "" && compute === "name") {
+			consultedNodes.add(current);
+			return ariaLabel;
+		}
+
+		// 2D
+		if (!isMarkedPresentational(current)) {
+			const elementTextAlternative = computeElementTextAlternative(current);
+			if (elementTextAlternative !== null) {
+				consultedNodes.add(current);
+				return elementTextAlternative;
 			}
 		}
 
