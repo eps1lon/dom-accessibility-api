@@ -24,12 +24,12 @@ strategy:
     # EOL: 2023-04-30
     node_14_x:
       node_version: 14.x
-    # Release: 2020-10-21
+    # EOL: 2021-06-01
     node_15_x:
       node_version: 15.x
-    # Release: 2021-04-20
-    # node_15_x:
-    #   node_version: 16.x
+    # EOL: 2024-04-30
+    node_16_x:
+      node_version: 16.x
 
 steps:
   - task: NodeTool@0
@@ -78,6 +78,8 @@ steps:
       project: $(System.TeamProject)
       runVersion: latestFromBranch
       runBranch: refs/heads/main
+    # TODO: Remove once we finish node16 on `main`
+    continueOnError: true
 
   - script: |
       mkdir $(Agent.TempDirectory)/published-previous
