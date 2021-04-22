@@ -78,8 +78,6 @@ steps:
       project: $(System.TeamProject)
       runVersion: latestFromBranch
       runBranch: refs/heads/main
-    # TODO: Remove once we finish node16 on `main`
-    continueOnError: true
 
   - script: |
       mkdir $(Agent.TempDirectory)/published-previous
