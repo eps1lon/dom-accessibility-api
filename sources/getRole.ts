@@ -193,10 +193,12 @@ function getImplicitRole(element: Element): string | null {
 }
 
 function getExplicitRole(element: Element): string | null {
-	if (element.hasAttribute("role")) {
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- safe due to hasAttribute check
-		const [explicitRole] = element.getAttribute("role")!.trim().split(" ");
-		if (explicitRole !== undefined && explicitRole.length > 0) {
+	const role = element.getAttribute("role");
+	if (role !== null) {
+		const explicitRole = role.trim().split(" ")[0];
+		// String.prototype.split(sep, limit) will always return an array with at least one member
+		// as long as limit is either undefined or > 0
+		if (explicitRole.length > 0) {
 			return explicitRole;
 		}
 	}
