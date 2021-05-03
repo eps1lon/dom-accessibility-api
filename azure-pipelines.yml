@@ -14,10 +14,6 @@ pool:
 # but it let's us use a single job. No need to split up jobs yet
 strategy:
   matrix:
-    # active node versions, remove once they reached their EOL
-    # EOL: 2021-04-30
-    node_10_x:
-      node_version: 10.x
     # EOL: 	2022-04-30
     node_12_x:
       node_version: 12.x
