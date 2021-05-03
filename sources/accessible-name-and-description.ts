@@ -13,6 +13,7 @@ import {
 	safeWindow,
 	isHTMLFieldSetElement,
 	isHTMLLegendElement,
+	isHTMLOptGroupElement,
 	isHTMLTableElement,
 	isHTMLSlotElement,
 	isSVGSVGElement,
@@ -461,6 +462,11 @@ export function computeTextAlternative(
 			const nameFromAlt = useAttribute(node, "alt");
 			if (nameFromAlt !== null) {
 				return nameFromAlt;
+			}
+		} else if (isHTMLOptGroupElement(node)) {
+			const nameFromLabel = useAttribute(node, "label");
+			if (nameFromLabel !== null) {
+				return nameFromLabel;
 			}
 		}
 

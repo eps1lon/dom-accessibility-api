@@ -29,6 +29,12 @@ export function isHTMLInputElement(
 	return isElement(node) && getLocalName(node) === "input";
 }
 
+export function isHTMLOptGroupElement(
+	node: Node | null
+): node is HTMLOptGroupElement {
+	return isElement(node) && getLocalName(node) === "optgroup";
+}
+
 export function isHTMLSelectElement(
 	node: Node | null
 ): node is HTMLSelectElement {

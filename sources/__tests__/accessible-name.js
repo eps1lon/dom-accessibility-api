@@ -102,6 +102,11 @@ describe("to upstream", () => {
 			"greek iota",
 		],
 		[
+			"optgroup",
+			`<select><optgroup data-test label="foo"><option value="1">baz</option></optgroup></select>`,
+			"foo",
+		],
+		[
 			"radio",
 			`<div data-test role="radio"><em>greek</em> kappa</div>`,
 			"greek kappa",
