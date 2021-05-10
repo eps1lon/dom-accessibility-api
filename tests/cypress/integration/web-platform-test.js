@@ -174,13 +174,8 @@ context("wpt", () => {
 				`#steps tr:nth-of-type(2) .api tr:nth-of-type(${2 + usedApiIndex})`
 			)
 				.then(($row) => {
-					const [
-						$apiName,
-						$access,
-						$property,
-						$equality,
-						$expected,
-					] = $row.find("td");
+					const [$apiName, $access, $property, $equality, $expected] =
+						$row.find("td");
 
 					// these cases are handled
 					expect($apiName.textContent).to.equal("ATK");
