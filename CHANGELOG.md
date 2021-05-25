@@ -1,5 +1,46 @@
 # dom-accessibility-api changelog
 
+## 0.5.5
+
+### Patch Changes
+
+- [#627](https://github.com/eps1lon/dom-accessibility-api/pull/627) [`0485441`](https://github.com/eps1lon/dom-accessibility-api/commit/0485441e68cf728596d7140bdff2ac13280eefab) Thanks [@eps1lon](https://github.com/eps1lon)! - Ensure certain babel helpers aren't required
+
+  Source:
+
+  ```diff
+  -const [item] = list;
+  +const item = list[0];
+  ```
+
+  Transpiled:
+
+  ```diff
+  -var _trim$split = list.trim().split(" "),
+  -_trim$split2 = _slicedToArray(_trim$split, 1),
+  -item = _trim$split2[0]
+  +var item = list[0];
+  ```
+
+* [#629](https://github.com/eps1lon/dom-accessibility-api/pull/629) [`383bdb6`](https://github.com/eps1lon/dom-accessibility-api/commit/383bdb616c00105474c8607dd9e5aab4deaff7ed) Thanks [@eps1lon](https://github.com/eps1lon)! - Use label attribute for naming of `<optgroup>` elements.
+
+  Given
+
+  ```jsx
+  <select>
+  	<optgroup label="foo">
+  		<option value="1">bar</option>
+  	</optgroup>
+  </select>
+  ```
+
+  Previously the `<optgroup />` would not have an accessible name.
+  Though [2D in `accname` 1.2](https://www.w3.org/TR/accname-1.2/) could be interpreted to use the `label` attribute:
+
+  > Otherwise, if the current node's native markup provides an attribute (e.g. title) or element (e.g. HTML label) that defines a text alternative, return that alternative [...]
+
+  This was confirmed in NVDA + FireFox.
+
 ## 0.5.4
 
 ### Patch Changes
