@@ -3,7 +3,7 @@
 ```bash
 $ nvm use # or use the node version specified in .nvmrc
 $ yarn
-$ wpt:init
+$ yarn wpt:init
 $ yarn build
 ```
 
