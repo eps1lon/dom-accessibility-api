@@ -57,7 +57,7 @@
 		"cypress": "^7.4.0",
 		"eslint": "^7.27.0",
 		"eslint-plugin-jest": "^24.3.6",
-		"jest": "^27.0.1",
+		"jest": "^27.0.3",
 		"jest-diff": "^27.0.2",
 		"jest-environment-jsdom": "^27.0.3",
 		"jest-junit": "^12.1.0",
