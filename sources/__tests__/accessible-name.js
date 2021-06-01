@@ -5,7 +5,21 @@ import diff from "jest-diff";
 
 expect.extend({
 	toHaveAccessibleName(received, expected) {
-		if (received == null) {
+		let receivedElement = received;
+		if (typeof received === "string") {
+			const markup = received;
+			const container = renderIntoDocument(markup);
+
+			receivedElement = container.querySelector("[data-test]");
+
+			if (receivedElement == null) {
+				return {
+					message: () =>
+						`The following markup did not contain an element matching \`[data-test]\`:\n${markup}`,
+					pass: false,
+				};
+			}
+		} else if (received == null) {
 			return {
 				message: () =>
 					`The element was not an Element but '${String(received)}'`,
@@ -13,12 +27,12 @@ expect.extend({
 			};
 		}
 
-		const actual = computeAccessibleName(received);
+		const actual = computeAccessibleName(receivedElement);
 		if (actual !== expected) {
 			return {
 				message: () =>
 					`expected ${prettyDOM(
-						received
+						receivedElement
 					)} to have accessible name '${expected}' but got '${actual}'\n${diff(
 						expected,
 						actual
@@ -39,13 +53,6 @@ expect.extend({
 		};
 	},
 });
-
-function testMarkup(markup, accessibleName) {
-	const container = renderIntoDocument(markup);
-
-	const testNode = container.querySelector("[data-test]");
-	expect(testNode).toHaveAccessibleName(accessibleName);
-}
 
 function testShadowDomMarkup(markup, accessibleName) {
 	const container = renderIntoDocument(markup);
@@ -137,9 +144,9 @@ describe("to upstream", () => {
 			`<li data-test role="treeitem"><em>greek</em> pi</li>`,
 			"greek pi",
 		],
-	])(`role %s has name from content`, (_, markup, expectedAccessibleName) =>
-		testMarkup(markup, expectedAccessibleName)
-	);
+	])(`role %s has name from content`, (_, markup, expectedAccessibleName) => {
+		expect(markup).toHaveAccessibleName(expectedAccessibleName);
+	});
 
 	test.each([
 		[
@@ -201,7 +208,7 @@ describe("to upstream", () => {
 			"Country of origin: United States",
 		],
 	])(`coverage for %s`, (_, markup, expectedAccessibleName) => {
-		return testMarkup(markup, expectedAccessibleName);
+		expect(markup).toHaveAccessibleName(expectedAccessibleName);
 	});
 });
 
@@ -374,7 +381,9 @@ test.each([
 		`<img data-test alt="" aria-label="a logo" role="presentation" /> />`,
 		"a logo",
 	],
-])(`test #%#`, testMarkup);
+])(`misc test #%#`, (markup, expectedAccessibleName) => {
+	expect(markup).toHaveAccessibleName(expectedAccessibleName);
+});
 
 test("text nodes are not concatenated by space", () => {
 	// how React would create `<h1>Hello {name}!</h1>`
@@ -403,7 +412,7 @@ describe("prohibited naming", () => {
 		["subscript", '<div data-test role="subscript">named?</div>'],
 		["superscript", "<div data-test role='supscript'>Hello</div>"],
 	])("role '%s' prohibites naming", (_, markup) => {
-		testMarkup(markup, "");
+		expect(markup).toHaveAccessibleName("");
 	});
 
 	test.each([
@@ -467,8 +476,8 @@ describe("prohibited naming", () => {
 		],
 	])(
 		"role '%s'can be part of the accessible name of another element",
-		(_, markup, name) => {
-			testMarkup(markup, name);
+		(_, markup, expectedAccessibleName) => {
+			expect(markup).toHaveAccessibleName(expectedAccessibleName);
 		}
 	);
 });
