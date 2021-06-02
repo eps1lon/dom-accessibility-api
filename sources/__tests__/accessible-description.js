@@ -1,7 +1,7 @@
 import { computeAccessibleDescription } from "../accessible-description";
 import { cleanup, renderIntoDocument } from "./helpers/test-utils";
 import { prettyDOM } from "@testing-library/dom";
-import diff from "jest-diff";
+import { diff } from "jest-diff";
 
 expect.extend({
 	toHaveAccessibleDescription(received, expected) {

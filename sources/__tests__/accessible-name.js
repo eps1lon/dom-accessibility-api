@@ -1,7 +1,7 @@
 import { computeAccessibleName } from "../accessible-name";
 import { cleanup, renderIntoDocument } from "./helpers/test-utils";
 import { prettyDOM } from "@testing-library/dom";
-import diff from "jest-diff";
+import { diff } from "jest-diff";
 
 expect.extend({
 	toHaveAccessibleName(received, expected) {
