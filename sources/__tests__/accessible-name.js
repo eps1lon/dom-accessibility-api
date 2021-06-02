@@ -141,6 +141,16 @@ describe("to upstream", () => {
 		testMarkup(markup, expectedAccessibleName)
 	);
 
+	test("output is labelable", () => {
+		const container = renderIntoDocument(`
+			<label for="outputid">Output Label</label>
+			<output id="outputid" data-test></output>
+		`);
+
+		const output = container.querySelector("output");
+		expect(output).toHaveAccessibleName("");
+	});
+
 	test.each([
 		[
 			// TODO
