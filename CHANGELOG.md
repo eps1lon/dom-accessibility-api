@@ -1,5 +1,21 @@
 # dom-accessibility-api changelog
 
+## 0.5.6
+
+### Patch Changes
+
+- [#666](https://github.com/eps1lon/dom-accessibility-api/pull/666) [`26ee73d`](https://github.com/eps1lon/dom-accessibility-api/commit/26ee73de9ad6fce27cde0d5ec53a2bc4a12bd879) Thanks [@eps1lon](https://github.com/eps1lon)! - Consider `<label />` when computing the accessible name of `<output />`
+
+  Given
+
+  ```html
+  <label for="outputid">Output Label</label> <output id="outputid"></output>
+  ```
+
+  Previously the accessible name of the `<output />` would ignore the `<label />`.
+  However, an [`<output />` is labelable](https://html.spec.whatwg.org/#the-output-element) and therefore the accessible name is now computed using `<label />` elements if they exists.
+  In this example the accessible name is `"Output Label"`.
+
 ## 0.5.5
 
 ### Patch Changes
