@@ -298,6 +298,7 @@ function getLabels(element: Element): HTMLLabelElement[] | null {
 		return ArrayFrom(labelsProperty);
 	}
 
+	// polyfill
 	if (!isLabelableElement(element)) {
 		return null;
 	}
@@ -492,29 +493,21 @@ export function computeTextAlternative(
 			}
 		}
 
-		if (
-			isHTMLInputElement(node) ||
-			isHTMLSelectElement(node) ||
-			isHTMLTextAreaElement(node)
-		) {
-			const input = node;
-
-			const labels = getLabels(input);
-			if (labels !== null && labels.length !== 0) {
-				consultedNodes.add(input);
-				return ArrayFrom(labels)
-					.map((element) => {
-						return computeTextAlternative(element, {
-							isEmbeddedInLabel: true,
-							isReferenced: false,
-							recursion: true,
-						});
-					})
-					.filter((label) => {
-						return label.length > 0;
-					})
-					.join(" ");
-			}
+		const labels = getLabels(node);
+		if (labels !== null && labels.length !== 0) {
+			consultedNodes.add(node);
+			return ArrayFrom(labels)
+				.map((element) => {
+					return computeTextAlternative(element, {
+						isEmbeddedInLabel: true,
+						isReferenced: false,
+						recursion: true,
+					});
+				})
+				.filter((label) => {
+					return label.length > 0;
+				})
+				.join(" ");
 		}
 
 		// https://w3c.github.io/html-aam/#input-type-image-accessible-name-computation

@@ -148,7 +148,7 @@ describe("to upstream", () => {
 		`);
 
 		const output = container.querySelector("output");
-		expect(output).toHaveAccessibleName("");
+		expect(output).toHaveAccessibleName("Output Label");
 	});
 
 	test.each([
