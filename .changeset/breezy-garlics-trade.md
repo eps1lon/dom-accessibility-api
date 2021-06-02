@@ -11,5 +11,5 @@ Given
 ```
 
 Previously the accessible name of the `<output />` would ignore the `<label />`.
-However, an `<output />` is labelable and therefore the accessible name is now computed using `<label />` elements if they exists.
+However, an [`<output />` is labelable](https://html.spec.whatwg.org/#the-output-element) and therefore the accessible name is now computed using `<label />` elements if they exists.
 In this example the accessible name is `"Output Label"`.
