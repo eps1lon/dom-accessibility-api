@@ -1,0 +1,28 @@
+{
+	"automerge": true,
+	"automergeType": "pr-comment",
+	"automergeComment": "renovate automerge",
+	"dependencyDashboard": true,
+	"ignoreDeps": [],
+	"labels": ["dependencies"],
+	"packageRules": [
+		{
+			"matchPackagePatterns": "@babel/*",
+			"groupName": "babel"
+		},
+		{
+			"matchPackagePatterns": "@changesets/*",
+			"groupName": "changesets"
+		},
+		{
+			"matchPackagePatterns": "@typescript-eslint/*",
+			"groupName": "typescript-eslint"
+		},
+		{
+			"matchPackageNames": ["jest", "jest-diff", "jest-environment-jsdom"],
+			"groupName": "jest"
+		}
+	],
+	"prConcurrentLimit": 99,
+	"schedule": "weekly at 4am"
+}
