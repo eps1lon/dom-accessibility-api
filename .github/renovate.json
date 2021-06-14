@@ -25,5 +25,5 @@
 	],
 	"prConcurrentLimit": 99,
 	"prHourlyLimit": 0,
-	"schedule": "weekly at 4am"
+	"schedule": "on monday at 4:00"
 }
