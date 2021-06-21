@@ -20,9 +20,6 @@ strategy:
     # EOL: 2023-04-30
     node_14_x:
       node_version: 14.x
-    # EOL: 2021-06-01
-    node_15_x:
-      node_version: 15.x
     # EOL: 2024-04-30
     node_16_x:
       node_version: 16.x
