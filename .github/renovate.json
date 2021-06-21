@@ -1,7 +1,5 @@
 {
-	"automerge": true,
-	"automergeType": "pr-comment",
-	"automergeComment": "renovate automerge",
+	"automerge": false,
 	"dependencyDashboard": true,
 	"ignoreDeps": [],
 	"labels": ["dependencies"],
