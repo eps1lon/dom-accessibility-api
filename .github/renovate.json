@@ -1,5 +1,8 @@
 {
 	"automerge": false,
+	"commitMessageAction": "bump",
+	"commitMessageExtra": "to {{newValue}}",
+	"commitMessageTopic": "{{depName}}",
 	"dependencyDashboard": true,
 	"ignoreDeps": [],
 	"labels": ["dependencies"],
