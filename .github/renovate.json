@@ -26,5 +26,6 @@
 	],
 	"prConcurrentLimit": 99,
 	"prHourlyLimit": 0,
-	"schedule": "on monday at 4:00"
+	"schedule": "on monday before 6:00am",
+	"timezone": "UTC"
 }
