@@ -42,6 +42,9 @@ module.exports = {
 
 					return {
 						visitor: {
+							ExportAllDeclaration(path, state) {
+								rewriteRelativeImports(path.node);
+							},
 							ExportNamedDeclaration(path, state) {
 								rewriteRelativeImports(path.node);
 							},
