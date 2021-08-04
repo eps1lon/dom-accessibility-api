@@ -5,7 +5,6 @@ import { getLocalName } from "./util";
 const localNameToRoleMappings: Record<string, string | undefined> = {
 	article: "article",
 	aside: "complementary",
-	html: "document",
 	button: "button",
 	datalist: "listbox",
 	dd: "definition",
@@ -25,6 +24,7 @@ const localNameToRoleMappings: Record<string, string | undefined> = {
 	h6: "heading",
 	header: "banner",
 	hr: "separator",
+	html: "document",
 	legend: "legend",
 	li: "listitem",
 	math: "math",
