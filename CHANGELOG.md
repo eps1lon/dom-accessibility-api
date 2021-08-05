@@ -1,5 +1,11 @@
 # dom-accessibility-api changelog
 
+## 0.5.7
+
+### Patch Changes
+
+- [#718](https://github.com/eps1lon/dom-accessibility-api/pull/718) [`6154760`](https://github.com/eps1lon/dom-accessibility-api/commit/61547602a7676167a65a893be53c3cf6b4e010b5) Thanks [@calebeby](https://github.com/calebeby)! - Remove implicit "document" role on `<body>` and add it to `<html>`
+
 ## 0.5.6
 
 ### Patch Changes
