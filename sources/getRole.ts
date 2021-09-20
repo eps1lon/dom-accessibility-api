@@ -46,7 +46,6 @@ const localNameToRoleMappings: Record<string, string | undefined> = {
 	tfoot: "rowgroup",
 	// WARNING: Only in certain context
 	td: "cell",
-	th: "columnheader",
 	thead: "rowgroup",
 	tr: "row",
 	ul: "list",
@@ -188,6 +187,13 @@ function getImplicitRole(element: Element): string | null {
 				return "listbox";
 			}
 			return "combobox";
+		case "th": {
+			const scope = element.getAttribute("scope");
+			if (scope && scope === "rowgroup") {
+				return "rowheader";
+			}
+			return "columnheader";
+		}
 	}
 	return null;
 }

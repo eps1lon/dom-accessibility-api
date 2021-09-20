@@ -168,6 +168,7 @@ const cases = [
   // WARNING: Only in certain contexts
 	["td", "cell", createElementFactory("td", {})],
 	["th", "columnheader", createElementFactory("th", {})],
+	["th, scope=rowgroup", "rowheader", createElementFactory("th", {scope: "rowgroup"})],
 	["tr", "row", createElementFactory("tr", {})],
 	["track", null, createElementFactory("track", {})],
 	["ul", "list", createElementFactory("ul", {})],
