@@ -169,6 +169,7 @@ const cases = [
 	["td", "cell", createElementFactory("td", {})],
 	["th", "columnheader", createElementFactory("th", {})],
 	["th, scope=rowgroup", "rowheader", createElementFactory("th", {scope: "rowgroup"})],
+	["th, scope=row", "rowheader", createElementFactory("th", {scope: "row"})],
 	["tr", "row", createElementFactory("tr", {})],
 	["track", null, createElementFactory("track", {})],
 	["ul", "list", createElementFactory("ul", {})],
