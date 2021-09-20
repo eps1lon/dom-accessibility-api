@@ -189,7 +189,7 @@ function getImplicitRole(element: Element): string | null {
 			return "combobox";
 		case "th": {
 			const scope = element.getAttribute("scope");
-			if (scope && ["row", "rowgroup"].indexOf(scope) !== -1) {
+			if (scope === "row" || scope === "rowgroup") {
 				return "rowheader";
 			}
 			return "columnheader";
