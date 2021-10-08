@@ -60,7 +60,7 @@
 		"jest": "^27.0.3",
 		"jest-diff": "^27.0.2",
 		"jest-environment-jsdom": "^27.0.3",
-		"jest-junit": "^12.1.0",
+		"jest-junit": "^13.0.0",
 		"js-yaml": "^4.1.0",
 		"jsdom": "^17.0.0",
 		"minimatch": "^3.0.4",
