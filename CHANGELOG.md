@@ -1,5 +1,14 @@
 # dom-accessibility-api changelog
 
+## 0.5.8
+
+### Patch Changes
+
+- [#343](https://github.com/eps1lon/dom-accessibility-api/pull/343) [`3d755c2`](https://github.com/eps1lon/dom-accessibility-api/commit/3d755c2b851d7e5da762494559347dfcc25a6654) Thanks [@eps1lon](https://github.com/eps1lon)! - Add `isInaccessible` and `isSubtreeInaccessible`.
+
+  `isInaccessible` implements https://www.w3.org/TR/wai-aria-1.2/#tree_exclusion.
+  `isSubtreeInaccessible` can be used to inject a memoized version of that function into `isInaccessible`.
+
 ## 0.5.7
 
 ### Patch Changes
