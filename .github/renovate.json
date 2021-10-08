@@ -24,6 +24,7 @@
 			"groupName": "jest"
 		}
 	],
+	"postUpdateOptions": ["yarnDedupeFewer"],
 	"prConcurrentLimit": 99,
 	"prHourlyLimit": 0,
 	"rangeStrategy": "update-lockfile",
