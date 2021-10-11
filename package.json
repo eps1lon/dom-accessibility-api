@@ -55,7 +55,7 @@
 		"concurrently": "^6.2.0",
 		"cross-env": "^7.0.3",
 		"cypress": "^8.0.0",
-		"eslint": "^7.27.0",
+		"eslint": "^8.0.0",
 		"eslint-plugin-jest": "^24.3.6",
 		"jest": "^27.0.3",
 		"jest-diff": "^27.0.2",
