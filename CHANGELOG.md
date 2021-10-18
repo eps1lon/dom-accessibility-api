@@ -1,5 +1,14 @@
 # dom-accessibility-api changelog
 
+## 0.5.9
+
+### Patch Changes
+
+- [#762](https://github.com/eps1lon/dom-accessibility-api/pull/762) [`b3e4a17`](https://github.com/eps1lon/dom-accessibility-api/commit/b3e4a1711cd0d8dbc83bd6c656698cc2b2cc3b6a) Thanks [@eps1lon](https://github.com/eps1lon)! - Compute name from author for `menu` role.
+
+  Previously we wouldn't compute any name for `menu` to pass some web-platform-tests that covered an exotic use case.
+  Now we correctly respect name from author (e.g. `aria-label` or `aria-labelledby`).
+
 ## 0.5.8
 
 ### Patch Changes
