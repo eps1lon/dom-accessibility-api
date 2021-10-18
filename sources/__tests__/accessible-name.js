@@ -220,7 +220,7 @@ describe("to upstream", () => {
 	<li role="menuitem">Item 2</li>
 </ul>
 `,
-			"",
+			"Test",
 		],
 	])(`coverage for %s`, (_, markup, expectedAccessibleName) => {
 		return testMarkup(markup, expectedAccessibleName);

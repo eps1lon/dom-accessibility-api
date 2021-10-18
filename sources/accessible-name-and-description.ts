@@ -543,13 +543,6 @@ export function computeTextAlternative(
 			return "";
 		}
 
-		// special casing, cheating to make tests pass
-		// https://github.com/w3c/accname/issues/67
-		if (hasAnyConcreteRoles(current, ["menu"])) {
-			consultedNodes.add(current);
-			return "";
-		}
-
 		// 2A
 		if (isHidden(current, getComputedStyle) && !context.isReferenced) {
 			consultedNodes.add(current);
@@ -600,6 +593,13 @@ export function computeTextAlternative(
 					return elementTextAlternative;
 				}
 			}
+		}
+
+		// special casing, cheating to make tests pass
+		// https://github.com/w3c/accname/issues/67
+		if (hasAnyConcreteRoles(current, ["menu"])) {
+			consultedNodes.add(current);
+			return "";
 		}
 
 		// 2E
