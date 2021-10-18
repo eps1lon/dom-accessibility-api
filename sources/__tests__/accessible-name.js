@@ -210,6 +210,18 @@ describe("to upstream", () => {
 `,
 			"Country of origin: United States",
 		],
+		[
+			'[role="menu"]',
+			// https://github.com/testing-library/dom-testing-library/issues/1059
+			`
+<button id="trigger">Test</button>
+<ul data-test role="menu" aria-labelledby="trigger">
+	<li role="menuitem">Item 1</li>
+	<li role="menuitem">Item 2</li>
+</ul>
+`,
+			"Test",
+		],
 	])(`coverage for %s`, (_, markup, expectedAccessibleName) => {
 		return testMarkup(markup, expectedAccessibleName);
 	});
