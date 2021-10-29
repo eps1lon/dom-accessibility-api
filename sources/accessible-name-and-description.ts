@@ -43,6 +43,12 @@ export interface ComputeTextAlternativeOptions {
 	 * mock window.getComputedStyle. Needs `content`, `display` and `visibility`
 	 */
 	getComputedStyle?: typeof window.getComputedStyle;
+	/**
+	 * Set to `true` if you want to include hidden elements in the accessible name and description computation.
+	 * Skips 2A in https://w3c.github.io/accname/#computation-steps.
+	 * @default false
+	 */
+	hidden?: boolean;
 }
 
 /**
@@ -350,6 +356,7 @@ export function computeTextAlternative(
 		// the type declarations don't require a `this`
 		// eslint-disable-next-line no-restricted-properties
 		getComputedStyle = window.getComputedStyle.bind(window),
+		hidden = false,
 	} = options;
 
 	// 2F.i
@@ -547,7 +554,11 @@ export function computeTextAlternative(
 		}
 
 		// 2A
-		if (isHidden(current, getComputedStyle) && !context.isReferenced) {
+		if (
+			!hidden &&
+			isHidden(current, getComputedStyle) &&
+			!context.isReferenced
+		) {
 			consultedNodes.add(current);
 			return "" as FlatString;
 		}
