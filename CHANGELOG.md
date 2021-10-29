@@ -1,5 +1,19 @@
 # dom-accessibility-api changelog
 
+## 0.5.10
+
+### Patch Changes
+
+- [#770](https://github.com/eps1lon/dom-accessibility-api/pull/770) [`7066180`](https://github.com/eps1lon/dom-accessibility-api/commit/70661802252b4e03d1c5874c53efab010b4f2974) Thanks [@eps1lon](https://github.com/eps1lon)! - Allow computing name for inaccessible elements
+
+  This is mainly targetted at integration with `@testing-library/dom`.
+  But it can also be used as a general performance boost when used in a JSDOM environment.
+  The rationale is that most elements are part of the a11y tree.
+  In those cases computing a11y tree exclusion is wasted.
+  Since it's expensive, we can disable it.
+  The recommendation is to only ignore a11y tree inclusion locally and specifically
+  enable it for the tests where you do know that a11y tree inclusion will play a role.
+
 ## 0.5.9
 
 ### Patch Changes
