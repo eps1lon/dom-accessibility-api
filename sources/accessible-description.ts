@@ -5,10 +5,9 @@ import {
 import { queryIdRefs } from "./util";
 
 /**
- * implements https://w3c.github.io/accname/#mapping_additional_nd_description
  * @param root
- * @param [options]
- * @parma [options.getComputedStyle] - mock window.getComputedStyle. Needs `content`, `display` and `visibility`
+ * @param options
+ * @returns
  */
 export function computeAccessibleDescription(
 	root: Element,
