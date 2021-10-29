@@ -29,7 +29,7 @@ strategy:
     # Initial release: 2022-04-19
     # EOL: 2025-04-30
     #node_18_x:
-    #  node_version: 178.x
+    #  node_version: 18.x
 
 steps:
   - task: NodeTool@0
@@ -78,8 +78,6 @@ steps:
       project: $(System.TeamProject)
       runVersion: latestFromBranch
       runBranch: refs/heads/main
-    # TODO: Remove once we finish node17 on `main`
-    continueOnError: true
 
   - script: |
       mkdir $(Agent.TempDirectory)/published-previous
