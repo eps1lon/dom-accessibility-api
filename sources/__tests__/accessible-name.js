@@ -571,3 +571,17 @@ describe("options.computedStyleSupportsPseudoElements", () => {
 		);
 	});
 });
+
+describe("options.hidden", () => {
+	test.each([
+		[`<button data-test hidden>hidden</button>`, "hidden"],
+		[`<button data-test style="display: none;">hidden</button>`, "hidden"],
+	])(`inaccessible #%#`, (markup, accessibleName) => {
+		const container = renderIntoDocument(markup);
+
+		const testNode = container.querySelector("[data-test]");
+		expect(computeAccessibleName(testNode, { hidden: true })).toEqual(
+			accessibleName
+		);
+	});
+});
