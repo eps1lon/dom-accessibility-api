@@ -5,9 +5,9 @@ import {
 import { queryIdRefs } from "./util";
 
 /**
- * @param root 
- * @param options 
- * @returns 
+ * @param root
+ * @param options
+ * @returns
  */
 export function computeAccessibleDescription(
 	root: Element,
