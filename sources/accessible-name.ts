@@ -26,8 +26,8 @@ function prohibitsNaming(node: Node): boolean {
 /**
  * implements https://w3c.github.io/accname/#mapping_additional_nd_name
  * @param root
- * @param [options]
- * @parma [options.getComputedStyle] - mock window.getComputedStyle. Needs `content`, `display` and `visibility`
+ * @param options
+ * @returns
  */
 export function computeAccessibleName(
 	root: Element,
