@@ -176,8 +176,8 @@ function getImplicitRole(element: Element): string | null {
 						return "combobox";
 					}
 					return "searchbox";
-        case "number":
-          return "spinbutton";
+				case "number":
+					return "spinbutton";
 				default:
 					return null;
 			}
