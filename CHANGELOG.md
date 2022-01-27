@@ -1,5 +1,11 @@
 # dom-accessibility-api changelog
 
+## 0.5.11
+
+### Patch Changes
+
+- [#796](https://github.com/eps1lon/dom-accessibility-api/pull/796) [`cb38778`](https://github.com/eps1lon/dom-accessibility-api/commit/cb3877882c35b474fe25f04365f4c0af11e10fa6) Thanks [@calebeby](https://github.com/calebeby)! - `<input type="number" />` now maps to `role` `spinbutton` (was `textbox` before).
+
 ## 0.5.10
 
 ### Patch Changes
