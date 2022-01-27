@@ -101,6 +101,7 @@ const cases = [
 	["input type=hidden", null, createElementFactory("input", {type: "hidden"})],
 	["input type=image", "button", createElementFactory("input", {type: "image"})],
 	["input type=month", null, createElementFactory("input", {type: "month"})],
+	["input type=number", "spinbutton", createElementFactory("input", {type: "number"})],
 	["input type=radio", "radio", createElementFactory("input", {type: "radio"})],
 	["input type=range", "slider", createElementFactory("input", {type: "range"})],
 	["input type=reset", "button", createElementFactory("input", {type: "reset"})],
