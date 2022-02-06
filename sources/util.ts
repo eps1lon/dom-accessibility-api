@@ -1,17 +1,5 @@
-import getRole from "./getRole";
-
-/**
- * Safe Element.localName for all supported environments
- * @param element
- */
-export function getLocalName(element: Element): string {
-	return (
-		// eslint-disable-next-line no-restricted-properties -- actual guard for environments without localName
-		element.localName ??
-		// eslint-disable-next-line no-restricted-properties -- required for the fallback
-		element.tagName.toLowerCase()
-	);
-}
+export { getLocalName } from "./getRole";
+import getRole, { getLocalName } from "./getRole";
 
 export function isElement(node: Node | null): node is Element {
 	return node !== null && node.nodeType === node.ELEMENT_NODE;
