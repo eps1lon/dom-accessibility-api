@@ -1,6 +1,17 @@
 // https://w3c.github.io/html-aria/#document-conformance-requirements-for-use-of-aria-attributes-in-html
 
-import { getLocalName } from "./util";
+/**
+ * Safe Element.localName for all supported environments
+ * @param element
+ */
+export function getLocalName(element: Element): string {
+	return (
+		// eslint-disable-next-line no-restricted-properties -- actual guard for environments without localName
+		element.localName ??
+		// eslint-disable-next-line no-restricted-properties -- required for the fallback
+		element.tagName.toLowerCase()
+	);
+}
 
 const localNameToRoleMappings: Record<string, string | undefined> = {
 	article: "article",
