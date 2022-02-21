@@ -1,5 +1,11 @@
 # dom-accessibility-api changelog
 
+## 0.5.12
+
+### Patch Changes
+
+- [#800](https://github.com/eps1lon/dom-accessibility-api/pull/800) [`de554b0`](https://github.com/eps1lon/dom-accessibility-api/commit/de554b08c749d0f3e68baf8d7db4f0fbb571f40b) Thanks [@pablo-abc](https://github.com/pablo-abc)! - Remover circular dependency, which fixes warnings thrown in certain environments.
+
 ## 0.5.11
 
 ### Patch Changes
