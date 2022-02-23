@@ -398,7 +398,7 @@ export function computeTextAlternative(
 			accumulatedText = `${accumulatedText} ${afterContent}`;
 		}
 
-		return accumulatedText;
+		return accumulatedText.trim();
 	}
 
 	function computeElementTextAlternative(node: Node): string | null {
