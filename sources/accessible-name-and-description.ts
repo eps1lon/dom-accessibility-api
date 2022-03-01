@@ -398,7 +398,7 @@ export function computeTextAlternative(
 			accumulatedText = `${accumulatedText} ${afterContent}`;
 		}
 
-		return accumulatedText;
+		return accumulatedText.trim();
 	}
 
 	function computeElementTextAlternative(node: Node): string | null {
@@ -536,6 +536,18 @@ export function computeTextAlternative(
 
 			// TODO: l10n
 			return "Submit Query";
+		}
+
+		if (hasAnyConcreteRoles(node, ["button"])) {
+			// https://www.w3.org/TR/html-aam-1.0/#button-element
+			const nameFromSubTree = computeMiscTextAlternative(node, {
+				isEmbeddedInLabel: false,
+				isReferenced: false,
+			});
+			if (nameFromSubTree !== "") {
+				return nameFromSubTree;
+			}
+			return useAttribute(node, "title");
 		}
 
 		return useAttribute(node, "title");
