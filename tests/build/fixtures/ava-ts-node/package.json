@@ -2,7 +2,7 @@
 	"name": "build-fixture-node-es-modules",
 	"private": true,
 	"dependencies": {
-		"@testing-library/react": "^12.0.0",
+		"@testing-library/react": "^13.0.0",
 		"@types/jsdom": "^16.2.1",
 		"@types/react": "^17.0.0",
 		"@types/react-dom": "^17.0.0",
