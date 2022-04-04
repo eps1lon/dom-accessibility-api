@@ -1,10 +1,10 @@
 import test from "ava";
 import { JSDOM } from "jsdom";
-import { getByRole } from "@testing-library/react";
+import { findByRole } from "@testing-library/react";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import * as ReactDOMClient from "react-dom/client";
 
-test("fn() returns foo", (t) => {
+test("fn() returns foo", async (t) => {
 	const { window } = new JSDOM();
 	// @ts-ignore
 	global.window = window;
@@ -12,10 +12,11 @@ test("fn() returns foo", (t) => {
 	global.document = window.document;
 
 	const container = document.createElement("div");
-	ReactDOM.render(
-		React.createElement("div", { children: "Hello, Dave!", role: "button" }),
-		container
+	ReactDOMClient.createRoot(container).render(
+		React.createElement("div", { children: "Hello, Dave!", role: "button" })
 	);
-	// getByRole depends on `dom-accessibility-api`
-	t.truthy(getByRole(container, "button", { name: "Hello, Dave!" }));
+	// findByRole depends on `dom-accessibility-api`
+	await t.notThrowsAsync(() =>
+		findByRole(container, "button", { name: "Hello, Dave!" })
+	);
 });
