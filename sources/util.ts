@@ -90,8 +90,11 @@ export function queryIdRefs(node: Node, attributeName: string): Element[] {
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- safe due to hasAttribute check
 		const ids = node.getAttribute(attributeName)!.split(" ");
 
+		// Browsers that don't support shadow DOM won't have getRootNode
+		const root = node.getRootNode ? node.getRootNode() as (Document | ShadowRoot) : node.ownerDocument;
+
 		return ids
-			.map((id) => node.ownerDocument.getElementById(id))
+			.map((id) => root.getElementById(id))
 			.filter(
 				(element: Element | null): element is Element => element !== null
 				// TODO: why does this not narrow?
