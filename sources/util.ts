@@ -91,7 +91,9 @@ export function queryIdRefs(node: Node, attributeName: string): Element[] {
 		const ids = node.getAttribute(attributeName)!.split(" ");
 
 		// Browsers that don't support shadow DOM won't have getRootNode
-		const root = node.getRootNode ? node.getRootNode() as (Document | ShadowRoot) : node.ownerDocument;
+		const root = node.getRootNode
+			? (node.getRootNode() as Document | ShadowRoot)
+			: node.ownerDocument;
 
 		return ids
 			.map((id) => root.getElementById(id))

@@ -592,14 +592,14 @@ describe("options.hidden", () => {
 
 describe("content in shadow DOM", () => {
 	it("works for aria-labelledby on co-located elements in same shadow root", () => {
-		const container = renderIntoDocument('<div></div>')
-		const div = container.querySelector('div')
-		div.attachShadow({ mode: 'open' }).innerHTML = `
+		const container = renderIntoDocument("<div></div>");
+		const div = container.querySelector("div");
+		div.attachShadow({ mode: "open" }).innerHTML = `
 			<label id="theLabel">Type here</label>
 			<input type="text" aria-labelledby="theLabel">
-		`
+		`;
 
-		const input = div.shadowRoot.querySelector('input')
-		expect(computeAccessibleName(input)).toEqual('Type here')
-	})
-})
+		const input = div.shadowRoot.querySelector("input");
+		expect(computeAccessibleName(input)).toEqual("Type here");
+	});
+});
