@@ -63,3 +63,17 @@ describe("wpt copies", () => {
 		testMarkup(markup, expectedAccessibleName)
 	);
 });
+
+describe("content in shadow DOM", () => {
+	it("works for aria-labelledby on elements in same shadow root", () => {
+		const container = renderIntoDocument("<div></div>");
+		const div = container.querySelector("div");
+		div.attachShadow({ mode: "open" }).innerHTML = `
+			<div id="theDescription">This is a button</div>
+			<button aria-describedby="theDescription">Click me</button>
+		`;
+
+		const button = div.shadowRoot.querySelector("button");
+		expect(computeAccessibleDescription(button)).toEqual("This is a button");
+	});
+});
