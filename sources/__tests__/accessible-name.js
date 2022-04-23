@@ -591,7 +591,7 @@ describe("options.hidden", () => {
 });
 
 describe("content in shadow DOM", () => {
-	it("works for aria-labelledby on co-located elements in same shadow root", () => {
+	it("works for aria-labelledby on elements in same shadow root", () => {
 		const container = renderIntoDocument("<div></div>");
 		const div = container.querySelector("div");
 		div.attachShadow({ mode: "open" }).innerHTML = `
