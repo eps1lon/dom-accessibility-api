@@ -14,9 +14,6 @@ pool:
 # but it let's us use a single job. No need to split up jobs yet
 strategy:
   matrix:
-    # EOL: 	2022-04-30
-    node_12_x:
-      node_version: 12.x
     # EOL: 2023-04-30
     node_14_x:
       node_version: 14.x
@@ -26,10 +23,17 @@ strategy:
     # EOL: 2022-06-01
     node_17_x:
       node_version: 17.x
-    # Initial release: 2022-04-19
     # EOL: 2025-04-30
-    #node_18_x:
-    #  node_version: 18.x
+    node_18_x:
+      node_version: 18.x
+    # Initial release: 2022-10-18
+    # EOL: 2023-06-01
+    #node_19_x:
+    #  node_version: 19.x
+    # Initial release: 2023-04-18
+    # EOL: 2026-04-30
+    #node_20_x:
+    #  node_version: 20.x
 
 steps:
   - task: NodeTool@0
@@ -78,6 +82,8 @@ steps:
       project: $(System.TeamProject)
       runVersion: latestFromBranch
       runBranch: refs/heads/main
+    # Needed if we introduce a new Node.js version
+    continueOnError: true
 
   - script: |
       mkdir $(Agent.TempDirectory)/published-previous
@@ -101,9 +107,6 @@ steps:
   - script: yarn start
     displayName: "ES modules in node smoke tests of build"
     workingDirectory: tests/build/fixtures/node-es-modules
-    # in node 12 we need to use a flag and I'm too lazy to branch even further
-    # not running in node < 13 is hopefully a sufficient smoke test
-    condition: not(or(startsWith(variables['node_version'], '10.'), startsWith(variables['node_version'], '12.')))
 
   - script: yarn test:ci
     displayName: "Run jest tests"
