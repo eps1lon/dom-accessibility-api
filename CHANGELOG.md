@@ -1,5 +1,11 @@
 # dom-accessibility-api changelog
 
+## 0.5.14
+
+### Patch Changes
+
+- [#827](https://github.com/eps1lon/dom-accessibility-api/pull/827) [`a1daca5`](https://github.com/eps1lon/dom-accessibility-api/commit/a1daca5576553faddd147742829338ee348b804c) Thanks [@nolanlawson](https://github.com/nolanlawson)! - Follow aria-labelledby and aria-describedby if they point to elements in the same shadow root.
+
 ## 0.5.13
 
 ### Patch Changes
