@@ -15,6 +15,7 @@ pool:
 strategy:
   matrix:
     # EOL: 2023-04-30
+    # sync with #node-version
     node_14_x:
       node_version: 14.x
     # EOL: 2024-04-30
