@@ -1,4 +1,4 @@
-const JestEnvironmentJsdom = require("jest-environment-jsdom");
+const JestEnvironmentJsdom = require("jest-environment-jsdom").default;
 
 class JestEnvironmentJsdomMockEdge16 extends JestEnvironmentJsdom {
 	setup() {

@@ -1,4 +1,4 @@
-const JestEnvironmentJsdom = require("jest-environment-jsdom");
+const JestEnvironmentJsdom = require("jest-environment-jsdom").default;
 
 class JestEnvironmentJsdomMockIE11 extends JestEnvironmentJsdom {
 	setup() {
