@@ -567,11 +567,11 @@ describe("options.computedStyleSupportsPseudoElements", () => {
 
 		// one for ::before, one for ::after
 		expect(console.error).toHaveBeenCalledTimes(2);
-		expect(console.error.mock.calls[0][0]).toMatch(
-			"Error: Not implemented: window.computedStyle(elt, pseudoElt)"
+		expect(console.error.mock.calls[0][0]).toMatchInlineSnapshot(
+			`[Error: Not implemented: window.computedStyle(elt, pseudoElt)]`
 		);
-		expect(console.error.mock.calls[1][0]).toMatch(
-			"Error: Not implemented: window.computedStyle(elt, pseudoElt)"
+		expect(console.error.mock.calls[1][0]).toMatchInlineSnapshot(
+			`[Error: Not implemented: window.computedStyle(elt, pseudoElt)]`
 		);
 	});
 });

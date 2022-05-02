@@ -5,11 +5,13 @@ module.exports = {
 	rootDir: path.resolve(__dirname, "../../sources"),
 	setupFilesAfterEnv: [require.resolve("./jest.setup")],
 	testEnvironment: "jsdom",
+	testEnvironmentOptions: {
+		url: "http://localhost",
+	},
 	testPathIgnorePatterns: [
 		"/node_modules/",
 		"/fixtures/",
 		"/__tests__/helpers/",
 		"__mocks__",
 	],
-	testURL: "http://localhost",
 };
