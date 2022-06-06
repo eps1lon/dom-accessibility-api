@@ -21,9 +21,6 @@ strategy:
     # EOL: 2024-04-30
     node_16_x:
       node_version: 16.x
-    # EOL: 2022-06-01
-    node_17_x:
-      node_version: 17.x
     # EOL: 2025-04-30
     node_18_x:
       node_version: 18.x
