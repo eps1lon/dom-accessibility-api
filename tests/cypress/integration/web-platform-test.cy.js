@@ -168,7 +168,7 @@ context("wpt", () => {
 		["name_text-title-manual", "pass"],
 	].forEach(([testBasename, result]) => {
 		it(`${result} ${testBasename}`, () => {
-			cy.visit(`http://localhost:5000/accname/${testBasename}`);
+			cy.visit(`http://localhost:3000/accname/${testBasename}`);
 
 			cy.get(
 				`#steps tr:nth-of-type(2) .api tr:nth-of-type(${2 + usedApiIndex})`

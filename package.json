@@ -71,7 +71,7 @@
 		"request": "^2.88",
 		"request-promise-native": "^1.0.9",
 		"rimraf": "^3.0.2",
-		"serve": "^12.0.0",
+		"serve": "^13.0.0",
 		"typescript": "^4.3.2"
 	},
 	"resolutions": {
