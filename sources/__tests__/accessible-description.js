@@ -3,49 +3,49 @@ import { cleanup, renderIntoDocument } from "./helpers/test-utils";
 import { prettyDOM } from "@testing-library/dom";
 import { diff } from "jest-diff";
 
-expect.extend({
-	toHaveAccessibleDescription(received, expected) {
-		if (received == null) {
-			return {
-				message: () =>
-					`The element was not an Element but '${String(received)}'`,
-				pass: false,
-			};
-		}
+function toHaveAccessibleDescription(received, expected) {
+	if (received == null) {
+		return {
+			message: () => `The element was not an Element but '${String(received)}'`,
+			pass: false,
+		};
+	}
 
-		const actual = computeAccessibleDescription(received);
-		if (actual !== expected) {
-			return {
-				message: () =>
-					`expected ${prettyDOM(
-						received
-					)} to have accessible description '${expected}' but got '${actual}'\n${diff(
-						expected,
-						actual
-					)}`,
-				pass: false,
-			};
-		}
-
+	const actual = computeAccessibleDescription(received);
+	if (actual !== expected) {
 		return {
 			message: () =>
 				`expected ${prettyDOM(
 					received
-				)} not to have accessible description '${expected}'\n${diff(
+				)} to have accessible description '${expected}' but got '${actual}'\n${diff(
 					expected,
 					actual
 				)}`,
-			pass: true,
+			pass: false,
 		};
+	}
+
+	return {
+		message: () =>
+			`expected ${prettyDOM(
+				received
+			)} not to have accessible description '${expected}'\n${diff(
+				expected,
+				actual
+			)}`,
+		pass: true,
+	};
+}
+
+expect.extend({
+	toHaveAccessibleDescription,
+	toRenderIntoDocumentAccessibleDescription(received, expected) {
+		const container = renderIntoDocument(received);
+
+		const testNode = container.querySelector("[data-test]");
+		return toHaveAccessibleDescription(testNode, expected);
 	},
 });
-
-function testMarkup(markup, accessibleDescription) {
-	const container = renderIntoDocument(markup);
-
-	const testNode = container.querySelector("[data-test]");
-	expect(testNode).toHaveAccessibleDescription(accessibleDescription);
-}
 
 afterEach(cleanup);
 
@@ -59,9 +59,11 @@ describe("wpt copies", () => {
 			`<a data-test href="#" aria-label="California" title="San Francisco" >United States</a>`,
 			"San Francisco",
 		],
-	])(`#%#`, (markup, expectedAccessibleName) =>
-		testMarkup(markup, expectedAccessibleName)
-	);
+	])(`#%#`, (markup, expectedAccessibleDescription) => {
+		expect(markup).toRenderIntoDocumentAccessibleDescription(
+			expectedAccessibleDescription
+		);
+	});
 });
 
 describe("content in shadow DOM", () => {

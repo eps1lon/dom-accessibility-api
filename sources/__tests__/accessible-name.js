@@ -3,58 +3,60 @@ import { cleanup, renderIntoDocument } from "./helpers/test-utils";
 import { prettyDOM } from "@testing-library/dom";
 import { diff } from "jest-diff";
 
-expect.extend({
-	toHaveAccessibleName(received, expected) {
-		if (received == null) {
-			return {
-				message: () =>
-					`The element was not an Element but '${String(received)}'`,
-				pass: false,
-			};
-		}
+function toHaveAccessibleName(received, expected) {
+	if (received == null) {
+		return {
+			message: () => `The element was not an Element but '${String(received)}'`,
+			pass: false,
+		};
+	}
 
-		const actual = computeAccessibleName(received);
-		if (actual !== expected) {
-			return {
-				message: () =>
-					`expected ${prettyDOM(
-						received
-					)} to have accessible name '${expected}' but got '${actual}'\n${diff(
-						expected,
-						actual
-					)}`,
-				pass: false,
-			};
-		}
-
+	const actual = computeAccessibleName(received);
+	if (actual !== expected) {
 		return {
 			message: () =>
 				`expected ${prettyDOM(
 					received
-				)} not to have accessible name '${expected}'\n${diff(
+				)} to have accessible name '${expected}' but got '${actual}'\n${diff(
 					expected,
 					actual
 				)}`,
-			pass: true,
+			pass: false,
 		};
+	}
+
+	return {
+		message: () =>
+			`expected ${prettyDOM(
+				received
+			)} not to have accessible name '${expected}'\n${diff(expected, actual)}`,
+		pass: true,
+	};
+}
+
+expect.extend({
+	toHaveAccessibleName,
+	/**
+	 * @example `expect('<button data-test>Hello, Dave</button>').toRenderIntoDocumentAccessibleName('Hello, Dave!')`
+	 * @param {string} received Some markup with an element having a `data-test` attribute
+	 * @param {string} expected The expected accessible name
+	 * @returns
+	 */
+	toRenderIntoDocumentAccessibleName(received, expected) {
+		const container = renderIntoDocument(received);
+
+		const testNode = container.querySelector("[data-test]");
+		return toHaveAccessibleName(testNode, expected);
+	},
+	toRenderIntoShadowDOMAccessibleName(received, expected) {
+		const container = renderIntoDocument(received);
+
+		const testNode = container
+			.querySelector("[data-root]")
+			.shadowRoot.querySelector("[data-test]");
+		return toHaveAccessibleName(testNode, expected);
 	},
 });
-
-function testMarkup(markup, accessibleName) {
-	const container = renderIntoDocument(markup);
-
-	const testNode = container.querySelector("[data-test]");
-	expect(testNode).toHaveAccessibleName(accessibleName);
-}
-
-function testShadowDomMarkup(markup, accessibleName) {
-	const container = renderIntoDocument(markup);
-
-	const testNode = container
-		.querySelector("[data-root]")
-		.shadowRoot.querySelector("[data-test]");
-	expect(testNode).toHaveAccessibleName(accessibleName);
-}
 
 afterEach(cleanup);
 
@@ -137,9 +139,9 @@ describe("to upstream", () => {
 			`<li data-test role="treeitem"><em>greek</em> pi</li>`,
 			"greek pi",
 		],
-	])(`role %s has name from content`, (_, markup, expectedAccessibleName) =>
-		testMarkup(markup, expectedAccessibleName)
-	);
+	])(`role %s has name from content`, (_, markup, expectedAccessibleName) => {
+		expect(markup).toRenderIntoDocumentAccessibleName(expectedAccessibleName);
+	});
 
 	test("output is labelable", () => {
 		const container = renderIntoDocument(`
@@ -223,7 +225,7 @@ describe("to upstream", () => {
 			"Test",
 		],
 	])(`coverage for %s`, (_, markup, expectedAccessibleName) => {
-		return testMarkup(markup, expectedAccessibleName);
+		expect(markup).toRenderIntoDocumentAccessibleName(expectedAccessibleName);
 	});
 });
 
@@ -268,9 +270,9 @@ describe("slots", () => {
 			`<custom-button-with-default data-root>Custom name</custom-button>`,
 			"Custom name",
 		],
-	])("slot with %s has name", (_, markup, expectedAccessibleName) =>
-		testShadowDomMarkup(markup, expectedAccessibleName)
-	);
+	])("slot with %s has name", (_, markup, expectedAccessibleName) => {
+		expect(markup).toRenderIntoShadowDOMAccessibleName(expectedAccessibleName);
+	});
 });
 
 // misc tests
@@ -400,7 +402,9 @@ test.each([
 		`<img data-test alt="" aria-label="a logo" role="presentation" /> />`,
 		"a logo",
 	],
-])(`test #%#`, testMarkup);
+])(`test #%#`, (markup, expectedAccessibleName) => {
+	expect(markup).toRenderIntoDocumentAccessibleName(expectedAccessibleName);
+});
 
 test("text nodes are not concatenated by space", () => {
 	// how React would create `<h1>Hello {name}!</h1>`
@@ -429,7 +433,7 @@ describe("prohibited naming", () => {
 		["subscript", '<div data-test role="subscript">named?</div>'],
 		["superscript", "<div data-test role='supscript'>Hello</div>"],
 	])("role '%s' prohibites naming", (_, markup) => {
-		testMarkup(markup, "");
+		expect(markup).toRenderIntoDocumentAccessibleName("");
 	});
 
 	test.each([
@@ -494,7 +498,7 @@ describe("prohibited naming", () => {
 	])(
 		"role '%s'can be part of the accessible name of another element",
 		(_, markup, name) => {
-			testMarkup(markup, name);
+			expect(markup).toRenderIntoDocumentAccessibleName(name);
 		}
 	);
 });
