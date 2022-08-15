@@ -34,7 +34,7 @@ strategy:
     #  node_version: 20.x
 
 steps:
-  - task: NodeTool@0
+  - task: NodeTool@0.200.0
     inputs:
       versionSpec: $(node_version)
     displayName: "Install Node.js"
