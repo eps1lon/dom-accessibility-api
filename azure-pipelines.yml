@@ -67,7 +67,7 @@ steps:
     displayName: "Publish tarball"
     artifact: dom-accessibility-api-node-$(node_version)
 
-  - task: DownloadPipelineArtifact@2
+  - task: DownloadPipelineArtifact@2.198.0
     displayName: "Download tarball from main"
     inputs:
       artifact: dom-accessibility-api-node-$(node_version)
