@@ -109,7 +109,7 @@ steps:
   - script: yarn test:ci
     displayName: "Run jest tests"
 
-  - task: PublishTestResults@2
+  - task: PublishTestResults@2.203.0
     condition: succeededOrFailed()
     inputs:
       testRunner: JUnit
