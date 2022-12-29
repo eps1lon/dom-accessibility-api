@@ -296,10 +296,10 @@ function getControlOfLabel(label: HTMLLabelElement): Element | null {
  * @param element
  */
 function getLabels(element: Element): HTMLLabelElement[] | null {
-	const labelsProperty = (element as any).labels as
-		| undefined
-		| null
-		| NodeListOf<HTMLLabelElement>;
+	const labelsProperty = (element as HTMLInputElement).labels as
+		| HTMLInputElement["labels"]
+		| undefined;
+
 	if (labelsProperty === null) {
 		return labelsProperty;
 	}
