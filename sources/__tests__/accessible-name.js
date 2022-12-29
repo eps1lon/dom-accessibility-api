@@ -275,7 +275,6 @@ describe("slots", () => {
 	});
 });
 
-// misc tests
 test.each([
 	[
 		`
@@ -402,7 +401,7 @@ test.each([
 		`<img data-test alt="" aria-label="a logo" role="presentation" /> />`,
 		"a logo",
 	],
-])(`test #%#`, (markup, expectedAccessibleName) => {
+])(`misc #%#`, (markup, expectedAccessibleName) => {
 	expect(markup).toRenderIntoDocumentAccessibleName(expectedAccessibleName);
 });
 
