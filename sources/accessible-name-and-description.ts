@@ -415,7 +415,6 @@ export function computeTextAlternative(
 		return null;
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars -- not implemented yet
 	function computeTooltipAttributeValue(node: Node): string | null {
 		if (!isElement(node)) {
 			return null;
