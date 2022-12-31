@@ -415,6 +415,15 @@ export function computeTextAlternative(
 		return null;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars -- not implemented yet
+	function computeTooltipAttributeValue(node: Node): string | null {
+		if (!isElement(node)) {
+			return null;
+		}
+
+		return useAttribute(node, "title");
+	}
+
 	function computeElementTextAlternative(node: Node): string | null {
 		if (!isElement(node)) {
 			return null;
@@ -684,7 +693,7 @@ export function computeTextAlternative(
 			});
 		}
 
-		const tooltipAttributeValue = useAttribute(current, "title");
+		const tooltipAttributeValue = computeTooltipAttributeValue(current);
 		if (tooltipAttributeValue !== null) {
 			consultedNodes.add(current);
 			return tooltipAttributeValue;
