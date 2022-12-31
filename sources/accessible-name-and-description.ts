@@ -207,14 +207,6 @@ function isDescendantOfNativeHostLanguageTextAlternativeElement(
 	return false;
 }
 
-/**
- * TODO https://github.com/eps1lon/dom-accessibility-api/issues/101
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- not implemented yet
-function computeTooltipAttributeValue(node: Node): string | null {
-	return null;
-}
-
 function getValueOfTextbox(element: Element): string {
 	if (isHTMLInputElement(element) || isHTMLTextAreaElement(element)) {
 		return element.value;
@@ -401,30 +393,30 @@ export function computeTextAlternative(
 		return accumulatedText.trim();
 	}
 
+	/**
+	 *
+	 * @param element
+	 * @param attributeName
+	 * @returns A string non-empty string or `null`
+	 */
+	function useAttribute(
+		element: Element,
+		attributeName: string
+	): string | null {
+		const attribute = element.getAttributeNode(attributeName);
+		if (
+			attribute !== null &&
+			!consultedNodes.has(attribute) &&
+			attribute.value.trim() !== ""
+		) {
+			consultedNodes.add(attribute);
+			return attribute.value;
+		}
+		return null;
+	}
+
 	function computeElementTextAlternative(node: Node): string | null {
 		if (!isElement(node)) {
-			return null;
-		}
-
-		/**
-		 *
-		 * @param element
-		 * @param attributeName
-		 * @returns A string non-empty string or `null`
-		 */
-		function useAttribute(
-			element: Element,
-			attributeName: string
-		): string | null {
-			const attribute = element.getAttributeNode(attributeName);
-			if (
-				attribute !== null &&
-				!consultedNodes.has(attribute) &&
-				attribute.value.trim() !== ""
-			) {
-				consultedNodes.add(attribute);
-				return attribute.value;
-			}
 			return null;
 		}
 
@@ -547,10 +539,9 @@ export function computeTextAlternative(
 			if (nameFromSubTree !== "") {
 				return nameFromSubTree;
 			}
-			return useAttribute(node, "title");
 		}
 
-		return useAttribute(node, "title");
+		return null;
 	}
 
 	function computeTextAlternative(
@@ -693,7 +684,7 @@ export function computeTextAlternative(
 			});
 		}
 
-		const tooltipAttributeValue = computeTooltipAttributeValue(current);
+		const tooltipAttributeValue = useAttribute(current, "title");
 		if (tooltipAttributeValue !== null) {
 			consultedNodes.add(current);
 			return tooltipAttributeValue;

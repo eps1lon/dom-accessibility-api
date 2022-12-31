@@ -109,6 +109,11 @@ describe("to upstream", () => {
 			"foo",
 		],
 		[
+			"option",
+			`<select><option data-test title="Title">Content</option></select>`,
+			"Content",
+		],
+		[
 			"radio",
 			`<div data-test role="radio"><em>greek</em> kappa</div>`,
 			"greek kappa",
