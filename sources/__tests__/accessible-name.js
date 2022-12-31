@@ -406,6 +406,7 @@ test.each([
 		`<img data-test alt="" aria-label="a logo" role="presentation" /> />`,
 		"a logo",
 	],
+	[` <input type="radio" data-test title="crazy"/>`, "crazy"],
 ])(`misc #%#`, (markup, expectedAccessibleName) => {
 	expect(markup).toRenderIntoDocumentAccessibleName(expectedAccessibleName);
 });

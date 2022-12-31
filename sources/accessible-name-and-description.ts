@@ -672,11 +672,14 @@ export function computeTextAlternative(
 			isNativeHostLanguageTextAlternativeElement(current) ||
 			isDescendantOfNativeHostLanguageTextAlternativeElement(current)
 		) {
-			consultedNodes.add(current);
-			return computeMiscTextAlternative(current, {
+			const accumulatedText2F = computeMiscTextAlternative(current, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
 				isReferenced: false,
 			});
+			if (accumulatedText2F !== "") {
+				consultedNodes.add(current);
+				return accumulatedText2F;
+			}
 		}
 
 		if (current.nodeType === current.TEXT_NODE) {
