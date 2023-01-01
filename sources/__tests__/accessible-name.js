@@ -109,6 +109,11 @@ describe("to upstream", () => {
 			"foo",
 		],
 		[
+			"option",
+			`<select><option data-test title="Title">Content</option></select>`,
+			"Content",
+		],
+		[
 			"radio",
 			`<div data-test role="radio"><em>greek</em> kappa</div>`,
 			"greek kappa",
@@ -401,6 +406,7 @@ test.each([
 		`<img data-test alt="" aria-label="a logo" role="presentation" /> />`,
 		"a logo",
 	],
+	[` <input type="radio" data-test title="crazy"/>`, "crazy"],
 ])(`misc #%#`, (markup, expectedAccessibleName) => {
 	expect(markup).toRenderIntoDocumentAccessibleName(expectedAccessibleName);
 });
