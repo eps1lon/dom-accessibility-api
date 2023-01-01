@@ -7,7 +7,7 @@
 - [#893](https://github.com/eps1lon/dom-accessibility-api/pull/893) [`d5af41d`](https://github.com/eps1lon/dom-accessibility-api/commit/d5af41d4d35a62f4bf0faf8776e62d8ecfabea41) Thanks [@eps1lon](https://github.com/eps1lon)! - Don't consider `title` in 2E
 
   Effectively ensures that `title` will not have precedence over name from content.
-  For example, the `option` in `<option title="Title">Content</option>` will now have `"Content"` has its accessible name instead of `"Title"`.
+  For example, the `option` in `<option title="Title">Content</option>` will now have `"Content"` as its accessible name instead of `"Title"`.
 
 ## 0.5.14
 
