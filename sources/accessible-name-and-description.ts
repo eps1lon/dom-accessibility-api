@@ -575,23 +575,34 @@ export function computeTextAlternative(
 		}
 
 		// 2B
-		const labelElements = queryIdRefs(current, "aria-labelledby");
+		const labelAttributeNode = isElement(current)
+			? current.getAttributeNode("aria-labelledby")
+			: null;
+		// TODO: Do we generally need to block query IdRefs of attributes we have already consulted?
+		const labelElements =
+			labelAttributeNode !== null && !consultedNodes.has(labelAttributeNode)
+				? queryIdRefs(current, "aria-labelledby")
+				: [];
 		if (
 			compute === "name" &&
 			!context.isReferenced &&
 			labelElements.length > 0
 		) {
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- Can't be null here otherwise labelElements would be empty
+			consultedNodes.add(labelAttributeNode!);
+
 			return labelElements
-				.map((element) =>
-					computeTextAlternative(element, {
+				.map((element) => {
+					// TODO: Chrome will consider repeated values i.e. use a node multiple times while we'll bail out in computeTextAlternative.
+					return computeTextAlternative(element, {
 						isEmbeddedInLabel: context.isEmbeddedInLabel,
 						isReferenced: true,
-						// thais isn't recursion as specified, otherwise we would skip
+						// this isn't recursion as specified, otherwise we would skip
 						// `aria-label` in
 						// <input id="myself" aria-label="foo" aria-labelledby="myself"
 						recursion: false,
-					})
-				)
+					});
+				})
 				.join(" ");
 		}
 
