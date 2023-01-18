@@ -1,5 +1,11 @@
 # dom-accessibility-api changelog
 
+## 0.5.16
+
+### Patch Changes
+
+- [#902](https://github.com/eps1lon/dom-accessibility-api/pull/902) [`df97b80`](https://github.com/eps1lon/dom-accessibility-api/commit/df97b80deff351c9c28ddad7195c3db22909368d) Thanks [@eps1lon](https://github.com/eps1lon)! - Fix a case of maximum call stack size exceeded when a node referenced itself in `aria-labelledby`.
+
 ## 0.5.15
 
 ### Patch Changes
