@@ -560,7 +560,7 @@ export function computeTextAlternative(
 			recursion: boolean;
 		}
 	): string {
-		if (consultedNodes.has(current) && !context.isReferenced) {
+		if (consultedNodes.has(current)) {
 			return "";
 		}
 
