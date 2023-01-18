@@ -407,6 +407,39 @@ test.each([
 		"a logo",
 	],
 	[` <input type="radio" data-test title="crazy"/>`, "crazy"],
+	[
+		`
+		<h2 id="lorem-heading">
+			Lorem ipsum
+			<a data-test aria-labelledby="lorem-heading" href="#lorem-heading" tabindex="-1">
+				<svg></svg>
+			</a>
+		</h2>
+	`,
+		"Lorem ipsum",
+	],
+	[
+		`
+		<label for="toggle-button" id="label" value="full">
+			<button
+				data-test
+				aria-expanded="false"
+				aria-haspopup="listbox"
+				aria-labelledby="label toggle-button"
+				id="toggle-button"
+				type="button"
+			>
+				<span>
+					Full Refund
+				</span>
+			</button>
+			<div>
+				Refund Type
+			</div>
+		</label>
+		`,
+		"Full Refund Refund Type",
+	],
 ])(`misc #%#`, (markup, expectedAccessibleName) => {
 	expect(markup).toRenderIntoDocumentAccessibleName(expectedAccessibleName);
 });
