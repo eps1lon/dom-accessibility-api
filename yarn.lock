@@ -4842,9 +4842,9 @@ minimatch@5.0.1:
     brace-expansion "^2.0.1"
 
 minimatch@^6.0.0:
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-6.0.4.tgz#cbada37326e86dc19434874a04e29df0ba64cb17"
-  integrity sha512-9SQupyyavjdAc1VFjJS/5kdtFtlLAhKSWt7HocG0h/npy626jYrGegSslcM7Xxet5z0U9GOx9YbcpyIjBzn7tA==
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-6.1.6.tgz#5384bb324be5b5dae12a567c03d22908febd0ddd"
+  integrity sha512-6bR3UIeh/DF8+p6A9Spyuy67ShOq42rOkHWi7eUe3Ua99Zo5lZfGC6lJJWkeoK4k9jQFT3Pl7czhTXimG2XheA==
   dependencies:
     brace-expansion "^2.0.1"
 
