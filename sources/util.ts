@@ -116,11 +116,12 @@ export function hasAnyConcreteRoles(
 	return false;
 }
 
-export const elementsSupportingDisabledAttribute = new Set(['button',
-'fieldset',
-'input',
-'optgroup',
-'option',
-'select',
-'textarea',
-])
+export const elementsSupportingDisabledAttribute = new Set([
+	"button",
+	"fieldset",
+	"input",
+	"optgroup",
+	"option",
+	"select",
+	"textarea",
+]);
