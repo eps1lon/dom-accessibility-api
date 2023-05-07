@@ -1,7 +1,7 @@
 import { isDisabled } from "../is-disabled";
 import { cleanup, renderIntoDocument } from "./helpers/test-utils";
 
-describe("isInaccessible", () => {
+describe("isDisabled", () => {
 	afterEach(cleanup);
 	test.each([
 		["<button data-test />", false],
