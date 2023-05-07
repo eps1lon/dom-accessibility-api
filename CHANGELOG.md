@@ -1,5 +1,11 @@
 # dom-accessibility-api changelog
 
+## 0.6.0
+
+### Minor Changes
+
+- [#919](https://github.com/eps1lon/dom-accessibility-api/pull/919) [`215955e`](https://github.com/eps1lon/dom-accessibility-api/commit/215955ee5ea3582d49471f327291924deb44ff42) Thanks [@MatanBobi](https://github.com/MatanBobi)! - add an `isDisabled` function to check if elements are disabled or not
+
 ## 0.5.16
 
 ### Patch Changes
