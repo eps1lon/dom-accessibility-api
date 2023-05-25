@@ -59,6 +59,14 @@ describe("wpt copies", () => {
 			`<a data-test href="#" aria-label="California" title="San Francisco" >United States</a>`,
 			"San Francisco",
 		],
+		[
+			`<button data-test href="#" aria-description="Paid feature">Deploy</button>`,
+			"Paid feature",
+		],
+		[
+			`<img src="foo.jpg" data-test alt="test" aria-description="bar" aria-describedby="t1"><span id="t1" role="presentation">foo</span>`,
+			"foo",
+		],
 	])(`#%#`, (markup, expectedAccessibleDescription) => {
 		expect(markup).toRenderIntoDocumentAccessibleDescription(
 			expectedAccessibleDescription
