@@ -90,6 +90,7 @@ function hasGlobalAriaAttributes(element: Element, role: string): boolean {
 		"aria-busy",
 		"aria-controls",
 		"aria-current",
+		"aria-description",
 		"aria-describedby",
 		"aria-details",
 		// "disabled",
