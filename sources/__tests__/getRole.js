@@ -176,8 +176,10 @@ const cases = [
 	// https://rawgit.com/w3c/aria/stable/#conflict_resolution_presentation_none
 	["presentational <img /> with accessible name", "img", createElementFactory("img", {alt: "", 'aria-label': "foo"})],
 	["presentational <h1 /> global aria attributes", "heading", createElementFactory("h1", {'aria-describedby': "comment-1", role: "presentation"})],
+	["presentational <h1 /> global aria attributes", "heading", createElementFactory("h1", {'aria-describedby': "comment-1", role: "none"})],
 	// <div /> isn't mapped to `"generic"` yet so implicit semantics are `No role`
 	["presentational <div /> with prohibited aria attributes", null, createElementFactory("div", {'aria-label': "hello", role: "presentation"})],
+	["presentational <div /> with prohibited aria attributes", null, createElementFactory("div", {'aria-label': "hello", role: "none"})],
 ];
 
 it.each(cases)("%s has the role %s", (name, role, elementFactory) => {

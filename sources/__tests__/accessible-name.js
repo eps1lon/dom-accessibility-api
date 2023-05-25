@@ -290,6 +290,13 @@ test.each([
 	],
 	[
 		`
+<div data-test aria-labelledby="label">I reference my name</div>
+<div id="label" role="none">I'm prohibited a name</div>
+`,
+		"I'm prohibited a name",
+	],
+	[
+		`
 <element1 data-test id="el1" aria-labelledby="el3" />
 <element2 id="el2" aria-labelledby="el1" />
 <element3 id="el3"> hello </element3>
@@ -406,6 +413,7 @@ test.each([
 		`<img data-test alt="" aria-label="a logo" role="presentation" /> />`,
 		"a logo",
 	],
+	[`<img data-test alt="" aria-label="a logo" role="none" /> />`, "a logo"],
 	[` <input type="radio" data-test title="crazy"/>`, "crazy"],
 	[
 		`
@@ -467,6 +475,7 @@ describe("prohibited naming", () => {
 		["insertion", '<div data-test role="insertion">named?</div>'],
 		["paragraph", '<div data-test role="paragraph">named?</div>'],
 		["presentation", '<div data-test role="presentation">named?</div>'],
+		["none", '<div data-test role="none">named?</div>'],
 		["strong", '<div data-test role="strong">named?</div>'],
 		["subscript", '<div data-test role="subscript">named?</div>'],
 		["superscript", "<div data-test role='supscript'>Hello</div>"],
@@ -516,6 +525,11 @@ describe("prohibited naming", () => {
 		[
 			"presentation",
 			"<button data-test><span role='presentation'>icon</span></button>",
+			"icon",
+		],
+		[
+			"presentation",
+			"<button data-test><span role='none'>icon</span></button>",
 			"icon",
 		],
 		[
