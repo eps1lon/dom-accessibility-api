@@ -64,6 +64,11 @@ describe("to upstream", () => {
 	// name from content
 	test.each([
 		[
+			"button",
+			`<div data-test role="button"><em>latin</em> a</div>`,
+			"latin a",
+		],
+		[
 			"cell",
 			`<div data-test role="cell"><em>greek</em> alpha</div>`,
 			"greek alpha",
@@ -79,15 +84,21 @@ describe("to upstream", () => {
 			"greek gamma",
 		],
 		[
+			"comment",
+			`<div data-test role="button"><em>latin</em> b</div>`,
+			"latin b",
+		],
+		[
 			"gridcell",
 			`<div data-test role="gridcell"><em>greek</em> delta</div>`,
 			"greek delta",
 		],
 		[
-			"legend",
-			`<fieldset><legend data-test><em>greek</em> zeta</legend></fieldset>`,
-			"greek zeta",
+			"heading",
+			`<div data-test role="heading"><em>latin</em> c</div>`,
+			"latin c",
 		],
+		["link", `<div data-test role="link"><em>latin</em> d</div>`, "latin d"],
 		[
 			"menuitem",
 			`<li data-test role="menuitem"><em>greek</em> eta</li>`,
@@ -283,14 +294,14 @@ describe("slots", () => {
 test.each([
 	[
 		`
-<div data-test aria-labelledby="label">I reference my name</div>
+<element1 data-test aria-labelledby="label">I reference my name</element1>
 <div id="label" role="presentation">I'm prohibited a name</div>
 `,
 		"I'm prohibited a name",
 	],
 	[
 		`
-<div data-test aria-labelledby="label">I reference my name</div>
+<element1 data-test aria-labelledby="label">I reference my name</div>
 <div id="label" role="none">I'm prohibited a name</div>
 `,
 		"I'm prohibited a name",

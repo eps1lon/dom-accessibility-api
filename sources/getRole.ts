@@ -1,4 +1,5 @@
 // https://w3c.github.io/html-aria/#document-conformance-requirements-for-use-of-aria-attributes-in-html
+// https://w3c.github.io/html-aam/#html-element-role-mappings
 
 import { presentationRoles } from "./util";
 
@@ -16,68 +17,119 @@ export function getLocalName(element: Element): string {
 }
 
 const localNameToRoleMappings: Record<string, string | undefined> = {
+	address: "group",
 	article: "article",
+	// WARNING: Only in certain context
 	aside: "complementary",
+	b: "generic",
+	bdi: "generic",
+	bdo: "generic",
+	blockquote: "blockquote",
+	body: "generic",
 	button: "button",
+	caption: "caption",
+	code: "code",
+	data: "generic",
 	datalist: "listbox",
+	// WARNING: html-aria and html-aam conflict on this role assignment
 	dd: "definition",
+	del: "deletion",
 	details: "group",
+	dfn: "term",
 	dialog: "dialog",
+	div: "generic",
+	// WARNING: html-aria and html-aam conflict on this role assignment
 	dt: "term",
+	em: "emphasis",
 	fieldset: "group",
 	figure: "figure",
+	// WARNING: Only in certain context
+	footer: "contentinfo",
 	// WARNING: Only with an accessible name
 	form: "form",
-	footer: "contentinfo",
 	h1: "heading",
 	h2: "heading",
 	h3: "heading",
 	h4: "heading",
 	h5: "heading",
 	h6: "heading",
+	// WARNING: Only in certain context
 	header: "banner",
+	// WARNING: html-aria and html-aam conflict on this role assignment
+	hgroup: "group",
 	hr: "separator",
 	html: "document",
+	i: "generic",
+	ins: "insertion",
 	legend: "legend",
+	// WARNING: Only in certain context
 	li: "listitem",
-	math: "math",
 	main: "main",
+	math: "math",
 	menu: "list",
+	meter: "meter",
 	nav: "navigation",
 	ol: "list",
 	optgroup: "group",
 	// WARNING: Only in certain context
 	option: "option",
 	output: "status",
+	p: "paragraph",
+	pre: "generic",
 	progress: "progressbar",
+	q: "generic",
+	// WARNING: html-aria and html-aam conflict on this role assignment
+	s: "deletion",
+	samp: "generic",
+	search: "search",
 	// WARNING: Only with an accessible name
 	section: "region",
+	small: "generic",
+	span: "generic",
+	strong: "strong",
+	sub: "subscript",
+	// WARNING: Following user agent precedent in preference of specification
 	summary: "button",
+	sup: "superscript",
+	svg: "graphics-document",
 	table: "table",
 	tbody: "rowgroup",
+	// WARNING: Only in certain context
+	td: "cell",
 	textarea: "textbox",
 	tfoot: "rowgroup",
 	// WARNING: Only in certain context
-	td: "cell",
 	th: "columnheader",
 	thead: "rowgroup",
+	time: "time",
 	tr: "row",
+	u: "generic",
 	ul: "list",
 };
 
 const prohibitedAttributes: Record<string, Set<string>> = {
 	caption: new Set(["aria-label", "aria-labelledby"]),
 	code: new Set(["aria-label", "aria-labelledby"]),
+	definition: new Set(["aria-label", "aria-labelledby"]),
 	deletion: new Set(["aria-label", "aria-labelledby"]),
 	emphasis: new Set(["aria-label", "aria-labelledby"]),
-	generic: new Set(["aria-label", "aria-labelledby", "aria-roledescription"]),
+	generic: new Set([
+		"aria-brailleroledescription",
+		"aria-label",
+		"aria-labelledby",
+		"aria-roledescription",
+	]),
 	insertion: new Set(["aria-label", "aria-labelledby"]),
+	mark: new Set(["aria-label", "aria-labelledby"]),
 	none: new Set(["aria-label", "aria-labelledby"]),
 	paragraph: new Set(["aria-label", "aria-labelledby"]),
 	presentation: new Set(["aria-label", "aria-labelledby"]),
 	strong: new Set(["aria-label", "aria-labelledby"]),
 	subscript: new Set(["aria-label", "aria-labelledby"]),
+	suggestion: new Set(["aria-label", "aria-labelledby"]),
 	superscript: new Set(["aria-label", "aria-labelledby"]),
+	term: new Set(["aria-label", "aria-labelledby"]),
+	time: new Set(["aria-label", "aria-labelledby"]),
 };
 
 /**
@@ -86,24 +138,27 @@ const prohibitedAttributes: Record<string, Set<string>> = {
  * @param role The role used for this element. This is specified to control whether you want to use the implicit or explicit role.
  */
 function hasGlobalAriaAttributes(element: Element, role: string): boolean {
-	// https://rawgit.com/w3c/aria/stable/#global_states
+	// https://w3c.github.io/aria/#global_states
 	// commented attributes are deprecated
 	return [
 		"aria-atomic",
+		"aria-braillelabel",
+		"aria-brailledescription",
 		"aria-busy",
 		"aria-controls",
 		"aria-current",
 		"aria-description",
 		"aria-describedby",
+		"aria-description",
 		"aria-details",
-		// "disabled",
+		// "aria-disabled",
 		"aria-dropeffect",
-		// "errormessage",
+		// "aria-errormessage",
 		"aria-flowto",
 		"aria-grabbed",
-		// "haspopup",
+		// "aria-haspopup",
 		"aria-hidden",
-		// "invalid",
+		// "aria-invalid",
 		"aria-keyshortcuts",
 		"aria-label",
 		"aria-labelledby",
@@ -151,11 +206,10 @@ function getImplicitRole(element: Element): string | null {
 	switch (getLocalName(element)) {
 		case "a":
 		case "area":
-		case "link":
 			if (element.hasAttribute("href")) {
 				return "link";
 			}
-			break;
+			return "generic";
 		case "img":
 			if (
 				element.getAttribute("alt") === "" &&
@@ -205,6 +259,11 @@ function getImplicitRole(element: Element): string | null {
 				return "listbox";
 			}
 			return "combobox";
+		case "link":
+			if (element.hasAttribute("href")) {
+				return "link";
+			}
+			break;
 	}
 	return null;
 }

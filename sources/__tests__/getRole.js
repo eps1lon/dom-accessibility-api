@@ -21,8 +21,15 @@ it("uses the first role", () => {
 	expect(getRole(element)).toBe("textbox");
 });
 
-it("ignores empty roles", () => {
+it("ignores empty roles when have implicit role", () => {
 	const element = document.createElement("div");
+	element.setAttribute("role", "  ");
+
+	expect(getRole(element)).toBe("generic");
+});
+
+it("ignores empty roles when have no implicit role", () => {
+	const element = document.createElement("abbr");
 	element.setAttribute("role", "  ");
 
 	expect(getRole(element)).toBeNull();
@@ -43,34 +50,45 @@ function createElementFactory(tagName, attributes) {
 // prettier-ignore
 const cases = [
 	["a element with a href", "link", createElementFactory("a", { href: "any" })],
-	["a element without a href", null, createElementFactory("a", {})],
+	["a element without a href", "generic", createElementFactory("a", {})],
 	["abbr", null, createElementFactory("abbr", {})],
-	["address", null, createElementFactory("address", {})],
+	["address", "group", createElementFactory("address", {})],
 	["area with a href", "link", createElementFactory("area", { href: "any" })],
-	["area without a href", null, createElementFactory("area", {})],
+	["area without a href", "generic", createElementFactory("area", {})],
 	["article", "article", createElementFactory("article", {})],
+	// WARNING: Only in certain context
 	["aside", "complementary", createElementFactory("aside", {})],
 	["audio", null, createElementFactory("audio", {})],
+	["b", "generic", createElementFactory("b", {})],
 	["base", null, createElementFactory("base", {})],
-	["blockquote", null, createElementFactory("blockquote", {})],
-	["body", null, createElementFactory("body", {})],
+	["bdi", "generic", createElementFactory("bdi", {})],
+	["bdo", "generic", createElementFactory("bdo", {})],
+	["blockquote", "blockquote", createElementFactory("blockquote", {})],
+	["body", "generic", createElementFactory("body", {})],
+	["br", null, createElementFactory("br", {})],
 	["button", "button", createElementFactory("button", {})],
 	["canvas", null, createElementFactory("canvas", {})],
-	["caption", null, createElementFactory("caption", {})],
+	["caption", "caption", createElementFactory("caption", {})],
+	["cite", null, createElementFactory("cite", {})],
+	["code", "code", createElementFactory("code", {})],
 	["col", null, createElementFactory("col", {})],
 	["colgroup", null, createElementFactory("colgroup", {})],
+	["data", "generic", createElementFactory("data", {})],
 	["datalist", "listbox", createElementFactory("datalist", {})],
+	// WARNING: html-aria and html-aam conflict on this role assignment
 	["dd", "definition", createElementFactory("dd", {})],
-	["del", null, createElementFactory("del", {})],
+	["del", "deletion", createElementFactory("del", {})],
 	["details", "group", createElementFactory("details", {})],
+	["dfn", "term", createElementFactory("dfn", {})],
 	["dialog", "dialog", createElementFactory("dialog", {})],
-	["div", null, createElementFactory("div", {})],
+	["div", "generic", createElementFactory("div", {})],
 	["dl", null, createElementFactory("dl", {})],
+	// WARNING: html-aria and html-aam conflict on this role assignment
 	["dt", "term", createElementFactory("dt", {})],
-	["em", null, createElementFactory("em", {})],
+	["em", "emphasis", createElementFactory("em", {})],
 	["embed", null, createElementFactory("embed", {})],
-	["figcaption", null, createElementFactory("figcaption", {})],
 	["fieldset", "group", createElementFactory("fieldset", {})],
+	["figcaption", null, createElementFactory("figcaption", {})],
   ["figure", "figure", createElementFactory("figure", {})],
   // WARNING: Only in certain context
   ["footer", "contentinfo", createElementFactory("footer", {})],
@@ -84,9 +102,11 @@ const cases = [
   ["h6", "heading", createElementFactory("h6", {})],
   // WARNING: Only in certain context
 	["header", "banner", createElementFactory("header", {})],
-	["hgroup", null, createElementFactory("hgroup", {})],
+	// WARNING: html-aria and html-aam conflict on this role assignment
+	["hgroup", "group", createElementFactory("hgroup", {})],
 	["hr", "separator", createElementFactory("hr", {})],
 	["html", "document", createElementFactory("html", {})],
+	["i", "generic", createElementFactory("i", {})],
 	["iframe", null, createElementFactory("iframe", {})],
 	["img with alt=\"some text\"", "img", createElementFactory("img", {alt: "text"})],
 	["img with missing alt", "img", createElementFactory("img", {})],
@@ -117,18 +137,22 @@ const cases = [
 	["input type=time", null, createElementFactory("input", {type: "time"})],
 	["input type=url", "textbox", createElementFactory("input", {type: "url"})],
 	["input type=week", null, createElementFactory("input", {type: "week"})],
-	["ins", null, createElementFactory("ins", {})],
+	["ins", "insertion", createElementFactory("ins", {})],
+	["kbd", null, createElementFactory("kbd", {})],
 	["label", null, createElementFactory("label", {})],
   ["legend", 'legend', createElementFactory("legend", {})],
   // WARNING: Only in certain context
 	["li", "listitem", createElementFactory("li", {})],
+	// WARNING: html-aria and html-aam conflict on this role assignment
+	["link", null, createElementFactory("link", {})],
 	["link element with a href", "link", createElementFactory("link", {href: "some"})],
 	["main", "main", createElementFactory("main", {})],
 	["map", null, createElementFactory("map", {})],
+	["mark", null, createElementFactory("mark", {})],
 	["math", "math", createElementFactory("math", {})],
 	["menu", "list", createElementFactory("menu", {})],
 	["meta", null, createElementFactory("meta", {})],
-	["meter", null, createElementFactory("meter", {})],
+	["meter", "meter", createElementFactory("meter", {})],
 	["nav", "navigation", createElementFactory("nav", {})],
 	["noscript", null, createElementFactory("noscript", {})],
 	["object", null, createElementFactory("object", {})],
@@ -137,12 +161,20 @@ const cases = [
   // Warning: Only in certain context
 	["option", "option", createElementFactory("option", {})],
 	["output", "status", createElementFactory("output", {})],
-	["p", null, createElementFactory("p", {})],
+	["p", "paragraph", createElementFactory("p", {})],
 	["param", null, createElementFactory("param", {})],
 	["picture", null, createElementFactory("picture", {})],
-	["pre", null, createElementFactory("pre", {})],
+	["pre", "generic", createElementFactory("pre", {})],
 	["progress", "progressbar", createElementFactory("progress", {})],
+	["q", "generic", createElementFactory("q", {})],
+	["rp", null, createElementFactory("rp", {})],
+	["rt", null, createElementFactory("rt", {})],
+	["ruby", null, createElementFactory("ruby", {})],
+	// WARNING: html-aria and html-aam conflict on this role assignment
+	["s", "deletion", createElementFactory("s", {})],
+	["samp", "generic", createElementFactory("samp", {})],
   ["script", null, createElementFactory("script", {})],
+  ["search", "search", createElementFactory("search", {})],
   // WARNING: Only with a name
 	["section", "region", createElementFactory("section", {})],
 	["select, no multiple, no size", "combobox", createElementFactory("select", {})],
@@ -150,36 +182,41 @@ const cases = [
 	["select, size greater 1", "listbox", createElementFactory("select", {size: 2})],
 	["select, multiple", "listbox", createElementFactory("select", {multiple: true})],
 	["slot", null, createElementFactory("slot", {})],
+	["small", "generic", createElementFactory("small", {})],
 	["source", null, createElementFactory("source", {})],
-	["span", null, createElementFactory("span", {})],
-	["strong", null, createElementFactory("strong", {})],
+	["span", "generic", createElementFactory("span", {})],
+	["strong", "strong", createElementFactory("strong", {})],
 	["style", null, createElementFactory("style", {})],
-	["svg", null, createElementFactory("svg", {})],
-	["sub", null, createElementFactory("sub", {})],
+	["sub", "subscript", createElementFactory("sub", {})],
 	["summary", "button", createElementFactory("summary", {})],
-	["sup", null, createElementFactory("sup", {})],
+	["sup", "superscript", createElementFactory("sup", {})],
+	["svg", "graphics-document", createElementFactory("svg", {})],
 	["table", "table", createElementFactory("table", {})],
 	["tbody", "rowgroup", createElementFactory("tbody", {})],
+  // WARNING: Only in certain contexts
+	["td", "cell", createElementFactory("td", {})],
 	["template", null, createElementFactory("template", {})],
 	["textarea", "textbox", createElementFactory("textarea", {})],
 	["tfoot", "rowgroup", createElementFactory("tfoot", {})],
-	["thead", "rowgroup", createElementFactory("thead", {})],
-	["time", null, createElementFactory("time", {})],
-  ["title", null, createElementFactory("title", {})],
-  // WARNING: Only in certain contexts
-	["td", "cell", createElementFactory("td", {})],
+	// WARNING: Only in certain context
 	["th", "columnheader", createElementFactory("th", {})],
+	["thead", "rowgroup", createElementFactory("thead", {})],
+	["time", "time", createElementFactory("time", {})],
+  ["title", null, createElementFactory("title", {})],
 	["tr", "row", createElementFactory("tr", {})],
 	["track", null, createElementFactory("track", {})],
+	["u", "generic", createElementFactory("u", {})],
 	["ul", "list", createElementFactory("ul", {})],
+	["var", null, createElementFactory("var", {})],
 	["video", null, createElementFactory("video", {})],
+	["wbr", null, createElementFactory("wbr", {})],
 	// https://rawgit.com/w3c/aria/stable/#conflict_resolution_presentation_none
 	["presentational <img /> with accessible name", "img", createElementFactory("img", {alt: "", 'aria-label': "foo"})],
 	["presentational <h1 /> global aria attributes", "heading", createElementFactory("h1", {'aria-describedby': "comment-1", role: "presentation"})],
 	["presentational <h1 /> global aria attributes", "heading", createElementFactory("h1", {'aria-describedby': "comment-1", role: "none"})],
-	// <div /> isn't mapped to `"generic"` yet so implicit semantics are `No role`
-	["presentational <div /> with prohibited aria attributes", null, createElementFactory("div", {'aria-label': "hello", role: "presentation"})],
-	["presentational <div /> with prohibited aria attributes", null, createElementFactory("div", {'aria-label': "hello", role: "none"})],
+	// <abbr /> isn't mapped to `"generic"` yet so implicit semantics are `No role`
+	["presentational <abbr /> with prohibited aria attributes", null, createElementFactory("abbr", {'aria-label': "hello", role: "presentation"})],
+	["presentational <abbr /> with prohibited aria attributes", null, createElementFactory("abbr", {'aria-label': "hello", role: "none"})],
 ];
 
 it.each(cases)("%s has the role %s", (name, role, elementFactory) => {

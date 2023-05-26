@@ -91,7 +91,7 @@ function isHidden(
 
 /**
  * @param {Node} node -
- * @returns {boolean} - As defined in step 2E of https://w3c.github.io/accname/#mapping_additional_nd_te
+ * @returns {boolean} - As defined in step 2C of https://w3c.github.io/accname/#mapping_additional_nd_te
  */
 function isControl(node: Node): boolean {
 	return (
@@ -179,9 +179,10 @@ function allowsNameFromContent(node: Node): boolean {
 		"cell",
 		"checkbox",
 		"columnheader",
+		"comment",
 		"gridcell",
 		"heading",
-		"label",
+		// WARNING: Only in certain context
 		"legend",
 		"link",
 		"menuitem",

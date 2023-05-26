@@ -11,16 +11,21 @@ function prohibitsNaming(node: Node): boolean {
 	return hasAnyConcreteRoles(node, [
 		"caption",
 		"code",
+		"definition",
 		"deletion",
 		"emphasis",
 		"generic",
 		"insertion",
+		"mark",
 		"none",
 		"paragraph",
 		"presentation",
 		"strong",
 		"subscript",
+		"suggestion",
 		"superscript",
+		"term",
+		"time",
 	]);
 }
 
