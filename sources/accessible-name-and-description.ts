@@ -183,6 +183,8 @@ function allowsNameFromContent(node: Node): boolean {
 		"gridcell",
 		"heading",
 		// WARNING: Only in certain context
+		"label",
+		// WARNING: Only in certain context
 		"legend",
 		"link",
 		"menuitem",

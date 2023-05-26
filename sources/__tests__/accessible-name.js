@@ -94,6 +94,11 @@ describe("to upstream", () => {
 			"greek delta",
 		],
 		[
+			"legend",
+			`<fieldset><legend data-test><em>greek</em> zeta</legend></fieldset>`,
+			"greek zeta",
+		],
+		[
 			"heading",
 			`<div data-test role="heading"><em>latin</em> c</div>`,
 			"latin c",
