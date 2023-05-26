@@ -11,6 +11,14 @@ name_test_case_552-manual.html:
   [fail, getComputedStyle pseudo selector not implemented]
 name_test_case_553-manual.html:
   [fail, getComputedStyle pseudo selector not implemented]
+name_test_case_596-manual.html:
+  [fail, WPT outdated. div has generic role prohibiting aria-labelledby]
+name_test_case_597-manual.html:
+  [fail, WPT outdated. div has generic role prohibiting aria-label]
+name_test_case_598-manual.html:
+  [fail, WPT outdated. div has generic role prohibiting aria-labelledby]
+name_test_case_599-manual.html:
+  [fail, WPT outdated. div has generic role prohibiting aria-label and aria-labelledby]
 name_test_case_659-manual.html:
   [fail, getComputedStyle pseudo selector not implemented]
 name_test_case_660-manual.html:
