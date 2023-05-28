@@ -413,7 +413,7 @@ test.each([
 		`<img data-test alt="" aria-label="a logo" role="presentation" /> />`,
 		"a logo",
 	],
-	[`<img data-test alt="" aria-label="a logo" role="none" /> />`, "a logo"],
+	[`<img data-test alt="" aria-label="a logo" role="none" />`, "a logo"],
 	[` <input type="radio" data-test title="crazy"/>`, "crazy"],
 	[
 		`
