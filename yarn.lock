@@ -5011,9 +5011,9 @@ minimatch@5.0.1:
     brace-expansion "^2.0.1"
 
 minimatch@^8.0.0:
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-8.0.2.tgz#ba35f8afeb255a4cbad4b6677b46132f3278c469"
-  integrity sha512-ikHGF67ODxj7vS5NKU2wvTsFLbExee+KXVCnBWh8Cg2hVJfBMQIrlo50qru/09E0EifjnU8dZhJ/iHhyXJM6Mw==
+  version "8.0.4"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-8.0.4.tgz#847c1b25c014d4e9a7f68aaf63dedd668a626229"
+  integrity sha512-W0Wvr9HyFXZRGIDgCicunpQ299OKXs9RgZfaukz4qAW/pJhcpUfupc9c+OObPOFueNy8VSrZgEmDtk6Kh4WzDA==
   dependencies:
     brace-expansion "^2.0.1"
 
