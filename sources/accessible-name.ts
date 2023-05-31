@@ -5,26 +5,22 @@ import {
 import { hasAnyConcreteRoles } from "./util";
 
 /**
- * https://w3c.github.io/aria/#namefromprohibited
+ * https://rawgit.com/w3c/aria/stable/#namefromprohibited
  */
 function prohibitsNaming(node: Node): boolean {
 	return hasAnyConcreteRoles(node, [
 		"caption",
 		"code",
-		"definition",
 		"deletion",
 		"emphasis",
 		"generic",
 		"insertion",
-		"mark",
 		"none",
 		"paragraph",
 		"presentation",
 		"strong",
 		"subscript",
-		"suggestion",
 		"superscript",
-		"term",
 		"time",
 	]);
 }

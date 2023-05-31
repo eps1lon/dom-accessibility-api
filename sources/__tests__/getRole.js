@@ -143,7 +143,7 @@ const cases = [
 	["ins", "insertion", createElementFactory("ins", {})],
 	["kbd", null, createElementFactory("kbd", {})],
 	["label", null, createElementFactory("label", {})],
-  ["legend", 'legend', createElementFactory("legend", {})],
+  ["legend", null, createElementFactory("legend", {})],
   // WARNING: Only in certain context
 	["li", "listitem", createElementFactory("li", {})],
 	["link", null, createElementFactory("link", {})],

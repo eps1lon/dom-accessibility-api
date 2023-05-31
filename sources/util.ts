@@ -59,6 +59,12 @@ export function isHTMLFieldSetElement(
 	return isElement(node) && getLocalName(node) === "fieldset";
 }
 
+export function isHTMLLabelElement(
+	node: Node | null
+): node is HTMLLabelElement {
+	return isElement(node) && getLocalName(node) === "label";
+}
+
 export function isHTMLLegendElement(
 	node: Node | null
 ): node is HTMLLegendElement {

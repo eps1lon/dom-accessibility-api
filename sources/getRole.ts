@@ -1,5 +1,4 @@
-// https://w3c.github.io/html-aria/#document-conformance-requirements-for-use-of-aria-attributes-in-html
-// https://w3c.github.io/html-aam/#html-element-role-mappings
+// https://www.w3.org/TR/html-aria/#document-conformance-requirements-for-use-of-aria-attributes-in-html
 
 import { presentationRoles } from "./util";
 
@@ -16,6 +15,7 @@ export function getLocalName(element: Element): string {
 	);
 }
 
+// https://www.w3.org/TR/html-aam-1.0/#html-element-role-mappings
 const localNameToRoleMappings: Record<string, string | undefined> = {
 	address: "group",
 	article: "article",
@@ -58,7 +58,6 @@ const localNameToRoleMappings: Record<string, string | undefined> = {
 	html: "document",
 	i: "generic",
 	ins: "insertion",
-	legend: "legend",
 	// WARNING: Only in certain context
 	li: "listitem",
 	main: "main",
@@ -105,20 +104,14 @@ const localNameToRoleMappings: Record<string, string | undefined> = {
 	ul: "list",
 };
 
+// https://rawgit.com/w3c/aria/stable/#role_definitions
 const prohibitedAttributes: Record<string, Set<string>> = {
 	caption: new Set(["aria-label", "aria-labelledby"]),
 	code: new Set(["aria-label", "aria-labelledby"]),
-	definition: new Set(["aria-label", "aria-labelledby"]),
 	deletion: new Set(["aria-label", "aria-labelledby"]),
 	emphasis: new Set(["aria-label", "aria-labelledby"]),
-	generic: new Set([
-		"aria-brailleroledescription",
-		"aria-label",
-		"aria-labelledby",
-		"aria-roledescription",
-	]),
+	generic: new Set(["aria-label", "aria-labelledby", "aria-roledescription"]),
 	insertion: new Set(["aria-label", "aria-labelledby"]),
-	mark: new Set(["aria-label", "aria-labelledby"]),
 	none: new Set(["aria-label", "aria-labelledby"]),
 	paragraph: new Set(["aria-label", "aria-labelledby"]),
 	presentation: new Set(["aria-label", "aria-labelledby"]),
@@ -126,7 +119,6 @@ const prohibitedAttributes: Record<string, Set<string>> = {
 	subscript: new Set(["aria-label", "aria-labelledby"]),
 	suggestion: new Set(["aria-label", "aria-labelledby"]),
 	superscript: new Set(["aria-label", "aria-labelledby"]),
-	term: new Set(["aria-label", "aria-labelledby"]),
 	time: new Set(["aria-label", "aria-labelledby"]),
 };
 
@@ -136,18 +128,16 @@ const prohibitedAttributes: Record<string, Set<string>> = {
  * @param role The role used for this element. This is specified to control whether you want to use the implicit or explicit role.
  */
 function hasGlobalAriaAttributes(element: Element, role: string): boolean {
-	// https://w3c.github.io/aria/#global_states
+	// https://rawgit.com/w3c/aria/stable/#global_states
 	// commented attributes are deprecated
 	return [
 		"aria-atomic",
-		"aria-braillelabel",
-		"aria-brailledescription",
 		"aria-busy",
 		"aria-controls",
 		"aria-current",
 		"aria-description",
 		"aria-describedby",
-		"aria-description",
+		"aria-description", // Deviated from "stable" in anticipation of Editor's Draft
 		"aria-details",
 		// "aria-disabled",
 		"aria-dropeffect",

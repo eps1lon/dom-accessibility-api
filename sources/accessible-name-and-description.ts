@@ -12,6 +12,7 @@ import {
 	isHTMLTextAreaElement,
 	safeWindow,
 	isHTMLFieldSetElement,
+	isHTMLLabelElement,
 	isHTMLLegendElement,
 	isHTMLOptGroupElement,
 	isHTMLTableElement,
@@ -157,47 +158,44 @@ function isMarkedPresentational(node: Node): node is Element {
 /**
  * Elements specifically listed in html-aam
  *
- * We don't need this for `label` or `legend` elements.
- * Their implicit roles already allow "naming from content".
- *
  * sources:
  *
- * - https://w3c.github.io/html-aam/#table-element
+ * - https://www.w3.org/TR/html-aam-1.0/#table-element-accessible-name-computation
+ * - https://www.w3.org/TR/html-aam-1.0/#fieldset-element-accessible-name-computation
  */
 function isNativeHostLanguageTextAlternativeElement(
 	node: Node
 ): node is Element {
-	return isHTMLTableCaptionElement(node);
+	return (
+		isHTMLTableCaptionElement(node) ||
+		isHTMLLegendElement(node) ||
+		isHTMLLabelElement(node)
+	);
 }
 
 /**
- * https://w3c.github.io/aria/#namefromcontent
+ * https://rawgit.com/w3c/aria/stable/#namefromcontent
  */
 function allowsNameFromContent(node: Node): boolean {
 	return hasAnyConcreteRoles(node, [
-		"button",
+		"button", // name required
 		"cell",
-		"checkbox",
-		"columnheader",
-		"comment",
+		"checkbox", // name required
+		"columnheader", // name required
 		"gridcell",
-		"heading",
-		// WARNING: Only in certain context
-		"label",
-		// WARNING: Only in certain context
-		"legend",
-		"link",
-		"menuitem",
-		"menuitemcheckbox",
-		"menuitemradio",
-		"option",
-		"radio",
+		"heading", // name required
+		"link", // name required
+		"menuitem", // name required
+		"menuitemcheckbox", // name required
+		"menuitemradio", // name required
+		"option", // name required
+		"radio", // name required
 		"row",
-		"rowheader",
-		"switch",
-		"tab",
+		"rowheader", // name required
+		"switch", // name required
+		"tab", // name required
 		"tooltip",
-		"treeitem",
+		"treeitem", // name required
 	]);
 }
 
@@ -432,7 +430,7 @@ export function computeTextAlternative(
 			return null;
 		}
 
-		// https://w3c.github.io/html-aam/#fieldset-and-legend-elements
+		// https://www.w3.org/TR/html-aam-1.0/#fieldset-element-accessible-name-computation
 		if (isHTMLFieldSetElement(node)) {
 			consultedNodes.add(node);
 			const children = ArrayFrom(node.childNodes);
@@ -447,7 +445,7 @@ export function computeTextAlternative(
 				}
 			}
 		} else if (isHTMLTableElement(node)) {
-			// https://w3c.github.io/html-aam/#table-element
+			// https://www.w3.org/TR/html-aam-1.0/#table-element-accessible-name-computation
 			consultedNodes.add(node);
 			const children = ArrayFrom(node.childNodes);
 			for (let i = 0; i < children.length; i += 1) {
@@ -472,8 +470,8 @@ export function computeTextAlternative(
 			}
 			return null;
 		} else if (getLocalName(node) === "img" || getLocalName(node) === "area") {
-			// https://w3c.github.io/html-aam/#area-element
-			// https://w3c.github.io/html-aam/#img-element
+			// https://www.w3.org/TR/html-aam-1.0/#area-element-accessible-name-computation
+			// https://www.w3.org/TR/html-aam-1.0/#img-element-accessible-name-computation
 			const nameFromAlt = useAttribute(node, "alt");
 			if (nameFromAlt !== null) {
 				return nameFromAlt;
@@ -491,7 +489,7 @@ export function computeTextAlternative(
 				node.type === "submit" ||
 				node.type === "reset")
 		) {
-			// https://w3c.github.io/html-aam/#input-type-text-input-type-password-input-type-search-input-type-tel-input-type-email-input-type-url-and-textarea-element-accessible-description-computation
+			// https://www.w3.org/TR/html-aam-1.0/#input-type-text-input-type-password-input-type-number-input-type-search-input-type-tel-input-type-email-input-type-url-and-textarea-element-accessible-name-computation
 			const nameFromValue = useAttribute(node, "value");
 			if (nameFromValue !== null) {
 				return nameFromValue;
@@ -524,7 +522,7 @@ export function computeTextAlternative(
 				.join(" ");
 		}
 
-		// https://w3c.github.io/html-aam/#input-type-image-accessible-name-computation
+		// https://www.w3.org/TR/html-aam-1.0/#input-type-image-accessible-name-computation
 		// TODO: wpt test consider label elements but html-aam does not mention them
 		// We follow existing implementations over spec
 		if (isHTMLInputElement(node) && node.type === "image") {
@@ -543,7 +541,7 @@ export function computeTextAlternative(
 		}
 
 		if (hasAnyConcreteRoles(node, ["button"])) {
-			// https://www.w3.org/TR/html-aam-1.0/#button-element
+			// https://www.w3.org/TR/html-aam-1.0/#button-element-accessible-name-computation
 			const nameFromSubTree = computeMiscTextAlternative(node, {
 				isEmbeddedInLabel: false,
 				isReferenced: false,
