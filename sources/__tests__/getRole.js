@@ -146,10 +146,7 @@ const cases = [
   ["legend", 'legend', createElementFactory("legend", {})],
   // WARNING: Only in certain context
 	["li", "listitem", createElementFactory("li", {})],
-	// WARNING: html-aria and html-aam conflict with wai-aria on this role assignment
-	// REF: https://github.com/w3c/html-aria/issues/467
 	["link", null, createElementFactory("link", {})],
-	["link element with a href", "link", createElementFactory("link", {href: "some"})],
 	["main", "main", createElementFactory("main", {})],
 	["map", null, createElementFactory("map", {})],
 	["mark", null, createElementFactory("mark", {})],

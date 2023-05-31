@@ -257,13 +257,6 @@ function getImplicitRole(element: Element): string | null {
 				return "listbox";
 			}
 			return "combobox";
-		// WARNING: html-aria and html-aam conflict with wai-aria on this role assignment
-		// REF: https://github.com/w3c/html-aria/issues/467
-		case "link":
-			if (element.hasAttribute("href")) {
-				return "link";
-			}
-			break;
 	}
 	return null;
 }
