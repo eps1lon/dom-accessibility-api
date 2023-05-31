@@ -31,15 +31,11 @@ const localNameToRoleMappings: Record<string, string | undefined> = {
 	code: "code",
 	data: "generic",
 	datalist: "listbox",
-	// WARNING: html-aria and html-aam conflict on this role assignment
-	dd: "definition",
 	del: "deletion",
 	details: "group",
 	dfn: "term",
 	dialog: "dialog",
 	div: "generic",
-	// WARNING: html-aria and html-aam conflict on this role assignment
-	dt: "term",
 	em: "emphasis",
 	fieldset: "group",
 	figure: "figure",
@@ -56,6 +52,7 @@ const localNameToRoleMappings: Record<string, string | undefined> = {
 	// WARNING: Only in certain context
 	header: "banner",
 	// WARNING: html-aria and html-aam conflict on this role assignment
+	// REF: https://github.com/w3c/html-aria/issues/451
 	hgroup: "group",
 	hr: "separator",
 	html: "document",
@@ -79,6 +76,7 @@ const localNameToRoleMappings: Record<string, string | undefined> = {
 	progress: "progressbar",
 	q: "generic",
 	// WARNING: html-aria and html-aam conflict on this role assignment
+	// REF: https://github.com/w3c/html-aria/issues/466
 	s: "deletion",
 	samp: "generic",
 	search: "search",
@@ -259,6 +257,8 @@ function getImplicitRole(element: Element): string | null {
 				return "listbox";
 			}
 			return "combobox";
+		// WARNING: html-aria and html-aam conflict with wai-aria on this role assignment
+		// REF: https://github.com/w3c/html-aria/issues/467
 		case "link":
 			if (element.hasAttribute("href")) {
 				return "link";

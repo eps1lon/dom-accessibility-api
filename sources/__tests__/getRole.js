@@ -76,7 +76,8 @@ const cases = [
 	["data", "generic", createElementFactory("data", {})],
 	["datalist", "listbox", createElementFactory("datalist", {})],
 	// WARNING: html-aria and html-aam conflict on this role assignment
-	["dd", "definition", createElementFactory("dd", {})],
+	// REF: https://github.com/w3c/html-aam/pull/376
+	["dd", null, createElementFactory("dd", {})],
 	["del", "deletion", createElementFactory("del", {})],
 	["details", "group", createElementFactory("details", {})],
 	["dfn", "term", createElementFactory("dfn", {})],
@@ -84,7 +85,8 @@ const cases = [
 	["div", "generic", createElementFactory("div", {})],
 	["dl", null, createElementFactory("dl", {})],
 	// WARNING: html-aria and html-aam conflict on this role assignment
-	["dt", "term", createElementFactory("dt", {})],
+	// REF: https://github.com/w3c/html-aam/pull/376
+	["dt", null, createElementFactory("dt", {})],
 	["em", "emphasis", createElementFactory("em", {})],
 	["embed", null, createElementFactory("embed", {})],
 	["fieldset", "group", createElementFactory("fieldset", {})],
@@ -103,6 +105,7 @@ const cases = [
   // WARNING: Only in certain context
 	["header", "banner", createElementFactory("header", {})],
 	// WARNING: html-aria and html-aam conflict on this role assignment
+	// REF: https://github.com/w3c/html-aria/issues/451
 	["hgroup", "group", createElementFactory("hgroup", {})],
 	["hr", "separator", createElementFactory("hr", {})],
 	["html", "document", createElementFactory("html", {})],
@@ -143,7 +146,8 @@ const cases = [
   ["legend", 'legend', createElementFactory("legend", {})],
   // WARNING: Only in certain context
 	["li", "listitem", createElementFactory("li", {})],
-	// WARNING: html-aria and html-aam conflict on this role assignment
+	// WARNING: html-aria and html-aam conflict with wai-aria on this role assignment
+	// REF: https://github.com/w3c/html-aria/issues/467
 	["link", null, createElementFactory("link", {})],
 	["link element with a href", "link", createElementFactory("link", {href: "some"})],
 	["main", "main", createElementFactory("main", {})],
@@ -171,6 +175,7 @@ const cases = [
 	["rt", null, createElementFactory("rt", {})],
 	["ruby", null, createElementFactory("ruby", {})],
 	// WARNING: html-aria and html-aam conflict on this role assignment
+	// REF: https://github.com/w3c/html-aria/issues/466
 	["s", "deletion", createElementFactory("s", {})],
 	["samp", "generic", createElementFactory("samp", {})],
   ["script", null, createElementFactory("script", {})],

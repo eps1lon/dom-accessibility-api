@@ -299,7 +299,7 @@ describe("slots", () => {
 test.each([
 	[
 		`
-<element1 data-test aria-labelledby="label">I reference my name</element1>
+<abbr data-test aria-labelledby="label">I reference my name</abbr>
 <div id="label" role="presentation">I'm prohibited a name</div>
 `,
 		"I'm prohibited a name",

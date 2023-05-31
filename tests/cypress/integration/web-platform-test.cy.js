@@ -89,10 +89,10 @@ context("wpt", () => {
 		["name_test_case_564-manual", "pass"],
 		["name_test_case_565-manual", "pass"],
 		["name_test_case_566-manual", "pass"],
-		["name_test_case_596-manual", "fail"], // WPT outdated. div has generic role prohibiting aria-labelledby
-		["name_test_case_597-manual", "fail"], // WPT outdated. div has generic role prohibiting aria-label
-		["name_test_case_598-manual", "fail"], // WPT outdated. div has generic role prohibiting aria-labelledby
-		["name_test_case_599-manual", "fail"], // WPT outdated. div has generic role prohibiting aria-label and aria-labelledby
+		["name_test_case_596-manual", "fail"], // https://github.com/web-platform-tests/wpt/issues/40280
+		["name_test_case_597-manual", "fail"], // https://github.com/web-platform-tests/wpt/issues/40280
+		["name_test_case_598-manual", "fail"], // https://github.com/web-platform-tests/wpt/issues/40280
+		["name_test_case_599-manual", "fail"], // https://github.com/web-platform-tests/wpt/issues/40280
 		["name_test_case_600-manual", "pass"],
 		["name_test_case_601-manual", "pass"],
 		["name_test_case_602-manual", "pass"],
