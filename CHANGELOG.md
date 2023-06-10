@@ -1,5 +1,13 @@
 # dom-accessibility-api changelog
 
+## 0.6.1
+
+### Patch Changes
+
+- [#934](https://github.com/eps1lon/dom-accessibility-api/pull/934) [`8acefc3`](https://github.com/eps1lon/dom-accessibility-api/commit/8acefc3311e481e6aa1bc678c2a065c9f88b4468) Thanks [@alonidiom](https://github.com/alonidiom)! - Support `aria-description` as descriptor
+
+- [#933](https://github.com/eps1lon/dom-accessibility-api/pull/933) [`a593ee0`](https://github.com/eps1lon/dom-accessibility-api/commit/a593ee0853a6ede72c86b9b6be24773207aea0f8) Thanks [@jlp-craigmorten](https://github.com/jlp-craigmorten)! - Support `"none"` role as a synonym for the `"presentation"` role
+
 ## 0.6.0
 
 ### Minor Changes
