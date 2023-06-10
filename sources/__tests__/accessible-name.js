@@ -306,7 +306,7 @@ test.each([
 	],
 	[
 		`
-<element1 data-test aria-labelledby="label">I reference my name</div>
+<abbr data-test aria-labelledby="label">I reference my name</div>
 <div id="label" role="none">I'm prohibited a name</div>
 `,
 		"I'm prohibited a name",
