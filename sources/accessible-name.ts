@@ -15,6 +15,7 @@ function prohibitsNaming(node: Node): boolean {
 		"emphasis",
 		"generic",
 		"insertion",
+		"none",
 		"paragraph",
 		"presentation",
 		"strong",

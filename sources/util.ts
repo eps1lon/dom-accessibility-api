@@ -1,6 +1,8 @@
 export { getLocalName } from "./getRole";
 import getRole, { getLocalName } from "./getRole";
 
+export const presentationRoles = ["presentation", "none"];
+
 export function isElement(node: Node | null): node is Element {
 	return node !== null && node.nodeType === node.ELEMENT_NODE;
 }

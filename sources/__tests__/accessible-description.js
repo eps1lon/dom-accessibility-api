@@ -56,6 +56,10 @@ describe("wpt copies", () => {
 			"foo",
 		],
 		[
+			`<img src="foo.jpg" data-test alt="test" aria-describedby="t1"><span id="t1" role="none">foo</span>`,
+			"foo",
+		],
+		[
 			`<a data-test href="#" aria-label="California" title="San Francisco" >United States</a>`,
 			"San Francisco",
 		],

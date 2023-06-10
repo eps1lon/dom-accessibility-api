@@ -20,6 +20,7 @@ import {
 	isSVGTitleElement,
 	queryIdRefs,
 	getLocalName,
+	presentationRoles,
 } from "./util";
 
 /**
@@ -150,7 +151,7 @@ function querySelectedOptions(listbox: Element): ArrayLike<Element> {
 }
 
 function isMarkedPresentational(node: Node): node is Element {
-	return hasAnyConcreteRoles(node, ["none", "presentation"]);
+	return hasAnyConcreteRoles(node, presentationRoles);
 }
 
 /**

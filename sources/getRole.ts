@@ -1,5 +1,7 @@
 // https://w3c.github.io/html-aria/#document-conformance-requirements-for-use-of-aria-attributes-in-html
 
+import { presentationRoles } from "./util";
+
 /**
  * Safe Element.localName for all supported environments
  * @param element
@@ -70,6 +72,7 @@ const prohibitedAttributes: Record<string, Set<string>> = {
 	emphasis: new Set(["aria-label", "aria-labelledby"]),
 	generic: new Set(["aria-label", "aria-labelledby", "aria-roledescription"]),
 	insertion: new Set(["aria-label", "aria-labelledby"]),
+	none: new Set(["aria-label", "aria-labelledby"]),
 	paragraph: new Set(["aria-label", "aria-labelledby"]),
 	presentation: new Set(["aria-label", "aria-labelledby"]),
 	strong: new Set(["aria-label", "aria-labelledby"]),
@@ -126,10 +129,10 @@ function ignorePresentationalRole(
 
 export default function getRole(element: Element): string | null {
 	const explicitRole = getExplicitRole(element);
-	if (explicitRole === null || explicitRole === "presentation") {
+	if (explicitRole === null || presentationRoles.indexOf(explicitRole) !== -1) {
 		const implicitRole = getImplicitRole(element);
 		if (
-			explicitRole !== "presentation" ||
+			presentationRoles.indexOf(explicitRole || "") === -1 ||
 			ignorePresentationalRole(element, implicitRole || "")
 		) {
 			return implicitRole;
