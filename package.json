@@ -70,7 +70,7 @@
 		"q": "^1.5.1",
 		"request": "^2.88",
 		"request-promise-native": "^1.0.9",
-		"rimraf": "^4.0.0",
+		"rimraf": "^5.0.0",
 		"serve": "^14.0.0",
 		"typescript": "^5.0.0"
 	},
