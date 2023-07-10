@@ -6,7 +6,7 @@
 		"dom-accessibility-api": "file:../../../../dom-accessibility-api.tgz"
 	},
 	"devDependencies": {
-		"kcd-scripts": "^13.0.0"
+		"kcd-scripts": "^14.0.0"
 	},
 	"scripts": {
 		"start": "yarn install --no-lockfile && yarn build",
