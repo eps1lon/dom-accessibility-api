@@ -15,7 +15,6 @@
 		"url": "https://github.com/eps1lon/dom-accessibility-api.git"
 	},
 	"files": [
-		".browserslistrc",
 		"dist/"
 	],
 	"scripts": {

@@ -5,8 +5,15 @@ module.exports = {
 			// for jest we need to transpile esmodules
 			// otherwise transform-commonjs takes care of the correct module syntax
 			{
-				browserslistEnv: "production",
 				modules: process.env.NODE_ENV === "test" ? "auto" : false,
+				targets: [
+					"ie 11",
+					"edge >= 14",
+					"firefox >= 52",
+					"chrome >= 49",
+					"safari >= 10",
+					"node 10.0",
+				],
 			},
 		],
 		require.resolve("@babel/preset-typescript"),
