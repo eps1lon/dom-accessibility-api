@@ -4,7 +4,10 @@ module.exports = {
 			require.resolve("@babel/preset-env"),
 			// for jest we need to transpile esmodules
 			// otherwise transform-commonjs takes care of the correct module syntax
-			{ modules: process.env.NODE_ENV === "test" ? "auto" : false },
+			{
+				browserslistEnv: "production",
+				modules: process.env.NODE_ENV === "test" ? "auto" : false,
+			},
 		],
 		require.resolve("@babel/preset-typescript"),
 	],
