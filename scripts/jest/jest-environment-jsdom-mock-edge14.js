@@ -31,7 +31,7 @@ class JestEnvironmentJsdomMockEdge16 extends JestEnvironmentJsdom {
 					get() {
 						return undefined;
 					},
-				}
+				},
 			);
 		});
 	}

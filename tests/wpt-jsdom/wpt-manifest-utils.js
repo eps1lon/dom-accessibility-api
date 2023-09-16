@@ -37,7 +37,7 @@ exports.readManifest = (filename) => {
 
 	if (manifest.version !== EXPECTED_MANIFEST_VERSION) {
 		throw new Error(
-			`WPT manifest format mismatch; expected ${EXPECTED_MANIFEST_VERSION} but got ${manifest.version}`
+			`WPT manifest format mismatch; expected ${EXPECTED_MANIFEST_VERSION} but got ${manifest.version}`,
 		);
 	}
 

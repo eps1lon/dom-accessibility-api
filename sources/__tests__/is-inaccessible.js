@@ -28,7 +28,7 @@ describe("isInaccessible", () => {
 
 	test("isSubtreeInaccessible implementation can be injected", () => {
 		const container = renderIntoDocument(
-			`<div style="display: none;"><button data-test /></div>`
+			`<div style="display: none;"><button data-test /></div>`,
 		);
 		const testNode = container.querySelector("[data-test]");
 
@@ -38,14 +38,14 @@ describe("isInaccessible", () => {
 				// ignore subtree accessibility
 				// A more useful usecase would be caching these results for repeated calls of `isInaccessible`
 				isSubtreeInaccessible: () => false,
-			})
+			}),
 		).toBe(false);
 	});
 
 	test("window.getComputedStyle implementation can be injected", () => {
 		jest.spyOn(window, "getComputedStyle");
 		const container = renderIntoDocument(
-			`<button data-test style="display: none;" />`
+			`<button data-test style="display: none;" />`,
 		);
 		const testNode = container.querySelector("[data-test]");
 
@@ -58,7 +58,7 @@ describe("isInaccessible", () => {
 
 					return styles;
 				},
-			})
+			}),
 		).toBe(false);
 		expect(window.getComputedStyle).toHaveBeenCalledTimes(0);
 	});
@@ -69,9 +69,9 @@ describe("isInaccessible", () => {
 				// mocking no available window
 				// https://developer.mozilla.org/en-US/docs/Web/API/Document/defaultView
 				getComputedStyle: null,
-			})
+			}),
 		).toThrowErrorMatchingInlineSnapshot(
-			`"Owner document of the element needs to have an associated window."`
+			`"Owner document of the element needs to have an associated window."`,
 		);
 	});
 });
@@ -99,7 +99,7 @@ describe("isSubtreeInaccessible", () => {
 	test("window.getComputedStyle implementation can be injected", () => {
 		jest.spyOn(window, "getComputedStyle");
 		const container = renderIntoDocument(
-			`<button data-test style="display: none;" />`
+			`<button data-test style="display: none;" />`,
 		);
 		const testNode = container.querySelector("[data-test]");
 
@@ -112,7 +112,7 @@ describe("isSubtreeInaccessible", () => {
 
 					return styles;
 				},
-			})
+			}),
 		).toBe(false);
 		expect(window.getComputedStyle).toHaveBeenCalledTimes(0);
 	});
@@ -123,9 +123,9 @@ describe("isSubtreeInaccessible", () => {
 				// mocking no available window
 				// https://developer.mozilla.org/en-US/docs/Web/API/Document/defaultView
 				getComputedStyle: null,
-			})
+			}),
 		).toThrowErrorMatchingInlineSnapshot(
-			`"Owner document of the element needs to have an associated window."`
+			`"Owner document of the element needs to have an associated window."`,
 		);
 	});
 });

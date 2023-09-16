@@ -53,7 +53,7 @@ class CustomResourceLoader extends ResourceLoader {
 				.resolve(__dirname, "../wpt" + url.pathname)
 				.replace(
 					"/resources/WebIDLParser.js",
-					"/resources/webidl2/lib/webidl2.js"
+					"/resources/webidl2/lib/webidl2.js",
 				);
 
 			return super.fetch(`file://${filePath}`, options);
@@ -112,15 +112,15 @@ function createJSDOM(urlPrefix, testPath, expectFail) {
 				window.add_result_callback((test) => {
 					if (test.status === 1) {
 						errors.push(
-							`Failed in "${test.name}": \n${test.message}\n\n${test.stack}`
+							`Failed in "${test.name}": \n${test.message}\n\n${test.stack}`,
 						);
 					} else if (test.status === 2) {
 						errors.push(
-							`Timeout in "${test.name}": \n${test.message}\n\n${test.stack}`
+							`Timeout in "${test.name}": \n${test.message}\n\n${test.stack}`,
 						);
 					} else if (test.status === 3) {
 						errors.push(
-							`Uncompleted test "${test.name}": \n${test.message}\n\n${test.stack}`
+							`Uncompleted test "${test.name}": \n${test.message}\n\n${test.stack}`,
 						);
 					}
 				});
@@ -133,7 +133,7 @@ function createJSDOM(urlPrefix, testPath, expectFail) {
 
 					if (harnessStatus.status === 2) {
 						errors.push(
-							new Error(`test harness should not timeout: ${testPath}`)
+							new Error(`test harness should not timeout: ${testPath}`),
 						);
 					}
 
@@ -147,15 +147,15 @@ function createJSDOM(urlPrefix, testPath, expectFail) {
             this run there were no errors. If you have fixed the issue covered
             by this test, you can edit the "to-run.yaml" file and remove the line
             containing this test. Thanks!
-            `)
+            `),
 						);
 					} else if (errors.length === 1 && !expectFail) {
 						reject(new Error(errors[0]));
 					} else if (errors.length && !expectFail) {
 						reject(
 							new Error(
-								`${errors.length} errors in test:\n\n${errors.join("\n")}`
-							)
+								`${errors.length} errors in test:\n\n${errors.join("\n")}`,
+							),
 						);
 					} else {
 						resolve();

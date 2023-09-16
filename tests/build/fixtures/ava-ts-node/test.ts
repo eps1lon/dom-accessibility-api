@@ -13,10 +13,10 @@ test("fn() returns foo", async (t) => {
 
 	const container = document.createElement("div");
 	ReactDOMClient.createRoot(container).render(
-		React.createElement("div", { children: "Hello, Dave!", role: "button" })
+		React.createElement("div", { children: "Hello, Dave!", role: "button" }),
 	);
 	// findByRole depends on `dom-accessibility-api`
 	await t.notThrowsAsync(() =>
-		findByRole(container, "button", { name: "Hello, Dave!" })
+		findByRole(container, "button", { name: "Hello, Dave!" }),
 	);
 });

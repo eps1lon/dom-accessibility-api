@@ -11,7 +11,7 @@ import { queryIdRefs } from "./util";
  */
 export function computeAccessibleDescription(
 	root: Element,
-	options: ComputeTextAlternativeOptions = {}
+	options: ComputeTextAlternativeOptions = {},
 ): string {
 	let description = queryIdRefs(root, "aria-describedby")
 		.map((element) => {

@@ -69,7 +69,7 @@ function asFlatString(s: string): FlatString {
  */
 function isHidden(
 	node: Node,
-	getComputedStyleImplementation: typeof window.getComputedStyle
+	getComputedStyleImplementation: typeof window.getComputedStyle,
 ): node is Element {
 	if (!isElement(node)) {
 		return false;
@@ -116,7 +116,7 @@ function hasAbstractRole(node: Node, role: string): node is Element {
 			]);
 		default:
 			throw new TypeError(
-				`No knowledge about abstract role '${role}'. This is likely a bug :(`
+				`No knowledge about abstract role '${role}'. This is likely a bug :(`,
 			);
 	}
 }
@@ -128,7 +128,7 @@ function hasAbstractRole(node: Node, role: string): node is Element {
  */
 function querySelectorAllSubtree(
 	element: Element,
-	selectors: string
+	selectors: string,
 ): Element[] {
 	const elements = ArrayFrom(element.querySelectorAll(selectors));
 
@@ -165,7 +165,7 @@ function isMarkedPresentational(node: Node): node is Element {
  * - https://w3c.github.io/html-aam/#table-element
  */
 function isNativeHostLanguageTextAlternativeElement(
-	node: Node
+	node: Node,
 ): node is Element {
 	return isHTMLTableCaptionElement(node);
 }
@@ -203,7 +203,7 @@ function allowsNameFromContent(node: Node): boolean {
  */
 function isDescendantOfNativeHostLanguageTextAlternativeElement(
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars -- not implemented yet
-	node: Node
+	node: Node,
 ): boolean {
 	return false;
 }
@@ -335,7 +335,7 @@ function getSlotContents(slot: HTMLSlotElement): Node[] {
  */
 export function computeTextAlternative(
 	root: Element,
-	options: ComputeTextAlternativeOptions = {}
+	options: ComputeTextAlternativeOptions = {},
 ): string {
 	const consultedNodes = new SetLike<Node>();
 
@@ -355,7 +355,7 @@ export function computeTextAlternative(
 	// 2F.i
 	function computeMiscTextAlternative(
 		node: Node,
-		context: { isEmbeddedInLabel: boolean; isReferenced: boolean }
+		context: { isEmbeddedInLabel: boolean; isReferenced: boolean },
 	): string {
 		let accumulatedText = "";
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
@@ -402,7 +402,7 @@ export function computeTextAlternative(
 	 */
 	function useAttribute(
 		element: Element,
-		attributeName: string
+		attributeName: string,
 	): string | null {
 		const attribute = element.getAttributeNode(attributeName);
 		if (
@@ -559,7 +559,7 @@ export function computeTextAlternative(
 			isEmbeddedInLabel: boolean;
 			isReferenced: boolean;
 			recursion: boolean;
-		}
+		},
 	): string {
 		if (consultedNodes.has(current)) {
 			return "";
@@ -724,6 +724,6 @@ export function computeTextAlternative(
 			// by spec computeAccessibleDescription starts with the referenced elements as roots
 			isReferenced: compute === "description",
 			recursion: false,
-		})
+		}),
 	);
 }

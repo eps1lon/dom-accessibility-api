@@ -7,7 +7,7 @@ declare global {
 		delete(value: T): boolean;
 		forEach(
 			callbackfn: (value: T, value2: T, set: Set<T>) => void,
-			thisArg?: unknown
+			thisArg?: unknown,
 		): void;
 		has(value: T): boolean;
 		readonly size: number;

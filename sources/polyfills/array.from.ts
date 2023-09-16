@@ -34,7 +34,7 @@ export default function arrayFrom<T>(iterable: Iterable<T> | ArrayLike<T>): T[];
  */
 export default function arrayFrom<T, U>(
 	arrayLike: Iterable<T> | ArrayLike<T>,
-	mapFn?: (v: T, k: number) => U
+	mapFn?: (v: T, k: number) => U,
 ): U[] {
 	// 1. Let C be the this value.
 	// edit(@eps1lon): we're not calling it as Array.from
@@ -46,7 +46,7 @@ export default function arrayFrom<T, U>(
 	// 3. ReturnIfAbrupt(items).
 	if (arrayLike == null) {
 		throw new TypeError(
-			"Array.from requires an array-like object - not null or undefined"
+			"Array.from requires an array-like object - not null or undefined",
 		);
 	}
 
@@ -58,7 +58,7 @@ export default function arrayFrom<T, U>(
 		// 5. a If IsCallable(mapfn) is false, throw a TypeError exception.
 		if (!isCallable(mapFn)) {
 			throw new TypeError(
-				"Array.from: when provided, the second argument must be a function"
+				"Array.from: when provided, the second argument must be a function",
 			);
 		}
 	}

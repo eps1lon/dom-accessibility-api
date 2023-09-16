@@ -13,7 +13,7 @@ chai.use((_chai, _utils) => {
 		this.assert(
 			expected === actual,
 			`expected to have accessible name '${expected}' but got '${actual}'`,
-			`expected to not have accessible name ${expected}`
+			`expected to not have accessible name ${expected}`,
 		);
 	}
 
@@ -28,12 +28,12 @@ chai.use((_chai, _utils) => {
 		this.assert(
 			expected === actual,
 			`expected to have accessible description '${expected}' but got '${actual}'`,
-			`expected to not have accessible description ${expected}`
+			`expected to not have accessible description ${expected}`,
 		);
 	}
 
 	_chai.Assertion.addMethod(
 		"accessibleDescription",
-		assertAccessibleDescription
+		assertAccessibleDescription,
 	);
 });
