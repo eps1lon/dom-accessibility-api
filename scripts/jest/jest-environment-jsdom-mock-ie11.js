@@ -29,7 +29,7 @@ class JestEnvironmentJsdomMockIE11 extends JestEnvironmentJsdom {
 					get() {
 						return undefined;
 					},
-				}
+				},
 			);
 		});
 	}

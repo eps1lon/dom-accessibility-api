@@ -60,7 +60,7 @@ describe("web-platform-tests", () => {
 						(pattern) => {
 							const matcher = minimatchers.get(toRunDoc.DIR + "/" + pattern);
 							return matcher.match(testFilePath);
-						}
+						},
 					);
 
 					const testFile = testFilePath.slice((toRunDoc.DIR + "/").length);
@@ -83,7 +83,7 @@ describe("web-platform-tests", () => {
 						runSingleWPT(
 							testFilePath,
 							`[expected fail] ${testFile}`,
-							expectFail
+							expectFail,
 						);
 					} else {
 						runSingleWPT(testFilePath, testFile, expectFail);
@@ -99,12 +99,12 @@ function checkToRun() {
 	for (const doc of toRunDocs) {
 		if (doc.DIR.startsWith("/")) {
 			throw new Error(
-				`DIR entries must not start with a slash: saw "${doc.DIR}"`
+				`DIR entries must not start with a slash: saw "${doc.DIR}"`,
 			);
 		}
 		if (doc.DIR.endsWith("/")) {
 			throw new Error(
-				`DIR entries must not end with a slash: saw "${doc.DIR}"`
+				`DIR entries must not end with a slash: saw "${doc.DIR}"`,
 			);
 		}
 
@@ -114,7 +114,7 @@ function checkToRun() {
 
 		if (doc.DIR < lastDir) {
 			throw new Error(
-				`Bad lexicographical directory sorting in to-run.yaml: ${doc.DIR} should come before ${lastDir}`
+				`Bad lexicographical directory sorting in to-run.yaml: ${doc.DIR} should come before ${lastDir}`,
 			);
 		}
 		lastDir = doc.DIR;
@@ -123,7 +123,7 @@ function checkToRun() {
 		for (const pattern of expectationsInDoc(doc)) {
 			if (pattern.startsWith("/")) {
 				throw new Error(
-					`Expectation patterns must not start with a slash: saw "${pattern}"`
+					`Expectation patterns must not start with a slash: saw "${pattern}"`,
 				);
 			}
 
@@ -132,7 +132,7 @@ function checkToRun() {
 					"Bad lexicographical expectation pattern sorting in to-run.yaml: " +
 						pattern +
 						" should come before " +
-						lastPattern
+						lastPattern,
 				);
 			}
 			lastPattern = pattern;
@@ -145,7 +145,7 @@ function checkToRun() {
 			const matcher = new Minimatch(doc.DIR + "/" + pattern);
 			if (!possibleTestFilePaths.some((filename) => matcher.match(filename))) {
 				throw new Error(
-					`Expectation pattern "${pattern}" does not match any test files`
+					`Expectation pattern "${pattern}" does not match any test files`,
 				);
 			}
 			minimatchers.set(doc.DIR + "/" + pattern, matcher);

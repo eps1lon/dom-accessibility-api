@@ -20,7 +20,7 @@ export interface IsInaccessibleOptions {
  */
 export function isInaccessible(
 	element: Element,
-	options: IsInaccessibleOptions = {}
+	options: IsInaccessibleOptions = {},
 ): boolean {
 	const {
 		getComputedStyle = element.ownerDocument.defaultView?.getComputedStyle,
@@ -28,7 +28,7 @@ export function isInaccessible(
 	} = options;
 	if (typeof getComputedStyle !== "function") {
 		throw new TypeError(
-			"Owner document of the element needs to have an associated window."
+			"Owner document of the element needs to have an associated window.",
 		);
 	}
 	// since visibility is inherited we can exit early
@@ -60,14 +60,14 @@ export interface IsSubtreeInaccessibleOptions {
  */
 export function isSubtreeInaccessible(
 	element: Element,
-	options: IsSubtreeInaccessibleOptions = {}
+	options: IsSubtreeInaccessibleOptions = {},
 ): boolean {
 	const {
 		getComputedStyle = element.ownerDocument.defaultView?.getComputedStyle,
 	} = options;
 	if (typeof getComputedStyle !== "function") {
 		throw new TypeError(
-			"Owner document of the element needs to have an associated window."
+			"Owner document of the element needs to have an associated window.",
 		);
 	}
 

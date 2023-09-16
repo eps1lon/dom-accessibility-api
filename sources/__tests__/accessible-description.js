@@ -16,10 +16,10 @@ function toHaveAccessibleDescription(received, expected) {
 		return {
 			message: () =>
 				`expected ${prettyDOM(
-					received
+					received,
 				)} to have accessible description '${expected}' but got '${actual}'\n${diff(
 					expected,
-					actual
+					actual,
 				)}`,
 			pass: false,
 		};
@@ -28,10 +28,10 @@ function toHaveAccessibleDescription(received, expected) {
 	return {
 		message: () =>
 			`expected ${prettyDOM(
-				received
+				received,
 			)} not to have accessible description '${expected}'\n${diff(
 				expected,
-				actual
+				actual,
 			)}`,
 		pass: true,
 	};
@@ -73,7 +73,7 @@ describe("wpt copies", () => {
 		],
 	])(`#%#`, (markup, expectedAccessibleDescription) => {
 		expect(markup).toRenderIntoDocumentAccessibleDescription(
-			expectedAccessibleDescription
+			expectedAccessibleDescription,
 		);
 	});
 });

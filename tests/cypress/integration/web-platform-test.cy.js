@@ -171,7 +171,7 @@ context("wpt", () => {
 			cy.visit(`http://localhost:3000/accname/${testBasename}`);
 
 			cy.get(
-				`#steps tr:nth-of-type(2) .api tr:nth-of-type(${2 + usedApiIndex})`
+				`#steps tr:nth-of-type(2) .api tr:nth-of-type(${2 + usedApiIndex})`,
 			)
 				.then(($row) => {
 					const [$apiName, $access, $property, $equality, $expected] =
