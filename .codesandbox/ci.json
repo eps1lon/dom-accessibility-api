@@ -1,6 +1,6 @@
 {
 	"buildCommand": "build",
-	"node": "14",
+	"node": "16",
 	"sandboxes": ["new"],
 	"silent": true
 }
