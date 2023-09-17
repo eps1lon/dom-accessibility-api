@@ -1,5 +1,11 @@
 # dom-accessibility-api changelog
 
+## 0.6.2
+
+### Patch Changes
+
+- [#978](https://github.com/eps1lon/dom-accessibility-api/pull/978) [`0128d16`](https://github.com/eps1lon/dom-accessibility-api/commit/0128d16d67ab12232775b9a7db0195d207980f26) Thanks [@hiebj](https://github.com/hiebj)! - Add explicit typings location to support use in TypeScript ESM modules
+
 ## 0.6.1
 
 ### Patch Changes
