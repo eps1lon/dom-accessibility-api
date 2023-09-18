@@ -1,5 +1,11 @@
 # dom-accessibility-api changelog
 
+## 0.6.3
+
+### Patch Changes
+
+- [#996](https://github.com/eps1lon/dom-accessibility-api/pull/996) [`a6c21d5`](https://github.com/eps1lon/dom-accessibility-api/commit/a6c21d5873c55e7ad1484cc7ecf06408614f68b9) Thanks [@eps1lon](https://github.com/eps1lon)! - Ensure types are declared first in `exports` field
+
 ## 0.6.2
 
 ### Patch Changes
