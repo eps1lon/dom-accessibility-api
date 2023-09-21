@@ -8,37 +8,37 @@ export function isElement(node: Node | null): node is Element {
 }
 
 export function isHTMLTableCaptionElement(
-	node: Node | null
+	node: Node | null,
 ): node is HTMLTableCaptionElement {
 	return isElement(node) && getLocalName(node) === "caption";
 }
 
 export function isHTMLInputElement(
-	node: Node | null
+	node: Node | null,
 ): node is HTMLInputElement {
 	return isElement(node) && getLocalName(node) === "input";
 }
 
 export function isHTMLOptGroupElement(
-	node: Node | null
+	node: Node | null,
 ): node is HTMLOptGroupElement {
 	return isElement(node) && getLocalName(node) === "optgroup";
 }
 
 export function isHTMLSelectElement(
-	node: Node | null
+	node: Node | null,
 ): node is HTMLSelectElement {
 	return isElement(node) && getLocalName(node) === "select";
 }
 
 export function isHTMLTableElement(
-	node: Node | null
+	node: Node | null,
 ): node is HTMLTableElement {
 	return isElement(node) && getLocalName(node) === "table";
 }
 
 export function isHTMLTextAreaElement(
-	node: Node | null
+	node: Node | null,
 ): node is HTMLTextAreaElement {
 	return isElement(node) && getLocalName(node) === "textarea";
 }
@@ -54,7 +54,7 @@ export function safeWindow(node: Node): Window {
 }
 
 export function isHTMLFieldSetElement(
-	node: Node | null
+	node: Node | null,
 ): node is HTMLFieldSetElement {
 	return isElement(node) && getLocalName(node) === "fieldset";
 }
@@ -66,7 +66,7 @@ export function isHTMLLabelElement(
 }
 
 export function isHTMLLegendElement(
-	node: Node | null
+	node: Node | null,
 ): node is HTMLLegendElement {
 	return isElement(node) && getLocalName(node) === "legend";
 }
@@ -106,7 +106,7 @@ export function queryIdRefs(node: Node, attributeName: string): Element[] {
 		return ids
 			.map((id) => root.getElementById(id))
 			.filter(
-				(element: Element | null): element is Element => element !== null
+				(element: Element | null): element is Element => element !== null,
 				// TODO: why does this not narrow?
 			) as Element[];
 	}
@@ -116,7 +116,7 @@ export function queryIdRefs(node: Node, attributeName: string): Element[] {
 
 export function hasAnyConcreteRoles(
 	node: Node,
-	roles: Array<string | null>
+	roles: Array<string | null>,
 ): node is Element {
 	if (isElement(node)) {
 		return roles.indexOf(getRole(node)) !== -1;

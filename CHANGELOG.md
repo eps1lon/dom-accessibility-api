@@ -1,5 +1,17 @@
 # dom-accessibility-api changelog
 
+## 0.6.3
+
+### Patch Changes
+
+- [#996](https://github.com/eps1lon/dom-accessibility-api/pull/996) [`a6c21d5`](https://github.com/eps1lon/dom-accessibility-api/commit/a6c21d5873c55e7ad1484cc7ecf06408614f68b9) Thanks [@eps1lon](https://github.com/eps1lon)! - Ensure types are declared first in `exports` field
+
+## 0.6.2
+
+### Patch Changes
+
+- [#978](https://github.com/eps1lon/dom-accessibility-api/pull/978) [`0128d16`](https://github.com/eps1lon/dom-accessibility-api/commit/0128d16d67ab12232775b9a7db0195d207980f26) Thanks [@hiebj](https://github.com/hiebj)! - Add explicit typings location to support use in TypeScript ESM modules
+
 ## 0.6.1
 
 ### Patch Changes

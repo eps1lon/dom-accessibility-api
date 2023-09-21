@@ -1,11 +1,12 @@
 {
 	"name": "dom-accessibility-api",
 	"description": "Implements https://w3c.github.io/accname/",
-	"version": "0.6.1",
+	"version": "0.6.3",
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",
 	"type": "commonjs",
 	"exports": {
+		"types": "./dist/index.d.ts",
 		"import": "./dist/index.mjs",
 		"require": "./dist/index.js"
 	},
@@ -15,7 +16,6 @@
 		"url": "https://github.com/eps1lon/dom-accessibility-api.git"
 	},
 	"files": [
-		".browserslistrc",
 		"dist/"
 	],
 	"scripts": {
@@ -50,8 +50,9 @@
 		"@changesets/cli": "^2.16.0",
 		"@testing-library/dom": "^9.0.0",
 		"@types/jest": "^29.0.0",
-		"@typescript-eslint/eslint-plugin": "^5.0.0",
-		"@typescript-eslint/parser": "^5.0.0",
+		"@types/node": "20.6.3",
+		"@typescript-eslint/eslint-plugin": "^6.0.0",
+		"@typescript-eslint/parser": "^6.0.0",
 		"concurrently": "^8.0.0",
 		"cross-env": "^7.0.3",
 		"cypress": "^12.0.0",
@@ -66,17 +67,16 @@
 		"minimatch": "^9.0.0",
 		"mocha": "^10.0.0",
 		"mocha-sugar-free": "^1.4.0",
-		"prettier": "^2.3.0",
+		"prettier": "^3.0.0",
 		"q": "^1.5.1",
 		"request": "^2.88",
 		"request-promise-native": "^1.0.9",
-		"rimraf": "^4.0.0",
+		"rimraf": "^5.0.0",
 		"serve": "^14.0.0",
 		"typescript": "^5.0.0"
 	},
 	"resolutions": {
-		"**/kind-of": "^6.0.3",
-		"**/minimist": "^1.2.2"
+		"@types/node": "20.6.3"
 	},
 	"prettier": {
 		"useTabs": true

@@ -164,7 +164,7 @@ function hasGlobalAriaAttributes(element: Element, role: string): boolean {
 
 function ignorePresentationalRole(
 	element: Element,
-	implicitRole: string
+	implicitRole: string,
 ): boolean {
 	// https://rawgit.com/w3c/aria/stable/#conflict_resolution_presentation_none
 	return hasGlobalAriaAttributes(element, implicitRole);

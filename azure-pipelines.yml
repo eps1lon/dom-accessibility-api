@@ -14,24 +14,12 @@ pool:
 # but it let's us use a single job. No need to split up jobs yet
 strategy:
   matrix:
-    # EOL: 2023-04-30
-    # sync with #node-version
-    node_14_x:
-      node_version: 14.x
-    # EOL: 2024-04-30
-    node_16_x:
-      node_version: 16.x
     # EOL: 2025-04-30
     node_18_x:
       node_version: 18.x
-    # Initial release: 2022-10-18
-    # EOL: 2023-06-01
-    #node_19_x:
-    #  node_version: 19.x
-    # Initial release: 2023-04-18
     # EOL: 2026-04-30
-    #node_20_x:
-    #  node_version: 20.x
+    node_20_x:
+      node_version: 20.x
 
 steps:
   - task: NodeTool@0.200.0

@@ -40,7 +40,7 @@ module.exports = () => {
 				return new Promise((resolve, reject) => {
 					python.on("error", (e) => {
 						reject(
-							new Error("Error starting python server process:", e.message)
+							new Error("Error starting python server process:", e.message),
 						);
 					});
 
@@ -48,18 +48,18 @@ module.exports = () => {
 						Promise.all([
 							Promise.resolve(python),
 							pollForServer(
-								`http://${config.browser_host}:${config.ports.http[0]}/`
+								`http://${config.browser_host}:${config.ports.http[0]}/`,
 							),
 							pollForServer(
-								`https://${config.browser_host}:${config.ports.https[0]}/`
+								`https://${config.browser_host}:${config.ports.https[0]}/`,
 							),
 							pollForServer(
-								`http://${config.browser_host}:${config.ports.ws[0]}/`
+								`http://${config.browser_host}:${config.ports.ws[0]}/`,
 							),
 							pollForServer(
-								`https://${config.browser_host}:${config.ports.wss[0]}/`
+								`https://${config.browser_host}:${config.ports.wss[0]}/`,
 							),
-						])
+						]),
 					);
 
 					process.on("exit", () => {
@@ -72,9 +72,9 @@ module.exports = () => {
 			() => {
 				throw new Error(
 					"Host entries not present for web platform tests. See " +
-						"https://github.com/w3c/web-platform-tests#running-the-tests"
+						"https://github.com/w3c/web-platform-tests#running-the-tests",
 				);
-			}
+			},
 		)
 		.then(([server, firstURL]) => {
 			return { server, url: firstURL };
@@ -89,7 +89,7 @@ function pollForServer(url) {
 		})
 		.catch((err) => {
 			console.log(
-				`WPT server at ${url} is not up yet (${err.message}); trying again`
+				`WPT server at ${url} is not up yet (${err.message}); trying again`,
 			);
 			return q.delay(500).then(() => pollForServer(url));
 		});

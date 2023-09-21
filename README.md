@@ -35,8 +35,6 @@ safari >= 10
 node 10.0
 ```
 
-or check the published `.browserslistrc`
-
 ## progress
 
 Using https://github.com/web-platform-tests/wpt. Be sure to init submodules when

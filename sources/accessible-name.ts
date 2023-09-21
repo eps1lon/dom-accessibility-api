@@ -33,7 +33,7 @@ function prohibitsNaming(node: Node): boolean {
  */
 export function computeAccessibleName(
 	root: Element,
-	options: ComputeTextAlternativeOptions = {}
+	options: ComputeTextAlternativeOptions = {},
 ): string {
 	if (prohibitsNaming(root)) {
 		return "";

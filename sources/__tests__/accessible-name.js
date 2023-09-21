@@ -16,10 +16,10 @@ function toHaveAccessibleName(received, expected) {
 		return {
 			message: () =>
 				`expected ${prettyDOM(
-					received
+					received,
 				)} to have accessible name '${expected}' but got '${actual}'\n${diff(
 					expected,
-					actual
+					actual,
 				)}`,
 			pass: false,
 		};
@@ -28,7 +28,7 @@ function toHaveAccessibleName(received, expected) {
 	return {
 		message: () =>
 			`expected ${prettyDOM(
-				received
+				received,
 			)} not to have accessible name '${expected}'\n${diff(expected, actual)}`,
 		pass: true,
 	};
@@ -260,7 +260,7 @@ describe("slots", () => {
 					const shadowRoot = this.attachShadow({ mode: "open" });
 					shadowRoot.innerHTML = `<button data-test><slot></slot></button>`;
 				}
-			}
+			},
 		);
 
 		customElements.define(
@@ -271,7 +271,7 @@ describe("slots", () => {
 					const shadowRoot = this.attachShadow({ mode: "open" });
 					shadowRoot.innerHTML = `<button data-test><slot>Default name</slot></button>`;
 				}
-			}
+			},
 		);
 	});
 
@@ -567,7 +567,7 @@ describe("prohibited naming", () => {
 		"role '%s'can be part of the accessible name of another element",
 		(_, markup, name) => {
 			expect(markup).toRenderIntoDocumentAccessibleName(name);
-		}
+		},
 	);
 });
 
@@ -640,10 +640,10 @@ describe("options.computedStyleSupportsPseudoElements", () => {
 		// one for ::before, one for ::after
 		expect(console.error).toHaveBeenCalledTimes(2);
 		expect(console.error.mock.calls[0][0]).toMatchInlineSnapshot(
-			`[Error: Not implemented: window.computedStyle(elt, pseudoElt)]`
+			`[Error: Not implemented: window.computedStyle(elt, pseudoElt)]`,
 		);
 		expect(console.error.mock.calls[1][0]).toMatchInlineSnapshot(
-			`[Error: Not implemented: window.computedStyle(elt, pseudoElt)]`
+			`[Error: Not implemented: window.computedStyle(elt, pseudoElt)]`,
 		);
 	});
 });
@@ -657,7 +657,7 @@ describe("options.hidden", () => {
 
 		const testNode = container.querySelector("[data-test]");
 		expect(computeAccessibleName(testNode, { hidden: true })).toEqual(
-			accessibleName
+			accessibleName,
 		);
 	});
 });
