@@ -167,35 +167,25 @@ name/shadowdom/*: [fail, shadowdom not implemented]
 DIR: dpub-aam
 
 manual/*:
-  [
-    timeout,
-    targets accessibility APIs whose mappings have not been implemented in this test suite yet,
-  ]
+  [timeout, targets accessibility APIs which are out of scope of this package]
 
 ---
 DIR: graphics-aria
-
 ---
 DIR: html-aam
 
 roles-contextual.html:
-  "el-aside-in-article-in-main":
-    [fail, context based role not implemented]
-  "el-aside-in-article":
-    [fail, context based role not implemented]
+  "el-aside-in-article-in-main": [fail, context based role not implemented]
+  "el-aside-in-article": [fail, context based role not implemented]
   "el-aside-in-aside": [fail, context based role not implemented]
   "el-aside-in-nav": [fail, context based role not implemented]
-  "el-aside-in-section":
-    [fail, context based role not implemented]
+  "el-aside-in-section": [fail, context based role not implemented]
   "el-footer": [fail, context based role not implemented]
   "el-header": [fail, context based role not implemented]
-  "el-header-ancestormain":
-    [fail, context based role not implemented]
-  "el-section-no-name":
-    [fail, context based role not implemented]
+  "el-header-ancestormain": [fail, context based role not implemented]
+  "el-section-no-name": [fail, context based role not implemented]
 roles-dynamic-switch.tentative.window.html:
-  "Connected <input type=checkbox switch>":
-    [fail, unknown]
+  "Connected <input type=checkbox switch>": [fail, unknown]
   "Connected <input type=checkbox switch>: adding switch attribute":
     [fail, unknown]
   "Connected <input type=checkbox switch>: removing switch attribute":
@@ -204,8 +194,7 @@ roles-dynamic-switch.tentative.window.html:
     [fail, unknown]
   "Connected <input type=checkbox switch>: adding type attribute":
     [fail, unknown]
-  "Disconnected <input type=checkbox switch>":
-    [fail, unknown]
+  "Disconnected <input type=checkbox switch>": [fail, unknown]
 roles-generic.html:
   "el-li-orphaned": [fail, context based role not implemented]
 roles.html:
@@ -213,24 +202,27 @@ roles.html:
   "el-dt": [fail, missing role]
   "el-img": [fail, image alias role not implemented]
   "el-mark": [fail, missing role]
-  "el-img-alt-no-value": [fail, test does not accept `presentation` as an implicit presentational role]
-  "el-img-empty-alt": [fail, test does not accept `presentation` as an implicit presentational role]
+  "el-img-alt-no-value":
+    [
+      fail,
+      test does not accept `presentation` as an implicit presentational role,
+    ]
+  "el-img-empty-alt":
+    [
+      fail,
+      test does not accept `presentation` as an implicit presentational role,
+    ]
 roles.tentative.html:
-  "el-input-checkbox-switch":
-    [fail, unknown]
+  "el-input-checkbox-switch": [fail, unknown]
 table-roles.html:
   "el-th-in-row": [fail, context based role not implemented]
-
 
 ---
 DIR: wai-aria
 
 idlharness.window.html: [timeout, not a test file]
 manual/*:
-  [
-    timeout,
-    targets accessibility APIs whose mappings have not been implemented in this test suite yet,
-  ]
+  [timeout, targets accessibility APIs which are out of scope of this package]
 role/abstract-roles.html: [fail, explicit abstract roles not ignored]
 role/contextual-roles.html:
   "footer element scoped to main element is generic":
@@ -253,8 +245,7 @@ role/grid-roles.html:
     [fail, context based role not implemented]
 role/invalid-roles.html: [timeout, not implemented]
 role/list-roles.html:
-  "orphan p with listitem role":
-    [fail, context based role not implemented]
+  "orphan p with listitem role": [fail, context based role not implemented]
 role/listbox-roles.html:
   "orphaned option outside the context of listbox":
     [fail, context based role not implemented]
@@ -265,28 +256,21 @@ role/menu-roles.html:
     [fail, context based role not implemented]
   "orphaned menuitemcheckbox outside the context of menu/menubar":
     [fail, context based role not implemented]
-  "orphan button with menuitem role":
-    [fail, context based role not implemented]
+  "orphan button with menuitem role": [fail, context based role not implemented]
   "orphan button with menuitemcheckbox role":
     [fail, context based role not implemented]
   "orphan button with menuitemradio role":
     [fail, context based role not implemented]
 role/region-roles.html:
-  "region without label":
-    [fail, incorrect role]
+  "region without label": [fail, incorrect role]
 role/role_none_conflict_resolution.html: [timeout, not implemented]
 role/synonym-roles.html:
-  "synonym img role == computedrole image":
-    [fail, not implemented]
-  "synonym presentation role == computedrole none":
-    [fail, not implemented]
-  "directory role == computedrole list":
-    [fail, not implemented]
-  "div w/directory role == computedrole list":
-    [fail, not implemented]
+  "synonym img role == computedrole image": [fail, not implemented]
+  "synonym presentation role == computedrole none": [fail, not implemented]
+  "directory role == computedrole list": [fail, not implemented]
+  "div w/directory role == computedrole list": [fail, not implemented]
 role/tab-roles.html:
-  "orphan button with tab role":
-    [fail, context based role not implemented]
+  "orphan button with tab role": [fail, context based role not implemented]
 role/tree-roles.html:
   "orphaned treeitem outside the context of tree":
     [fail, context based role not implemented]
