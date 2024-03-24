@@ -198,10 +198,14 @@ roles-dynamic-switch.tentative.window.html:
 roles-generic.html:
   "el-li-orphaned": [fail, context based role not implemented]
 roles.html:
-  "el-dd": [fail, missing role]
-  "el-dt": [fail, missing role]
+  "el-address": [fail, missing role]
+  "el-blockquote": [fail, missing role]
+  "el-code": [fail, missing role]
+  "el-del": [fail, missing role]
+  "el-dfn": [fail, missing role]
+  "el-em": [fail, missing role]
+  "el-hgroup": [fail, missing role]
   "el-img": [fail, image alias role not implemented]
-  "el-mark": [fail, missing role]
   "el-img-alt-no-value":
     [
       fail,
@@ -212,9 +216,20 @@ roles.html:
       fail,
       test does not accept `presentation` as an implicit presentational role,
     ]
+  "el-ins": [fail, missing role]
+  "el-mark": [fail, missing role]
+  "el-meter": [fail, missing role]
+  "el-p": [fail, missing role]
+  "el-s": [fail, missing role]
+  "el-search": [fail, missing role]
+  "el-sub": [fail, missing role]
+  "el-sup": [fail, missing role]
+  "el-strong": [fail, missing role]
+  "el-time": [fail, missing role]
 roles.tentative.html:
   "el-input-checkbox-switch": [fail, unknown]
 table-roles.html:
+  "el-caption": [fail, missing role]
   "el-th-in-row": [fail, context based role not implemented]
 
 ---

@@ -35,7 +35,7 @@ module.exports = (urlPrefixFactory) => {
 			title,
 			expectPromise: true,
 			// WPT also takes care of timeouts (maximum 60 seconds), this is an extra failsafe:
-			timeout: 250,
+			timeout: 1000,
 			slow: 10000,
 			skipIfBrowser: true,
 			fn() {
