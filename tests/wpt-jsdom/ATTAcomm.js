@@ -25,13 +25,13 @@ class ATTAcomm {
 
 					if (matcher === "property") {
 						if (name === namePropertyName[implementation]) {
-							const actual = computeAccessibleName(element);
+							const actual = computeAccessibleName(element) ?? "";
 							if (equality === "is") {
 								assert_equals(actual, expected);
 								continue;
 							}
 						} else if (name === descriptionPropertyName[implementation]) {
-							const actual = computeAccessibleDescription(element);
+							const actual = computeAccessibleDescription(element) ?? "";
 							if (equality === "is") {
 								assert_equals(actual, expected);
 								continue;

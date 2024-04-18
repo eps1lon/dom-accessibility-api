@@ -1,39 +1,290 @@
 DIR: accname
 
-description_1.0_combobox-focusable-manual.html:
-  [fail, title already used for name]
-description_from_content_of_describedby_element-manual.html:
-  [fail, test considers aria-label for description which is wrong IMO]
-name_file-label-inline-block-elements-manual.html:
-  [fail, whitespace issue, likely due to `display`]
-name_file-label-inline-block-styles-manual.html: [fail, missing word, unknown]
-name_test_case_552-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_553-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_659-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_660-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_661-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_662-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_663a-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_753-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_754-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_755-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_756-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_757-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_758-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_759-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
-name_test_case_76*-manual.html:
-  [fail, getComputedStyle pseudo selector not implemented]
+manual/description_1.0_combobox-focusable-manual.html:
+  [timeout, title already used for name]
+manual/description_from_content_of_describedby_element-manual.html:
+  [timeout, test considers aria-label for description which is wrong IMO]
+manual/name_file-label-inline-block-elements-manual.html:
+  [timeout, whitespace issue, likely due to `display`]
+manual/name_file-label-inline-block-styles-manual.html:
+  [timeout, missing word, unknown]
+manual/name_test_case_552-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_553-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_659-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_660-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_661-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_662-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_663a-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_753-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_754-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_755-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_756-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_757-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_758-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_759-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+manual/name_test_case_76*-manual.html:
+  [timeout, getComputedStyle pseudo selector not implemented]
+
+name/comp_embedded_control.html:
+  "checkbox label with embedded combobox (span)": [fail, missing word, unknown]
+  "checkbox label with embedded combobox (div)": [fail, missing word, unknown]
+name/comp_hidden_not_referenced.html:
+  "heading with name from content, containing element that is visibility:hidden with nested content that is visibility:visible":
+    [fail, incorrect label, likely due to `visibility`]
+name/comp_label.html:
+  "label valid on math element":
+    [fail, uncaught exception, upstream issue with jsdom]
+  "button's hidden referenced name (display:none) supercedes aria-label":
+    [fail, missing label, ignoring aria-labelledby referencing hidden element]
+  "button's hidden referenced name (visibility:hidden) supercedes aria-label":
+    [fail, missing label, ignoring aria-labelledby referencing hidden element]
+  "button's hidden referenced name (visibility:hidden) with hidden aria-labelledby traversal falls back to aria-label":
+    [
+      fail,
+      incorrect label,
+      preferring aria-labelledby referencing hidden element over aria-label,
+    ]
+  "Hidden button's label should be the empty string":
+    [fail, incorrect label, not accounting for hidden parent]
+  "nav with trailing nbsp char aria-label is valid (nbsp is preserved in name)":
+    [fail, whitespace]
+  "button with leading nbsp char in aria-label is valid (and uses aria-label)":
+    [fail, whitespace]
+name/comp_labelledby_hidden_nodes.html:
+  "button with aria-labelledby using visibility:hidden span (with nested span)":
+    [fail, incorrect label]
+  "button with aria-labelledby using visibility:hidden span (with nested spans, depth 2)":
+    [fail, incorrect label]
+  "button with aria-labelledby using visibility:hidden hidden span (with nested sibling spans)":
+    [fail, incorrect label]
+  "button with aria-labelledby using span without visibility:collapse (with nested visibility:collapse sibling spans)":
+    [fail, incorrect label]
+name/comp_name_from_content.html:
+  "button name from content with ::before":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "heading name from content with ::before":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "link name from content with ::before":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "button name from content with ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "heading name from content with ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "link name from content with ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "button name from content with ::before and ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "heading name from content with ::before and ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "link name from content with ::before and ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "button name from content no space joiners ::before and ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "heading name from content no space joiners ::before and ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "link name from content no space joiners ::before and ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "button name from content with ::before and ::after in rtl":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "heading name from content with ::before and ::after in rtl":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "link name from content with ::before and ::after in rtl":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "button name from fallback content with ::before and ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "heading name from fallback content with ::before and ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "link name from fallback content with ::before and ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "button name from fallback content mixing attr() and strings with ::before and ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "heading name from fallback content mixing attr() and strings with ::before and ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "link name from fallback content mixing attr() and strings with ::before and ::after":
+    [fail, getComputedStyle pseudo selector not implemented]
+  "heading with link referencing image using aria-labelledby, that in turn references text element via aria-labelledby":
+    [fail, incorrect label]
+  "heading with link referencing image using aria-labelledby, that in turn references itself and another element via aria-labelledby":
+    [fail, incorrect label]
+  "button name from content for each child (no space, inline)":
+    [fail, whitespace]
+  "heading name from content for each child (no space, inline)":
+    [fail, whitespace]
+  "link name from content for each child (no space, inline)": [fail, whitespace]
+name/comp_text_node.html:
+  "span[role=button] with text/element/text nodes, no space": [fail, whitespace]
+  "div[role=heading] with text/element/text nodes, no space": [fail, whitespace]
+  "button with text/element/text nodes, no space": [fail, whitespace]
+  "heading with text/element/text nodes, no space": [fail, whitespace]
+  "link with text/element/text nodes, no space": [fail, whitespace]
+  "span[role=button] with text node, with extra non-breaking space":
+    [fail, whitespace]
+  "div[role=heading] with text node, with extra non-breaking space":
+    [fail, whitespace]
+  "button with text node, with extra non-breaking space": [fail, whitespace]
+  "heading with text node, with extra non-breaking space": [fail, whitespace]
+  "link with text node, with extra non-breaking space": [fail, whitespace]
+  "span[role=button] with text node, with mixed space and non-breaking space":
+    [fail, whitespace]
+  "div[role=heading] with text node, with mixed space and non-breaking space":
+    [fail, whitespace]
+  "button with text node, with mixed space and non-breaking space":
+    [fail, whitespace]
+  "heading with text node, with mixed space and non-breaking space":
+    [fail, whitespace]
+  "link with text node, with mixed space and non-breaking space":
+    [fail, whitespace]
+name/comp_tooltip.html:
+  "img with tooltip label with empty alt": [fail, title not used for name]
+name/shadowdom/*: [fail, shadowdom not implemented]
+
+---
+DIR: dpub-aam
+
+manual/*:
+  [timeout, targets accessibility APIs which are out of scope of this package]
+
+---
+DIR: graphics-aria
+---
+DIR: html-aam
+
+roles-contextual.html:
+  "el-aside-in-article-in-main": [fail, context based role not implemented]
+  "el-aside-in-article": [fail, context based role not implemented]
+  "el-aside-in-aside": [fail, context based role not implemented]
+  "el-aside-in-nav": [fail, context based role not implemented]
+  "el-aside-in-section": [fail, context based role not implemented]
+  "el-footer": [fail, context based role not implemented]
+  "el-header": [fail, context based role not implemented]
+  "el-header-ancestormain": [fail, context based role not implemented]
+  "el-section-no-name": [fail, context based role not implemented]
+roles-dynamic-switch.tentative.window.html:
+  "Connected <input type=checkbox switch>": [fail, unknown]
+  "Connected <input type=checkbox switch>: adding switch attribute":
+    [fail, unknown]
+  "Connected <input type=checkbox switch>: removing switch attribute":
+    [fail, unknown]
+  "Connected <input type=checkbox switch>: removing type attribute":
+    [fail, unknown]
+  "Connected <input type=checkbox switch>: adding type attribute":
+    [fail, unknown]
+  "Disconnected <input type=checkbox switch>": [fail, unknown]
+roles-generic.html:
+  "el-li-orphaned": [fail, context based role not implemented]
+roles.html:
+  "el-address": [fail, missing role]
+  "el-blockquote": [fail, missing role]
+  "el-code": [fail, missing role]
+  "el-del": [fail, missing role]
+  "el-dfn": [fail, missing role]
+  "el-em": [fail, missing role]
+  "el-hgroup": [fail, missing role]
+  "el-img": [fail, image alias role not implemented]
+  "el-img-alt-no-value":
+    [
+      fail,
+      test does not accept `presentation` as an implicit presentational role,
+    ]
+  "el-img-empty-alt":
+    [
+      fail,
+      test does not accept `presentation` as an implicit presentational role,
+    ]
+  "el-ins": [fail, missing role]
+  "el-mark": [fail, missing role]
+  "el-meter": [fail, missing role]
+  "el-p": [fail, missing role]
+  "el-s": [fail, missing role]
+  "el-search": [fail, missing role]
+  "el-sub": [fail, missing role]
+  "el-sup": [fail, missing role]
+  "el-strong": [fail, missing role]
+  "el-time": [fail, missing role]
+roles.tentative.html:
+  "el-input-checkbox-switch": [fail, unknown]
+table-roles.html:
+  "el-caption": [fail, missing role]
+  "el-th-in-row": [fail, context based role not implemented]
+
+---
+DIR: wai-aria
+
+idlharness.window.html: [timeout, not a test file]
+manual/*:
+  [timeout, targets accessibility APIs which are out of scope of this package]
+role/abstract-roles.html: [fail, explicit abstract roles not ignored]
+role/contextual-roles.html:
+  "footer element scoped to main element is generic":
+    [fail, context based role not implemented]
+role/fallback-roles.html: [timeout, not implemented]
+role/form-roles.html:
+  "form without label": [fail, incorrect role]
+role/grid-roles.html:
+  "orphaned button with gridcell role outside the context of row":
+    [fail, context based role not implemented]
+  "orphaned row outside the context of table":
+    [fail, context based role not implemented]
+  "orphaned rowgroup outside the context of row":
+    [fail, context based role not implemented]
+  "orphaned div with gridcell role outside the context of row":
+    [fail, context based role not implemented]
+  "orphaned rowheader outside the context of row":
+    [fail, context based role not implemented]
+  "orphaned columnheader outside the context of row":
+    [fail, context based role not implemented]
+role/invalid-roles.html: [timeout, not implemented]
+role/list-roles.html:
+  "orphan div with listitem role": [fail, context based role not implemented]
+  "orphan p with listitem role": [fail, context based role not implemented]
+role/listbox-roles.html:
+  "orphaned option outside the context of listbox":
+    [fail, context based role not implemented]
+role/menu-roles.html:
+  "orphan div with menuitem role":
+    [fail, context based role not implemented]
+  "orphan div with menuitemcheckbox role":
+    [fail, context based role not implemented]
+  "orphan div with menuitemradio role":
+    [fail, context based role not implemented]
+  "orphaned menuitem outside the context of menu/menubar":
+    [fail, context based role not implemented]
+  "orphaned menuitemradio outside the context of menu/menubar":
+    [fail, context based role not implemented]
+  "orphaned menuitemcheckbox outside the context of menu/menubar":
+    [fail, context based role not implemented]
+  "orphan button with menuitem role": [fail, context based role not implemented]
+  "orphan button with menuitemcheckbox role":
+    [fail, context based role not implemented]
+  "orphan button with menuitemradio role":
+    [fail, context based role not implemented]
+role/region-roles.html:
+  "region without label": [fail, incorrect role]
+role/role_none_conflict_resolution.html: [timeout, not implemented]
+role/synonym-roles.html:
+  "synonym img role == computedrole image": [fail, not implemented]
+  "synonym presentation role == computedrole none": [fail, not implemented]
+  "directory role == computedrole list": [fail, not implemented]
+  "div w/directory role == computedrole list": [fail, not implemented]
+role/tab-roles.html:
+  "orphan button with tab role": [fail, context based role not implemented]
+  "orphan span with tab role": [fail, context based role not implemented]
+role/tree-roles.html:
+  "orphaned treeitem outside the context of tree":
+    [fail, context based role not implemented]
+  "orphaned button with treeitem role outside tree context":
+    [fail, context based role not implemented]

@@ -3,27 +3,26 @@ const path = require("path");
 const fs = require("fs");
 const jsYAML = require("js-yaml");
 const { Minimatch } = require("minimatch");
-const { describe, specify, before } = require("mocha-sugar-free");
+const { describe, specify, before, after } = require("mocha-sugar-free");
+const chalk = require("chalk");
 const {
 	readManifest,
 	getPossibleTestFilePaths,
 } = require("./wpt-manifest-utils.js");
-const startWPTServer = require("./start-wpt-server.js");
+const wptServer = require("./wpt-server.js");
+const { resolveReason, killSubprocess } = require("./utils.js");
+
+const validInnerReasons = new Set(["fail", "fail-with-canvas"]);
 
 const validReasons = new Set([
 	"fail",
 	"fail-slow",
+	"fail-with-canvas",
 	"timeout",
 	"flaky",
-	"mutates-globals",
-	"needs-node10",
-	"needs-node11",
-	"needs-node12",
+	"needs-canvas",
+	"fail-node18",
 ]);
-
-const hasNode10 = Number(process.versions.node.split(".")[0]) >= 10;
-const hasNode11 = Number(process.versions.node.split(".")[0]) >= 11;
-const hasNode12 = Number(process.versions.node.split(".")[0]) >= 12;
 
 const manifestFilename = path.resolve(__dirname, "wpt-manifest.json");
 const manifest = readManifest(manifestFilename);
@@ -31,24 +30,29 @@ const possibleTestFilePaths = getPossibleTestFilePaths(manifest);
 
 const toRunFilename = path.resolve(__dirname, "to-run.yaml");
 const toRunString = fs.readFileSync(toRunFilename, { encoding: "utf-8" });
-const toRunDocs = jsYAML.loadAll(toRunString, { filename: toRunFilename });
+const toRunDocs = jsYAML.loadAll(toRunString, null, {
+	filename: toRunFilename,
+	schema: jsYAML.DEFAULT_SAFE_SCHEMA,
+});
 
 const minimatchers = new Map();
 
 checkToRun();
 
-let serverProcess;
-let wptServerURL;
+let wptServerURL, serverProcess;
 const runSingleWPT = require("./run-single-wpt.js")(() => wptServerURL);
-before({ timeout: 30 * 1000 }, () => {
-	return startWPTServer().then(({ server, url }) => {
-		serverProcess = server;
-		wptServerURL = url;
-	});
+
+before({ timeout: 30_000 }, async () => {
+	const { urls, subprocess } = await wptServer.start();
+	wptServerURL = urls[0];
+	serverProcess = subprocess;
 });
 
+let expectedFailure = 0;
+
 after(() => {
-	serverProcess.kill("SIGINT");
+	killSubprocess(serverProcess);
+	process.stdout.write(chalk.red(`  ${expectedFailure} expected failures`));
 });
 
 describe("web-platform-tests", () => {
@@ -64,29 +68,63 @@ describe("web-platform-tests", () => {
 					);
 
 					const testFile = testFilePath.slice((toRunDoc.DIR + "/").length);
-					const reason = matchingPattern && toRunDoc[matchingPattern][0];
-					const shouldSkip = [
-						"fail-slow",
-						"timeout",
-						"flaky",
-						"mutates-globals",
-					].includes(reason);
-					const expectFail =
-						reason === "fail" ||
-						(reason === "needs-node10" && !hasNode10) ||
-						(reason === "needs-node11" && !hasNode11) ||
-						(reason === "needs-node12" && !hasNode12);
+					let reason, data;
 
-					if (matchingPattern && shouldSkip) {
-						specify.skip(`[${reason}] ${testFile}`);
-					} else if (expectFail) {
-						runSingleWPT(
-							testFilePath,
-							`[expected fail] ${testFile}`,
-							expectFail,
-						);
-					} else {
-						runSingleWPT(testFilePath, testFile, expectFail);
+					if (matchingPattern) {
+						// The array case is when the failure affects the whole test file
+						// (ex.: testharness timeout or error, uncaught exception, etc.)
+						reason = toRunDoc[matchingPattern][0];
+						if (!Array.isArray(toRunDoc[matchingPattern])) {
+							// The non-array case is when some subtests in the test file pass,
+							// but others fail, and testharness status is OK.
+							data = toRunDoc[matchingPattern];
+						}
+					} else if (toRunDoc.DIR.startsWith("html/canvas/")) {
+						reason = "needs-canvas";
+					}
+
+					switch (resolveReason(reason)) {
+						case "skip": {
+							specify.skip(`[${reason}] ${testFile}`);
+
+							break;
+						}
+
+						case "expect-fail": {
+							expectedFailure++;
+
+							const failReason = reason !== "fail" ? `: ${reason}` : "";
+
+							runSingleWPT(
+								testFilePath,
+								`[expected fail${failReason}] ${testFile}`,
+								true,
+							);
+
+							break;
+						}
+
+						default: {
+							let failCount = 0;
+
+							if (data) {
+								failCount = Object.values(data).filter(
+									([innerReason]) =>
+										resolveReason(innerReason) === "expect-fail",
+								).length;
+							}
+
+							let prefix = "";
+							if (failCount > 0) {
+								prefix = `[expected ${failCount} failure${
+									failCount > 1 ? "s" : ""
+								}] `;
+							}
+
+							expectedFailure += failCount;
+
+							runSingleWPT(testFilePath, `${prefix}${testFile}`, data || false);
+						}
 					}
 				}
 			}
@@ -137,9 +175,28 @@ function checkToRun() {
 			}
 			lastPattern = pattern;
 
-			const reason = doc[pattern][0];
-			if (!validReasons.has(reason)) {
-				throw new Error(`Bad reason "${reason}" for expectation ${pattern}`);
+			const data = doc[pattern];
+			if (Array.isArray(data)) {
+				const reason = data[0];
+				if (!validReasons.has(reason)) {
+					throw new Error(
+						`Bad reason "${reason}" for expectation "${pattern}"`,
+					);
+				}
+			} else {
+				for (const [subtest, [innerReason]] of Object.entries(data)) {
+					if (!validInnerReasons.has(innerReason)) {
+						if (!validReasons.has(innerReason)) {
+							throw new Error(
+								`Bad reason "${innerReason}" for expectation "${pattern}" and subtest "${subtest}"`,
+							);
+						} else {
+							throw new Error(
+								`Reason "${innerReason}" is only supported for files, not subtests (expectation "${pattern}", subtest "${subtest}")`,
+							);
+						}
+					}
+				}
 			}
 
 			const matcher = new Minimatch(doc.DIR + "/" + pattern);

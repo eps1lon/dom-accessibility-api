@@ -5,6 +5,7 @@ const EXPECTED_MANIFEST_VERSION = 8;
 
 exports.getPossibleTestFilePaths = (manifest) => {
 	const manualTests = manifest.items.manual;
+	const testharnessTests = manifest.items.testharness;
 
 	// Do a DFS to gather all test paths.
 	const allPaths = [];
@@ -15,10 +16,7 @@ exports.getPossibleTestFilePaths = (manifest) => {
 
 				for (const [curPath] of test[key].slice(1)) {
 					const testPath = curPath === null ? fallbackPath : curPath;
-
-					if (testPath.startsWith("accname")) {
-						allPaths.push(testPath);
-					}
+					allPaths.push(testPath);
 				}
 			} else {
 				const curPath = path === "" ? key : `${path}/${key}`;
@@ -27,6 +25,7 @@ exports.getPossibleTestFilePaths = (manifest) => {
 		}
 	}
 	addTests(manualTests, "");
+	addTests(testharnessTests, "");
 
 	return allPaths;
 };
