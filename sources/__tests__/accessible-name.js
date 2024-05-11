@@ -405,7 +405,10 @@ test.each([
 		"click me",
 	],
 	// https://www.w3.org/TR/html-aam-1.0/#input-type-text-input-type-password-input-type-number-input-type-search-input-type-tel-input-type-email-input-type-url-and-textarea-element-accessible-name-computation
-	[`<input type="text" data-test title="address" placeholder="Type here" />`, "address"],
+	[
+		`<input type="text" data-test title="address" placeholder="Type here" />`,
+		"address",
+	],
 	[`<input type="text" data-test placeholder="Type here" />`, "Type here"],
 	[`<textarea data-test title="address" placeholder="Type here" />`, "address"],
 	[`<textarea data-test placeholder="Type here" />`, "Type here"],

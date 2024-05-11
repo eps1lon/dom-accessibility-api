@@ -484,15 +484,14 @@ export function computeTextAlternative(
 
 		if (
 			(isHTMLInputElement(node) &&
-			(
-				node.type === "text" ||
-				node.type === "password" ||
-				node.type === "number" ||
-				node.type === "search" ||
-				node.type === "tel" ||
-				node.type === "email" ||
-				node.type === "url"
-			)) || isHTMLTextAreaElement(node)
+				(node.type === "text" ||
+					node.type === "password" ||
+					node.type === "number" ||
+					node.type === "search" ||
+					node.type === "tel" ||
+					node.type === "email" ||
+					node.type === "url")) ||
+			isHTMLTextAreaElement(node)
 		) {
 			// https://www.w3.org/TR/html-aam-1.0/#input-type-text-input-type-password-input-type-number-input-type-search-input-type-tel-input-type-email-input-type-url-and-textarea-element-accessible-name-computation
 			const nameFromTitle = useAttribute(node, "title");
