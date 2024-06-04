@@ -694,24 +694,33 @@ export function computeTextAlternative(
 			}
 		}
 
+		// 2G: Text Node
 		if (current.nodeType === current.TEXT_NODE) {
 			consultedNodes.add(current);
 			return current.textContent || "";
 		}
 
+		// 2H: Recursive Name From Content
 		if (context.recursion) {
 			consultedNodes.add(current);
-			return computeMiscTextAlternative(current, {
+			const miscTextAlternative = computeMiscTextAlternative(current, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
 				isReferenced: false,
 			});
+			if (miscTextAlternative !== "") {
+				return miscTextAlternative;
+			}
 		}
 
+		// 2I: Tooltip
 		const tooltipAttributeValue = computeTooltipAttributeValue(current);
 		if (tooltipAttributeValue !== null) {
 			consultedNodes.add(current);
 			return tooltipAttributeValue;
 		}
+
+		// 2J: Append a space character and the result of each step above to the total accumulated text
+		// TODO ???
 
 		// TODO should this be reachable?
 		consultedNodes.add(current);
