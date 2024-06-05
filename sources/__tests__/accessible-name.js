@@ -591,6 +591,15 @@ describe("options.getComputedStyle", () => {
 		expect(name).toEqual("foo test foo");
 		expect(window.getComputedStyle).not.toHaveBeenCalled();
 	});
+	it("is not called more than necessary", () => {
+		const container = renderIntoDocument(
+			"<button><span><span>nested</span>button</span></button>"
+		);
+
+		computeAccessibleName(container.querySelector("button"));
+
+		expect(window.getComputedStyle).toHaveBeenCalledTimes(4);
+	});
 });
 
 describe("options.computedStyleSupportsPseudoElements", () => {

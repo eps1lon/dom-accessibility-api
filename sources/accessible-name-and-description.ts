@@ -65,11 +65,13 @@ function asFlatString(s: string): FlatString {
  *
  * @param node -
  * @param options - These are not optional to prevent accidentally calling it without options in `computeAccessibleName`
+ * @param maybeNodeStyle - if we call `getComputedStyle` we can store the result here
  * @returns {boolean} -
  */
 function isHidden(
 	node: Node,
 	getComputedStyleImplementation: typeof window.getComputedStyle,
+	maybeNodeStyle: { current: CSSStyleDeclaration | null }
 ): node is Element {
 	if (!isElement(node)) {
 		return false;
@@ -83,6 +85,7 @@ function isHidden(
 	}
 
 	const style = getComputedStyleImplementation(node);
+	maybeNodeStyle.current = style;
 	return (
 		style.getPropertyValue("display") === "none" ||
 		style.getPropertyValue("visibility") === "hidden"
@@ -355,7 +358,12 @@ export function computeTextAlternative(
 	// 2F.i
 	function computeMiscTextAlternative(
 		node: Node,
-		context: { isEmbeddedInLabel: boolean; isReferenced: boolean },
+		context: {
+			isEmbeddedInLabel: boolean;
+			isReferenced: boolean;
+			// if we called getComputedStyle earlier in the stack, we can pass it here to avoid calling it again
+			style: CSSStyleDeclaration | null;
+		}
 	): string {
 		let accumulatedText = "";
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
@@ -378,13 +386,12 @@ export function computeTextAlternative(
 			// TODO: Unclear why display affects delimiter
 			// see https://github.com/w3c/accname/issues/3
 			const display = isElement(child)
-				? getComputedStyle(child).getPropertyValue("display")
+				? (context.style || getComputedStyle(child)).getPropertyValue("display")
 				: "inline";
 			const separator = display !== "inline" ? " " : "";
 			// trailing separator for wpt tests
 			accumulatedText += `${separator}${result}${separator}`;
 		});
-
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
 			const pseudoAfter = getComputedStyle(node, "::after");
 			const afterContent = getTextualContent(pseudoAfter);
@@ -544,6 +551,7 @@ export function computeTextAlternative(
 			const nameFromSubTree = computeMiscTextAlternative(node, {
 				isEmbeddedInLabel: false,
 				isReferenced: false,
+				style: null,
 			});
 			if (nameFromSubTree !== "") {
 				return nameFromSubTree;
@@ -559,16 +567,18 @@ export function computeTextAlternative(
 			isEmbeddedInLabel: boolean;
 			isReferenced: boolean;
 			recursion: boolean;
-		},
+		}
 	): string {
 		if (consultedNodes.has(current)) {
 			return "";
 		}
-
+		let maybeNodeStyle: { current: CSSStyleDeclaration | null } = {
+			current: null,
+		};
 		// 2A
 		if (
 			!hidden &&
-			isHidden(current, getComputedStyle) &&
+			isHidden(current, getComputedStyle, maybeNodeStyle) &&
 			!context.isReferenced
 		) {
 			consultedNodes.add(current);
@@ -687,6 +697,7 @@ export function computeTextAlternative(
 			const accumulatedText2F = computeMiscTextAlternative(current, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
 				isReferenced: false,
+				style: maybeNodeStyle.current,
 			});
 			if (accumulatedText2F !== "") {
 				consultedNodes.add(current);
@@ -704,6 +715,7 @@ export function computeTextAlternative(
 			return computeMiscTextAlternative(current, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
 				isReferenced: false,
+				style: maybeNodeStyle.current,
 			});
 		}
 
