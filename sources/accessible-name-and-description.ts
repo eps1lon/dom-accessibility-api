@@ -3,6 +3,7 @@
  */
 import ArrayFrom from "./polyfills/array.from";
 import SetLike from "./polyfills/SetLike";
+import MapLike from "./polyfills/MapLike";
 import {
 	hasAnyConcreteRoles,
 	isElement,
@@ -29,6 +30,7 @@ import {
 type FlatString = string & {
 	__flat: true;
 };
+type GetComputedStyle = typeof window.getComputedStyle;
 
 /**
  * interface for an options-bag where `window.getComputedStyle` can be mocked
@@ -43,7 +45,7 @@ export interface ComputeTextAlternativeOptions {
 	/**
 	 * mock window.getComputedStyle. Needs `content`, `display` and `visibility`
 	 */
-	getComputedStyle?: typeof window.getComputedStyle;
+	getComputedStyle?: GetComputedStyle;
 	/**
 	 * Set to `true` if you want to include hidden elements in the accessible name and description computation.
 	 * Skips 2A in https://w3c.github.io/accname/#computation-steps.
@@ -65,13 +67,11 @@ function asFlatString(s: string): FlatString {
  *
  * @param node -
  * @param options - These are not optional to prevent accidentally calling it without options in `computeAccessibleName`
- * @param maybeNodeStyle - if we call `getComputedStyle` we can store the result here
  * @returns {boolean} -
  */
 function isHidden(
 	node: Node,
-	getComputedStyleImplementation: typeof window.getComputedStyle,
-	maybeNodeStyle: { current: CSSStyleDeclaration | null }
+	getComputedStyleImplementation: GetComputedStyle
 ): node is Element {
 	if (!isElement(node)) {
 		return false;
@@ -85,7 +85,6 @@ function isHidden(
 	}
 
 	const style = getComputedStyleImplementation(node);
-	maybeNodeStyle.current = style;
 	return (
 		style.getPropertyValue("display") === "none" ||
 		style.getPropertyValue("visibility") === "hidden"
@@ -338,9 +337,10 @@ function getSlotContents(slot: HTMLSlotElement): Node[] {
  */
 export function computeTextAlternative(
 	root: Element,
-	options: ComputeTextAlternativeOptions = {},
+	options: ComputeTextAlternativeOptions = {}
 ): string {
 	const consultedNodes = new SetLike<Node>();
+	const computedStyles = new MapLike<Element, CSSStyleDeclaration>();
 
 	const window = safeWindow(root);
 	const {
@@ -351,9 +351,24 @@ export function computeTextAlternative(
 		// window.getComputedStyle(elementFromAnotherWindow) or if I don't bind it
 		// the type declarations don't require a `this`
 		// eslint-disable-next-line no-restricted-properties
-		getComputedStyle = window.getComputedStyle.bind(window),
+		getComputedStyle: _getComputedStyle = window.getComputedStyle.bind(window),
 		hidden = false,
 	} = options;
+	const cachingGetComputedStyle: GetComputedStyle = (
+		el,
+		pseudoElement
+	): CSSStyleDeclaration => {
+		// we don't cache the pseudoElement styles
+		if (pseudoElement !== undefined) {
+			return _getComputedStyle(el, pseudoElement);
+		}
+		if (computedStyles.has(el)) {
+			return computedStyles.get(el)!;
+		}
+		const style = _getComputedStyle(el, pseudoElement);
+		computedStyles.set(el, style);
+		return style;
+	};
 
 	// 2F.i
 	function computeMiscTextAlternative(
@@ -361,13 +376,11 @@ export function computeTextAlternative(
 		context: {
 			isEmbeddedInLabel: boolean;
 			isReferenced: boolean;
-			// if we called getComputedStyle earlier in the stack, we can pass it here to avoid calling it again
-			style: CSSStyleDeclaration | null;
 		}
 	): string {
 		let accumulatedText = "";
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
-			const pseudoBefore = getComputedStyle(node, "::before");
+			const pseudoBefore = cachingGetComputedStyle(node, "::before");
 			const beforeContent = getTextualContent(pseudoBefore);
 			accumulatedText = `${beforeContent} ${accumulatedText}`;
 		}
@@ -386,14 +399,14 @@ export function computeTextAlternative(
 			// TODO: Unclear why display affects delimiter
 			// see https://github.com/w3c/accname/issues/3
 			const display = isElement(child)
-				? (context.style || getComputedStyle(child)).getPropertyValue("display")
+				? cachingGetComputedStyle(child).getPropertyValue("display")
 				: "inline";
 			const separator = display !== "inline" ? " " : "";
 			// trailing separator for wpt tests
 			accumulatedText += `${separator}${result}${separator}`;
 		});
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
-			const pseudoAfter = getComputedStyle(node, "::after");
+			const pseudoAfter = cachingGetComputedStyle(node, "::after");
 			const afterContent = getTextualContent(pseudoAfter);
 			accumulatedText = `${accumulatedText} ${afterContent}`;
 		}
@@ -551,7 +564,6 @@ export function computeTextAlternative(
 			const nameFromSubTree = computeMiscTextAlternative(node, {
 				isEmbeddedInLabel: false,
 				isReferenced: false,
-				style: null,
 			});
 			if (nameFromSubTree !== "") {
 				return nameFromSubTree;
@@ -572,13 +584,10 @@ export function computeTextAlternative(
 		if (consultedNodes.has(current)) {
 			return "";
 		}
-		let maybeNodeStyle: { current: CSSStyleDeclaration | null } = {
-			current: null,
-		};
 		// 2A
 		if (
 			!hidden &&
-			isHidden(current, getComputedStyle, maybeNodeStyle) &&
+			isHidden(current, cachingGetComputedStyle) &&
 			!context.isReferenced
 		) {
 			consultedNodes.add(current);
@@ -697,7 +706,6 @@ export function computeTextAlternative(
 			const accumulatedText2F = computeMiscTextAlternative(current, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
 				isReferenced: false,
-				style: maybeNodeStyle.current,
 			});
 			if (accumulatedText2F !== "") {
 				consultedNodes.add(current);
@@ -715,7 +723,6 @@ export function computeTextAlternative(
 			return computeMiscTextAlternative(current, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
 				isReferenced: false,
-				style: maybeNodeStyle.current,
 			});
 		}
 
