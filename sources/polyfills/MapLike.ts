@@ -5,7 +5,7 @@ declare global {
 		delete(key: K): boolean;
 		forEach(
 			callbackfn: (value: V, key: K, map: Map<K, V>) => void,
-			thisArg?: any,
+			thisArg?: this,
 		): void;
 		get(key: K): V | undefined;
 		has(key: K): boolean;
@@ -57,8 +57,12 @@ class MapLike<K, V> {
 	}
 	forEach(
 		callbackfn: (value: V, key: K, map: MapLike<K, V>) => void,
-		thisArg?: any,
-	): void {}
+		thisArg?: this,
+	): void {
+		for (let i = 0; i < this.keys.length; i++) {
+			callbackfn(this.values[i], this.keys[i], thisArg || this);
+		}
+	}
 }
 
 export default typeof Map === "undefined" ? Map : MapLike;

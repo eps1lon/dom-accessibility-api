@@ -362,8 +362,9 @@ export function computeTextAlternative(
 		if (pseudoElement !== undefined) {
 			return _getComputedStyle(el, pseudoElement);
 		}
-		if (computedStyles.has(el)) {
-			return computedStyles.get(el)!;
+		const cachedStyles = computedStyles.get(el);
+		if (cachedStyles) {
+			return cachedStyles;
 		}
 		const style = _getComputedStyle(el, pseudoElement);
 		computedStyles.set(el, style);
