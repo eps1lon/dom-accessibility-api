@@ -593,7 +593,7 @@ describe("options.getComputedStyle", () => {
 	});
 	it("is not called more than once per element", () => {
 		const container = renderIntoDocument(
-			"<button><span><span>nested</span>button</span></button>"
+			"<button><span><span>nested</span>button</span></button>",
 		);
 
 		computeAccessibleName(container.querySelector("button"));

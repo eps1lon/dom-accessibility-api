@@ -71,7 +71,7 @@ function asFlatString(s: string): FlatString {
  */
 function isHidden(
 	node: Node,
-	getComputedStyleImplementation: GetComputedStyle
+	getComputedStyleImplementation: GetComputedStyle,
 ): node is Element {
 	if (!isElement(node)) {
 		return false;
@@ -337,7 +337,7 @@ function getSlotContents(slot: HTMLSlotElement): Node[] {
  */
 export function computeTextAlternative(
 	root: Element,
-	options: ComputeTextAlternativeOptions = {}
+	options: ComputeTextAlternativeOptions = {},
 ): string {
 	const consultedNodes = new SetLike<Node>();
 	const computedStyles = new MapLike<Element, CSSStyleDeclaration>();
@@ -356,7 +356,7 @@ export function computeTextAlternative(
 	} = options;
 	const cachingGetComputedStyle: GetComputedStyle = (
 		el,
-		pseudoElement
+		pseudoElement,
 	): CSSStyleDeclaration => {
 		// we don't cache the pseudoElement styles
 		if (pseudoElement !== undefined) {
@@ -376,7 +376,7 @@ export function computeTextAlternative(
 		context: {
 			isEmbeddedInLabel: boolean;
 			isReferenced: boolean;
-		}
+		},
 	): string {
 		let accumulatedText = "";
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
@@ -579,7 +579,7 @@ export function computeTextAlternative(
 			isEmbeddedInLabel: boolean;
 			isReferenced: boolean;
 			recursion: boolean;
-		}
+		},
 	): string {
 		if (consultedNodes.has(current)) {
 			return "";
