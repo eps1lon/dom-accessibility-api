@@ -351,22 +351,33 @@ export function computeTextAlternative(
 		// window.getComputedStyle(elementFromAnotherWindow) or if I don't bind it
 		// the type declarations don't require a `this`
 		// eslint-disable-next-line no-restricted-properties
-		getComputedStyle: _getComputedStyle = window.getComputedStyle.bind(window),
+		getComputedStyle: uncachedGetComputedStyle = window.getComputedStyle.bind(
+			window,
+		),
 		hidden = false,
 	} = options;
-	const cachingGetComputedStyle: GetComputedStyle = (
+	const getComputedStyle: GetComputedStyle = (
 		el,
 		pseudoElement,
 	): CSSStyleDeclaration => {
-		// we don't cache the pseudoElement styles
+		// We don't cache the pseudoElement styles and calls with psuedo elements
+		// should use the uncached version instead
 		if (pseudoElement !== undefined) {
-			return _getComputedStyle(el, pseudoElement);
+			throw new Error(
+				"use uncachedGetComputedStyle directly for pseudo elements",
+			);
+		}
+		// If Map is not available, it is probably faster to just use the uncached
+		// version since the polyfill lookup is O(n) instead of O(1) and
+		// the getComputedStyle function in those environments(e.g. IE11) is fast
+		if (Map === undefined) {
+			return uncachedGetComputedStyle(el);
 		}
 		const cachedStyles = computedStyles.get(el);
 		if (cachedStyles) {
 			return cachedStyles;
 		}
-		const style = _getComputedStyle(el, pseudoElement);
+		const style = uncachedGetComputedStyle(el, pseudoElement);
 		computedStyles.set(el, style);
 		return style;
 	};
@@ -381,7 +392,7 @@ export function computeTextAlternative(
 	): string {
 		let accumulatedText = "";
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
-			const pseudoBefore = cachingGetComputedStyle(node, "::before");
+			const pseudoBefore = uncachedGetComputedStyle(node, "::before");
 			const beforeContent = getTextualContent(pseudoBefore);
 			accumulatedText = `${beforeContent} ${accumulatedText}`;
 		}
@@ -400,14 +411,14 @@ export function computeTextAlternative(
 			// TODO: Unclear why display affects delimiter
 			// see https://github.com/w3c/accname/issues/3
 			const display = isElement(child)
-				? cachingGetComputedStyle(child).getPropertyValue("display")
+				? getComputedStyle(child).getPropertyValue("display")
 				: "inline";
 			const separator = display !== "inline" ? " " : "";
 			// trailing separator for wpt tests
 			accumulatedText += `${separator}${result}${separator}`;
 		});
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
-			const pseudoAfter = cachingGetComputedStyle(node, "::after");
+			const pseudoAfter = uncachedGetComputedStyle(node, "::after");
 			const afterContent = getTextualContent(pseudoAfter);
 			accumulatedText = `${accumulatedText} ${afterContent}`;
 		}
@@ -588,7 +599,7 @@ export function computeTextAlternative(
 		// 2A
 		if (
 			!hidden &&
-			isHidden(current, cachingGetComputedStyle) &&
+			isHidden(current, getComputedStyle) &&
 			!context.isReferenced
 		) {
 			consultedNodes.add(current);
