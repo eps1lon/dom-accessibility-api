@@ -3,7 +3,6 @@
  */
 import ArrayFrom from "./polyfills/array.from";
 import SetLike from "./polyfills/SetLike";
-import MapLike from "./polyfills/MapLike";
 import {
 	hasAnyConcreteRoles,
 	isElement,
@@ -340,7 +339,10 @@ export function computeTextAlternative(
 	options: ComputeTextAlternativeOptions = {},
 ): string {
 	const consultedNodes = new SetLike<Node>();
-	const computedStyles = new MapLike<Element, CSSStyleDeclaration>();
+	const computedStyles =
+		typeof Map === "function"
+			? new Map<Element, CSSStyleDeclaration>()
+			: undefined;
 
 	const window = safeWindow(root);
 	const {
@@ -368,9 +370,9 @@ export function computeTextAlternative(
 			);
 		}
 		// If Map is not available, it is probably faster to just use the uncached
-		// version since the polyfill lookup is O(n) instead of O(1) and
+		// version since a polyfill lookup would be O(n) instead of O(1) and
 		// the getComputedStyle function in those environments(e.g. IE11) is fast
-		if (Map === undefined) {
+		if (computedStyles === undefined) {
 			return uncachedGetComputedStyle(el);
 		}
 		const cachedStyles = computedStyles.get(el);
