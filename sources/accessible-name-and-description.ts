@@ -338,13 +338,13 @@ export function computeTextAlternative(
 	root: Element,
 	options: ComputeTextAlternativeOptions = {},
 ): string {
+	const window = safeWindow(root);
 	const consultedNodes = new SetLike<Node>();
 	const computedStyles =
-		typeof Map === "function"
-			? new Map<Element, CSSStyleDeclaration>()
-			: undefined;
+		typeof Map === "undefined"
+			? undefined
+			: new Map<Element, CSSStyleDeclaration>();
 
-	const window = safeWindow(root);
 	const {
 		compute = "name",
 		computedStyleSupportsPseudoElements = options.getComputedStyle !==
