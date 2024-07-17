@@ -338,13 +338,13 @@ export function computeTextAlternative(
 	root: Element,
 	options: ComputeTextAlternativeOptions = {},
 ): string {
-	const window = safeWindow(root);
 	const consultedNodes = new SetLike<Node>();
 	const computedStyles =
 		typeof Map === "undefined"
 			? undefined
 			: new Map<Element, CSSStyleDeclaration>();
 
+	const window = safeWindow(root);
 	const {
 		compute = "name",
 		computedStyleSupportsPseudoElements = options.getComputedStyle !==
@@ -387,10 +387,7 @@ export function computeTextAlternative(
 	// 2F.i
 	function computeMiscTextAlternative(
 		node: Node,
-		context: {
-			isEmbeddedInLabel: boolean;
-			isReferenced: boolean;
-		},
+		context: { isEmbeddedInLabel: boolean; isReferenced: boolean },
 	): string {
 		let accumulatedText = "";
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
