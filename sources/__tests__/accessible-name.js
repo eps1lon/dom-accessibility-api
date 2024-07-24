@@ -591,6 +591,15 @@ describe("options.getComputedStyle", () => {
 		expect(name).toEqual("foo test foo");
 		expect(window.getComputedStyle).not.toHaveBeenCalled();
 	});
+	it("is not called more than once per element", () => {
+		const container = renderIntoDocument(
+			"<button><span><span>nested</span>button</span></button>",
+		);
+
+		computeAccessibleName(container.querySelector("button"));
+		// once for the button, once for each span
+		expect(window.getComputedStyle).toHaveBeenCalledTimes(3);
+	});
 });
 
 describe("options.computedStyleSupportsPseudoElements", () => {

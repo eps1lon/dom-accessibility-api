@@ -29,6 +29,7 @@ import {
 type FlatString = string & {
 	__flat: true;
 };
+type GetComputedStyle = typeof window.getComputedStyle;
 
 /**
  * interface for an options-bag where `window.getComputedStyle` can be mocked
@@ -43,7 +44,7 @@ export interface ComputeTextAlternativeOptions {
 	/**
 	 * mock window.getComputedStyle. Needs `content`, `display` and `visibility`
 	 */
-	getComputedStyle?: typeof window.getComputedStyle;
+	getComputedStyle?: GetComputedStyle;
 	/**
 	 * Set to `true` if you want to include hidden elements in the accessible name and description computation.
 	 * Skips 2A in https://w3c.github.io/accname/#computation-steps.
@@ -69,7 +70,7 @@ function asFlatString(s: string): FlatString {
  */
 function isHidden(
 	node: Node,
-	getComputedStyleImplementation: typeof window.getComputedStyle,
+	getComputedStyleImplementation: GetComputedStyle,
 ): node is Element {
 	if (!isElement(node)) {
 		return false;
@@ -338,6 +339,10 @@ export function computeTextAlternative(
 	options: ComputeTextAlternativeOptions = {},
 ): string {
 	const consultedNodes = new SetLike<Node>();
+	const computedStyles =
+		typeof Map === "undefined"
+			? undefined
+			: new Map<Element, CSSStyleDeclaration>();
 
 	const window = safeWindow(root);
 	const {
@@ -348,9 +353,36 @@ export function computeTextAlternative(
 		// window.getComputedStyle(elementFromAnotherWindow) or if I don't bind it
 		// the type declarations don't require a `this`
 		// eslint-disable-next-line no-restricted-properties
-		getComputedStyle = window.getComputedStyle.bind(window),
+		getComputedStyle: uncachedGetComputedStyle = window.getComputedStyle.bind(
+			window,
+		),
 		hidden = false,
 	} = options;
+	const getComputedStyle: GetComputedStyle = (
+		el,
+		pseudoElement,
+	): CSSStyleDeclaration => {
+		// We don't cache the pseudoElement styles and calls with psuedo elements
+		// should use the uncached version instead
+		if (pseudoElement !== undefined) {
+			throw new Error(
+				"use uncachedGetComputedStyle directly for pseudo elements",
+			);
+		}
+		// If Map is not available, it is probably faster to just use the uncached
+		// version since a polyfill lookup would be O(n) instead of O(1) and
+		// the getComputedStyle function in those environments(e.g. IE11) is fast
+		if (computedStyles === undefined) {
+			return uncachedGetComputedStyle(el);
+		}
+		const cachedStyles = computedStyles.get(el);
+		if (cachedStyles) {
+			return cachedStyles;
+		}
+		const style = uncachedGetComputedStyle(el, pseudoElement);
+		computedStyles.set(el, style);
+		return style;
+	};
 
 	// 2F.i
 	function computeMiscTextAlternative(
@@ -359,7 +391,7 @@ export function computeTextAlternative(
 	): string {
 		let accumulatedText = "";
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
-			const pseudoBefore = getComputedStyle(node, "::before");
+			const pseudoBefore = uncachedGetComputedStyle(node, "::before");
 			const beforeContent = getTextualContent(pseudoBefore);
 			accumulatedText = `${beforeContent} ${accumulatedText}`;
 		}
@@ -384,9 +416,8 @@ export function computeTextAlternative(
 			// trailing separator for wpt tests
 			accumulatedText += `${separator}${result}${separator}`;
 		});
-
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
-			const pseudoAfter = getComputedStyle(node, "::after");
+			const pseudoAfter = uncachedGetComputedStyle(node, "::after");
 			const afterContent = getTextualContent(pseudoAfter);
 			accumulatedText = `${accumulatedText} ${afterContent}`;
 		}
@@ -564,7 +595,6 @@ export function computeTextAlternative(
 		if (consultedNodes.has(current)) {
 			return "";
 		}
-
 		// 2A
 		if (
 			!hidden &&
