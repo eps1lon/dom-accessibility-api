@@ -1,5 +1,15 @@
 # dom-accessibility-api changelog
 
+## 0.7.0
+
+### Minor Changes
+
+- [#1048](https://github.com/eps1lon/dom-accessibility-api/pull/1048) [`d9ad334`](https://github.com/eps1lon/dom-accessibility-api/commit/d9ad334c1e17d590bccdbd7e94cf403a09486d53) Thanks [@TomPridham](https://github.com/TomPridham)! - Cache `window.getComputedStyle` results
+
+  Should improve performance in environments that don't cache these results natively e.g. JSDOM.
+  This increases memory usage.
+  If this results in adverse effects (e.g. resource constrained browser environments), please file an issue.
+
 ## 0.6.3
 
 ### Patch Changes
