@@ -514,12 +514,34 @@ export function computeTextAlternative(
 		}
 
 		if (
+			(isHTMLInputElement(node) &&
+				(node.type === "text" ||
+					node.type === "password" ||
+					node.type === "number" ||
+					node.type === "search" ||
+					node.type === "tel" ||
+					node.type === "email" ||
+					node.type === "url")) ||
+			isHTMLTextAreaElement(node)
+		) {
+			// https://www.w3.org/TR/html-aam-1.0/#input-type-text-input-type-password-input-type-number-input-type-search-input-type-tel-input-type-email-input-type-url-and-textarea-element-accessible-name-computation
+			const nameFromTitle = useAttribute(node, "title");
+			if (nameFromTitle !== null) {
+				return nameFromTitle;
+			}
+			const nameFromPlaceholder = useAttribute(node, "placeholder");
+			if (nameFromPlaceholder !== null) {
+				return nameFromPlaceholder;
+			}
+		}
+
+		if (
 			isHTMLInputElement(node) &&
 			(node.type === "button" ||
 				node.type === "submit" ||
 				node.type === "reset")
 		) {
-			// https://w3c.github.io/html-aam/#input-type-text-input-type-password-input-type-search-input-type-tel-input-type-email-input-type-url-and-textarea-element-accessible-description-computation
+			// https://www.w3.org/TR/html-aam-1.0/#input-type-button-input-type-submit-and-input-type-reset-accessible-name-computation
 			const nameFromValue = useAttribute(node, "value");
 			if (nameFromValue !== null) {
 				return nameFromValue;
