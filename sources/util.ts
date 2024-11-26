@@ -1,5 +1,6 @@
 export { getLocalName } from "./getRole";
 import getRole, { getLocalName } from "./getRole";
+import cssEscape from "./polyfills/CSS.escape";
 
 export const presentationRoles = ["presentation", "none"];
 
@@ -94,15 +95,12 @@ export function queryIdRefs(node: Node, attributeName: string): Element[] {
 
 		// Browsers that don't support shadow DOM won't have getRootNode
 		const root = node.getRootNode
-			? (node.getRootNode() as Document | ShadowRoot)
+			? (node.getRootNode() as ParentNode)
 			: node.ownerDocument;
 
 		return ids
-			.map((id) => root.getElementById(id))
-			.filter(
-				(element: Element | null): element is Element => element !== null,
-				// TODO: why does this not narrow?
-			) as Element[];
+			.map((id) => root.querySelector(`#${cssEscape(id)}`))
+			.filter((element): element is Element => element !== null);
 	}
 
 	return [];

@@ -1,5 +1,5 @@
 import { computeAccessibleDescription } from "../accessible-description";
-import { cleanup, renderIntoDocument } from "./helpers/test-utils";
+import { cleanup, render, renderIntoDocument } from "./helpers/test-utils";
 import { prettyDOM } from "@testing-library/dom";
 import { diff } from "jest-diff";
 
@@ -45,6 +45,12 @@ expect.extend({
 		const testNode = container.querySelector("[data-test]");
 		return toHaveAccessibleDescription(testNode, expected);
 	},
+	toRenderDetachedFromDocumentAccessibleDescription(received, expected) {
+		const container = render(received);
+
+		const testNode = container.querySelector("[data-test]");
+		return toHaveAccessibleDescription(testNode, expected);
+	},
 });
 
 afterEach(cleanup);
@@ -73,6 +79,9 @@ describe("wpt copies", () => {
 		],
 	])(`#%#`, (markup, expectedAccessibleDescription) => {
 		expect(markup).toRenderIntoDocumentAccessibleDescription(
+			expectedAccessibleDescription,
+		);
+		expect(markup).toRenderDetachedFromDocumentAccessibleDescription(
 			expectedAccessibleDescription,
 		);
 	});
