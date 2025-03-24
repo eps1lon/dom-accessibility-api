@@ -422,12 +422,6 @@ export function computeTextAlternative(
 			// TODO: Unclear why display affects delimiter
 			// see https://github.com/w3c/accname/issues/3
 			const separator = !isElementInlineLevel(child) ? " " : "";
-			// console.log(`'${result}'`)
-			// console.log('getComputedStyle(child).getPropertyValue("display"):', isElementInlineLevel(child), child.nodeName, isElement(child), isElement(child) ? getComputedStyle(child).getPropertyValue('display') :'nope');
-			// if (isElement(child)) {
-			// console.log(`'${getComputedStyle(document.createElement(child.nodeName.toLowerCase())).getPropertyValue('display')}'`)
-			// }
-			// trailing separator for wpt tests
 			accumulatedText += `${separator}${result}${separator}`;
 		});
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
@@ -435,7 +429,7 @@ export function computeTextAlternative(
 			const afterContent = getTextualContent(pseudoAfter);
 			accumulatedText = `${accumulatedText} ${afterContent}`;
 		}
-//console.log('accumulatedText:', accumulatedText);
+
 		return accumulatedText;
 	}
 
