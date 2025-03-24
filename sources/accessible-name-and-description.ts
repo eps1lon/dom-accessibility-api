@@ -422,7 +422,7 @@ export function computeTextAlternative(
 			accumulatedText = `${accumulatedText} ${afterContent}`;
 		}
 
-		return accumulatedText.trim();
+		return accumulatedText;
 	}
 
 	/**
