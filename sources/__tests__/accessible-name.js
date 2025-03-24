@@ -181,7 +181,7 @@ describe("to upstream", () => {
 	foo
 	<input type="text" value="David" />
 </label>
-<input data-test id="test" type="text" value="baz">			
+<input data-test id="test" type="text" value="baz">
 `,
 			"foo David",
 		],
@@ -192,7 +192,7 @@ describe("to upstream", () => {
 	foo
 	<textarea>David</textarea>
 </label>
-<input data-test id="test" type="text" value="baz">			
+<input data-test id="test" type="text" value="baz">
 `,
 			"foo David",
 		],
@@ -338,7 +338,7 @@ test.each([
 	label:after { content:" fruit"; }
 </style>
 <label for="test">fancy</label>
-<input type="image" src="foo.jpg" id="test" data-test />	
+<input type="image" src="foo.jpg" id="test" data-test />
 `,
 		"fancy",
 	],
@@ -448,6 +448,8 @@ test.each([
 		`,
 		"Full Refund Refund Type",
 	],
+	["<button data-test>abc<span> - </span>123</button>", "abc - 123"],
+	["<div data-test role=\"button\">abc<span>-</span>123</div>", "abc-123"]
 ])(`misc #%#`, (markup, expectedAccessibleName) => {
 	expect(markup).toRenderIntoDocumentAccessibleName(expectedAccessibleName);
 });
@@ -499,7 +501,7 @@ describe("prohibited naming", () => {
 		],
 		[
 			"deletion",
-			"<button data-test>aria <span role='deletion'>1.1</span><span>1.2</span></button>",
+			"<button data-test>aria <span role='deletion'>1.1</span> <span>1.2</span></button>",
 			"aria 1.1 1.2",
 		],
 		[
@@ -514,7 +516,7 @@ describe("prohibited naming", () => {
 		],
 		[
 			"insertion",
-			"<button data-test><span role='insertion'>wai</span>aria</button>",
+			"<button data-test><span role='insertion'>wai</span> aria</button>",
 			"wai aria",
 		],
 		[
@@ -540,12 +542,12 @@ describe("prohibited naming", () => {
 		[
 			"subscript",
 			"<button data-test>A<span role='subscript'>_x</span></button>",
-			"A _x",
+			"A_x",
 		],
 		[
 			"superscript",
 			"<button data-test>2<span role='superscript'>64</span></button>",
-			"2 64",
+			"264",
 		],
 	])(
 		"role '%s'can be part of the accessible name of another element",

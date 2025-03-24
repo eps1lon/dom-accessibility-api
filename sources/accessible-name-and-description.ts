@@ -384,6 +384,18 @@ export function computeTextAlternative(
 		return style;
 	};
 
+	function isElementInlineLevel(child: Node): boolean {
+		let inline = false;
+		const defaultInlineElementTags = ["a", "abbr", "acronym", "b", "bdo", "big", "br", "button", "cite", "code", "dfn", "em", "i", "img", "input", "kbd", "label", "map", "object", "output", "q", "samp", "script", "select", "small", "span", "strong", "sub", "sup", "textarea", "time", "tt", "var", '#text'];
+		if (isElement(child)) {
+			inline = getComputedStyle(child).getPropertyValue("display").indexOf('inline') > -1;
+		}
+		if (!inline) {
+			inline = defaultInlineElementTags.indexOf(child.nodeName.toLowerCase()) > -1;
+		}
+		return inline;
+	}
+
 	// 2F.i
 	function computeMiscTextAlternative(
 		node: Node,
@@ -409,10 +421,12 @@ export function computeTextAlternative(
 			});
 			// TODO: Unclear why display affects delimiter
 			// see https://github.com/w3c/accname/issues/3
-			const display = isElement(child)
-				? getComputedStyle(child).getPropertyValue("display")
-				: "inline";
-			const separator = display !== "inline" ? " " : "";
+			const separator = !isElementInlineLevel(child) ? " " : "";
+			// console.log(`'${result}'`)
+			// console.log('getComputedStyle(child).getPropertyValue("display"):', isElementInlineLevel(child), child.nodeName, isElement(child), isElement(child) ? getComputedStyle(child).getPropertyValue('display') :'nope');
+			// if (isElement(child)) {
+			// console.log(`'${getComputedStyle(document.createElement(child.nodeName.toLowerCase())).getPropertyValue('display')}'`)
+			// }
 			// trailing separator for wpt tests
 			accumulatedText += `${separator}${result}${separator}`;
 		});
@@ -421,8 +435,8 @@ export function computeTextAlternative(
 			const afterContent = getTextualContent(pseudoAfter);
 			accumulatedText = `${accumulatedText} ${afterContent}`;
 		}
-
-		return accumulatedText.trim();
+//console.log('accumulatedText:', accumulatedText);
+		return accumulatedText;
 	}
 
 	/**
