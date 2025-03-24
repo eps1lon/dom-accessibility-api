@@ -449,7 +449,7 @@ test.each([
 		"Full Refund Refund Type",
 	],
 	["<button data-test>abc<span> - </span>123</button>", "abc - 123"],
-	["<div data-test role=\"button\">abc<span>-</span>123</div>", "abc-123"]
+	['<div data-test role="button">abc<span>-</span>123</div>', "abc-123"],
 ])(`misc #%#`, (markup, expectedAccessibleName) => {
 	expect(markup).toRenderIntoDocumentAccessibleName(expectedAccessibleName);
 });

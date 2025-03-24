@@ -386,12 +386,50 @@ export function computeTextAlternative(
 
 	function isElementInlineLevel(child: Node): boolean {
 		let inline = false;
-		const defaultInlineElementTags = ["a", "abbr", "acronym", "b", "bdo", "big", "br", "button", "cite", "code", "dfn", "em", "i", "img", "input", "kbd", "label", "map", "object", "output", "q", "samp", "script", "select", "small", "span", "strong", "sub", "sup", "textarea", "time", "tt", "var", '#text'];
+		const defaultInlineElementTags = [
+			"a",
+			"abbr",
+			"acronym",
+			"b",
+			"bdo",
+			"big",
+			"br",
+			"button",
+			"cite",
+			"code",
+			"dfn",
+			"em",
+			"i",
+			"img",
+			"input",
+			"kbd",
+			"label",
+			"map",
+			"object",
+			"output",
+			"q",
+			"samp",
+			"script",
+			"select",
+			"small",
+			"span",
+			"strong",
+			"sub",
+			"sup",
+			"textarea",
+			"time",
+			"tt",
+			"var",
+			"#text",
+		];
 		if (isElement(child)) {
-			inline = getComputedStyle(child).getPropertyValue("display").indexOf('inline') > -1;
+			inline =
+				getComputedStyle(child).getPropertyValue("display").indexOf("inline") >
+				-1;
 		}
 		if (!inline) {
-			inline = defaultInlineElementTags.indexOf(child.nodeName.toLowerCase()) > -1;
+			inline =
+				defaultInlineElementTags.indexOf(child.nodeName.toLowerCase()) > -1;
 		}
 		return inline;
 	}
