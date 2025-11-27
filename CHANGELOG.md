@@ -1,5 +1,11 @@
 # dom-accessibility-api changelog
 
+## 0.7.1
+
+### Patch Changes
+
+- [#1090](https://github.com/eps1lon/dom-accessibility-api/pull/1090) [`3c0b608`](https://github.com/eps1lon/dom-accessibility-api/commit/3c0b608221461833c09ee1ed82de0cbc7f689330) Thanks [@eps1lon](https://github.com/eps1lon)! - Switch to trusted publishing
+
 ## 0.7.0
 
 ### Minor Changes
