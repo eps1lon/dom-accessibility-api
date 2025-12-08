@@ -419,10 +419,12 @@ export function computeTextAlternative(
 		if (isElement(node) && computedStyleSupportsPseudoElements) {
 			const pseudoAfter = uncachedGetComputedStyle(node, "::after");
 			const afterContent = getTextualContent(pseudoAfter);
-			accumulatedText = `${accumulatedText} ${afterContent}`;
+			if (afterContent) {
+				accumulatedText = `${accumulatedText} ${afterContent}`;
+			}
 		}
 
-		return accumulatedText.trim();
+		return accumulatedText;
 	}
 
 	/**
