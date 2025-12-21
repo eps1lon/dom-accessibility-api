@@ -168,7 +168,13 @@ const cases = [
   ["title", null, createElementFactory("title", {})],
   // WARNING: Only in certain contexts
 	["td", "cell", createElementFactory("td", {})],
-	["th", "columnheader", createElementFactory("th", {})],
+	// default scope=auto
+	["th missing scope", "columnheader", createElementFactory("th", {})],
+	["th scope explicitly set to `auto`", "columnheader", createElementFactory("th", {scope:"auto"})],
+	["th scope=col", "columnheader", createElementFactory("th", {scope:"col"})],
+	["th scope=colgroup", "columnheader", createElementFactory("th", {scope:"colgroup"})],
+	["th scope=row", "rowheader", createElementFactory("th", {scope:"row"})],
+	["th scope=rowgroup", "rowheader", createElementFactory("th", {scope:"rowgroup"})],
 	["tr", "row", createElementFactory("tr", {})],
 	["track", null, createElementFactory("track", {})],
 	["ul", "list", createElementFactory("ul", {})],
@@ -182,7 +188,7 @@ const cases = [
 	["presentational <div /> with prohibited aria attributes", null, createElementFactory("div", {'aria-label': "hello", role: "none"})],
 ];
 
-it.each(cases)("%s has the role %s", (name, role, elementFactory) => {
+it.each(cases)("%s has the role %s", (_name, role, elementFactory) => {
 	const element = elementFactory();
 
 	expect(getRole(element)).toEqual(role);

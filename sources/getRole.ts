@@ -59,7 +59,6 @@ const localNameToRoleMappings: Record<string, string | undefined> = {
 	tfoot: "rowgroup",
 	// WARNING: Only in certain context
 	td: "cell",
-	th: "columnheader",
 	thead: "rowgroup",
 	tr: "row",
 	ul: "list",
@@ -143,12 +142,13 @@ export default function getRole(element: Element): string | null {
 }
 
 function getImplicitRole(element: Element): string | null {
-	const mappedByTag = localNameToRoleMappings[getLocalName(element)];
+	const elName = getLocalName(element);
+	const mappedByTag = localNameToRoleMappings[elName];
 	if (mappedByTag !== undefined) {
 		return mappedByTag;
 	}
 
-	switch (getLocalName(element)) {
+	switch (elName) {
 		case "a":
 		case "area":
 		case "link":
@@ -205,6 +205,17 @@ function getImplicitRole(element: Element): string | null {
 				return "listbox";
 			}
 			return "combobox";
+		case "th":
+			switch (element.getAttribute("scope")) {
+				case "row":
+				case "rowgroup":
+					return "rowheader";
+				case "col":
+				case "colgroup":
+				case "auto":
+				default:
+					return "columnheader";
+			}
 	}
 	return null;
 }
