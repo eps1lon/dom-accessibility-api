@@ -26,7 +26,6 @@ const localNameToRoleMappings: Record<string, string | undefined> = {
 	dt: "term",
 	fieldset: "group",
 	figure: "figure",
-	// WARNING: Only with an accessible name
 	form: "form",
 	footer: "contentinfo",
 	h1: "heading",
