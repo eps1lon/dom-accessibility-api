@@ -91,3 +91,17 @@ describe("content in shadow DOM", () => {
 		expect(computeAccessibleDescription(button)).toEqual("This is a button");
 	});
 });
+
+describe("aria-describedby", () => {
+	it("uses accessible names from referenced content", () => {
+		expect(
+			`
+			<input data-test aria-describedby="error-message" />
+			<div id="error-message">
+				<span aria-label="Error icon">error</span>
+				<span>The error message</span>
+			</div>
+			`,
+		).toRenderIntoDocumentAccessibleDescription("Error icon The error message");
+	});
+});

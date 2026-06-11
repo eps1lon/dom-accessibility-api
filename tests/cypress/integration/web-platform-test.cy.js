@@ -5,7 +5,7 @@ const usedApiIndex = 0; // ATK
 context("wpt", () => {
 	[
 		["description_1.0_combobox-focusable-manual.html", "fail"],
-		["description_from_content_of_describedby_element-manual.html", "fail"],
+		["description_from_content_of_describedby_element-manual.html", "pass"],
 		["description_link-with-label-manual.html", "pass"],
 		["description_test_case_557-manual.html", "pass"],
 		["description_test_case_664-manual.html", "pass"],
