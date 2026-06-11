@@ -404,7 +404,7 @@ export function computeTextAlternative(
 		childNodes.forEach((child) => {
 			const result = computeTextAlternative(child, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
-				isReferenced: false,
+				isReferenced: context.isReferenced,
 				recursion: true,
 			});
 			// TODO: Unclear why display affects delimiter
@@ -647,7 +647,7 @@ export function computeTextAlternative(
 				(isElement(current) && current.getAttribute("aria-label")) ||
 				""
 			).trim();
-			if (ariaLabel !== "" && compute === "name") {
+			if (ariaLabel !== "" && (compute === "name" || context.isReferenced)) {
 				consultedNodes.add(current);
 				return ariaLabel;
 			}
@@ -716,7 +716,7 @@ export function computeTextAlternative(
 		) {
 			const accumulatedText2F = computeMiscTextAlternative(current, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
-				isReferenced: false,
+				isReferenced: context.isReferenced,
 			});
 			if (accumulatedText2F !== "") {
 				consultedNodes.add(current);
@@ -733,7 +733,7 @@ export function computeTextAlternative(
 			consultedNodes.add(current);
 			return computeMiscTextAlternative(current, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
-				isReferenced: false,
+				isReferenced: context.isReferenced,
 			});
 		}
 

@@ -2,8 +2,7 @@ DIR: accname
 
 description_1.0_combobox-focusable-manual.html:
   [fail, title already used for name]
-description_from_content_of_describedby_element-manual.html:
-  [fail, test considers aria-label for description which is wrong IMO]
+description_from_content_of_describedby_element-manual.html: [pass]
 name_file-label-inline-block-elements-manual.html:
   [fail, whitespace issue, likely due to `display`]
 name_file-label-inline-block-styles-manual.html: [fail, missing word, unknown]
