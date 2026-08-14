@@ -148,6 +148,50 @@ describe("to upstream", () => {
 		expect(markup).toRenderIntoDocumentAccessibleName(expectedAccessibleName);
 	});
 
+	// https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/#naming_with_child_content
+	//
+	// "When calculating a name from content for the treeitem role, descendant
+	// content of child group elements are not included [...] a menuitem role
+	// with a menu descendant [...] is a similar case."
+	describe("name from content excludes specific descendant roles", () => {
+		test("treeitem excludes a descendant group's content", () => {
+			expect(`
+				<ul role="tree">
+					<li data-test role="treeitem">
+						Fruits
+						<ul role="group">
+							<li role="treeitem">Apples</li>
+							<li role="treeitem">Bananas</li>
+							<li role="treeitem">Oranges</li>
+						</ul>
+					</li>
+				</ul>
+			`).toRenderIntoDocumentAccessibleName("Fruits");
+		});
+
+		test("menuitem excludes a descendant menu's content", () => {
+			expect(`
+				<ul role="menu">
+					<li data-test role="menuitem">
+						Fruits
+						<ul role="menu">
+							<li role="menuitem">Apples</li>
+						</ul>
+					</li>
+				</ul>
+			`).toRenderIntoDocumentAccessibleName("Fruits");
+		});
+
+		test("a group descendant of a non-treeitem role is still included", () => {
+			expect(`
+				<div data-test role="button">
+					Fruits
+					<span role="group">Apples</span>
+				</div>
+			`).toRenderIntoDocumentAccessibleName("Fruits Apples");
+		});
+	});
+
 	test("output is labelable", () => {
 		const container = renderIntoDocument(`
 			<label for="outputid">Output Label</label>
