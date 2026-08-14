@@ -3,6 +3,7 @@
  */
 import ArrayFrom from "./polyfills/array.from";
 import SetLike from "./polyfills/SetLike";
+import getRole from "./getRole";
 import {
 	hasAnyConcreteRoles,
 	isElement,
@@ -22,6 +23,23 @@ import {
 	getLocalName,
 	presentationRoles,
 } from "./util";
+
+/**
+ * https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/#naming_with_child_content
+ *
+ * "When calculating a name from content for the treeitem role, descendant
+ * content of child group elements are not included [...] a menuitem role
+ * with a menu descendant [...] is a similar case."
+ */
+function isExcludedFromNameFromContent(
+	parentRole: string | null,
+	childRole: string | null,
+): boolean {
+	return (
+		(parentRole === "treeitem" && childRole === "group") ||
+		(parentRole === "menuitem" && childRole === "menu")
+	);
+}
 
 /**
  *  A string of characters where all carriage returns, newlines, tabs, and form-feeds are replaced with a single space, and multiple spaces are reduced to a single space. The string contains only character data; it does not contain any markup.
@@ -398,9 +416,17 @@ export function computeTextAlternative(
 
 		// FIXME: Including aria-owns is not defined in the spec
 		// But it is required in the web-platform-test
-		const childNodes = isHTMLSlotElement(node)
-			? getSlotContents(node)
-			: ArrayFrom(node.childNodes).concat(queryIdRefs(node, "aria-owns"));
+		const nodeRole = isElement(node) ? getRole(node) : null;
+		const childNodes = (
+			isHTMLSlotElement(node)
+				? getSlotContents(node)
+				: ArrayFrom(node.childNodes).concat(queryIdRefs(node, "aria-owns"))
+		).filter((child) => {
+			if (!isElement(child)) {
+				return true;
+			}
+			return !isExcludedFromNameFromContent(nodeRole, getRole(child));
+		});
 		childNodes.forEach((child) => {
 			const result = computeTextAlternative(child, {
 				isEmbeddedInLabel: context.isEmbeddedInLabel,
