@@ -49,6 +49,14 @@ expect.extend({
 
 afterEach(cleanup);
 
+it("computes descriptions within a detached tree", () => {
+	const container = document.createElement("div");
+	container.innerHTML = `<button aria-describedby="description">Button</button><p id="description">Detached description</p>`;
+	expect(
+		computeAccessibleDescription(container.querySelector("button")),
+	).toEqual("Detached description");
+});
+
 describe("wpt copies", () => {
 	test.each([
 		[
