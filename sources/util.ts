@@ -1,5 +1,6 @@
 export { getLocalName } from "./getRole";
 import getRole, { getLocalName } from "./getRole";
+import ArrayFrom from "./polyfills/array.from";
 
 export const presentationRoles = ["presentation", "none"];
 
@@ -94,11 +95,19 @@ export function queryIdRefs(node: Node, attributeName: string): Element[] {
 
 		// Browsers that don't support shadow DOM won't have getRootNode
 		const root = node.getRootNode
-			? (node.getRootNode() as Document | ShadowRoot)
+			? (node.getRootNode() as Document | ShadowRoot | Element)
 			: node.ownerDocument;
+		const elements = isElement(root)
+			? [root].concat(ArrayFrom(root.querySelectorAll("[id]")))
+			: [];
 
 		return ids
-			.map((id) => root.getElementById(id))
+			.map((id) =>
+				isElement(root)
+					? elements.filter((element) => id !== "" && element.id === id)[0] ||
+						null
+					: root.getElementById(id),
+			)
 			.filter(
 				(element: Element | null): element is Element => element !== null,
 				// TODO: why does this not narrow?
