@@ -384,6 +384,39 @@ export function computeTextAlternative(
 		return style;
 	};
 
+	function shouldSeparate(node: Node, text: string): boolean {
+		// Text nodes stay in the surrounding inline text.
+		if (!isElement(node)) {
+			return false;
+		}
+		// Non-inline boxes and controls are separated even when they have no text.
+		// TODO: Unclear why display affects delimiter, see https://github.com/w3c/accname/issues/3
+		if (
+			getComputedStyle(node).getPropertyValue("display") !== "inline" ||
+			isControl(node)
+		) {
+			return true;
+		}
+
+		// aria-label and alt apply only when computing a non-empty name.
+		if (text.trim() === "" || compute !== "name") {
+			return false;
+		}
+		// aria-label and aria-labelledby replace the element's contents.
+		if (
+			(node.getAttribute("aria-label") || "").trim() !== "" ||
+			queryIdRefs(node, "aria-labelledby").length > 0
+		) {
+			return true;
+		}
+		// The non-empty name of an img or area comes from alt.
+		if (getLocalName(node) === "img" || getLocalName(node) === "area") {
+			return true;
+		}
+
+		return false;
+	}
+
 	// 2F.i
 	function computeMiscTextAlternative(
 		node: Node,
@@ -407,12 +440,7 @@ export function computeTextAlternative(
 				isReferenced: false,
 				recursion: true,
 			});
-			// TODO: Unclear why display affects delimiter
-			// see https://github.com/w3c/accname/issues/3
-			const display = isElement(child)
-				? getComputedStyle(child).getPropertyValue("display")
-				: "inline";
-			const separator = display !== "inline" ? " " : "";
+			const separator = shouldSeparate(child, result) ? " " : "";
 			// trailing separator for wpt tests
 			accumulatedText += `${separator}${result}${separator}`;
 		});

@@ -452,6 +452,69 @@ test.each([
 	expect(markup).toRenderIntoDocumentAccessibleName(expectedAccessibleName);
 });
 
+describe("inline text alternatives", () => {
+	function inlineComputedStyle() {
+		const declaration = new CSSStyleDeclaration();
+		declaration.display = "inline";
+		declaration.visibility = "visible";
+		declaration.content = "none";
+		return declaration;
+	}
+
+	function accessibleName(markup) {
+		const container = renderIntoDocument(markup);
+		return computeAccessibleName(container.querySelector("[data-test]"), {
+			getComputedStyle: inlineComputedStyle,
+		});
+	}
+
+	test.each([
+		[
+			"aria-label",
+			`<button data-test>foo<span aria-label="bar"></span></button>`,
+			"foo bar",
+		],
+		[
+			"aria-label between text",
+			`<button data-test>foo<span aria-label="bar"></span>baz</button>`,
+			"foo bar baz",
+		],
+		[
+			"aria-label before text",
+			`<button data-test><span aria-label="foo"></span>bar</button>`,
+			"foo bar",
+		],
+		[
+			"adjacent aria-labels",
+			`<button data-test><span aria-label="foo"></span><span aria-label="bar"></span></button>`,
+			"foo bar",
+		],
+		[
+			"aria-labelledby",
+			`<button data-test>foo<span aria-labelledby="label"></span></button><span id="label">bar</span>`,
+			"foo bar",
+		],
+		["img alt", `<button data-test>foo<img alt="bar"></button>`, "foo bar"],
+		[
+			"inline textbox value",
+			`<button data-test>foo<span role="textbox">bar</span></button>`,
+			"foo bar",
+		],
+		[
+			"inline button contents",
+			`<button data-test>foo<span role="button">bar</span></button>`,
+			"foo bar",
+		],
+		[
+			"inline contents stay concatenated",
+			`<button data-test><span>foo</span><span>bar</span></button>`,
+			"foobar",
+		],
+	])("%s", (_, markup, expectedAccessibleName) => {
+		expect(accessibleName(markup)).toEqual(expectedAccessibleName);
+	});
+});
+
 test("text nodes are not concatenated by space", () => {
 	// how React would create `<h1>Hello {name}!</h1>`
 	// which transpiles to
