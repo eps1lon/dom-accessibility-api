@@ -647,7 +647,7 @@ export function computeTextAlternative(
 				(isElement(current) && current.getAttribute("aria-label")) ||
 				""
 			).trim();
-			if (ariaLabel !== "" && compute === "name") {
+			if (ariaLabel !== "") {
 				consultedNodes.add(current);
 				return ariaLabel;
 			}

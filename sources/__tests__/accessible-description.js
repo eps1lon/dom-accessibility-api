@@ -78,6 +78,40 @@ describe("wpt copies", () => {
 	});
 });
 
+describe("aria-label in descriptions", () => {
+	test.each([
+		[
+			"a descendant of the referenced element",
+			`<input data-test aria-describedby="description"><div id="description"><span aria-label="icon label">icon</span><span>Error message</span></div>`,
+			"icon label Error message",
+		],
+		[
+			"the referenced element",
+			`<input data-test aria-describedby="description"><div id="description" aria-label="Description label">Description content</div>`,
+			"Description label",
+		],
+		[
+			"a hidden referenced element",
+			`<input data-test aria-describedby="description"><div id="description" hidden aria-label="Hidden label">Hidden content</div>`,
+			"Hidden label",
+		],
+		[
+			"an empty label falls back to content",
+			`<input data-test aria-describedby="description"><div id="description"><span aria-label="  ">Error message</span></div>`,
+			"Error message",
+		],
+		[
+			"the described element's own label does not become its description",
+			`<input data-test aria-label="Input label" title="Input description">`,
+			"Input description",
+		],
+	])("%s", (_, markup, expectedAccessibleDescription) => {
+		expect(markup).toRenderIntoDocumentAccessibleDescription(
+			expectedAccessibleDescription,
+		);
+	});
+});
+
 describe("content in shadow DOM", () => {
 	it("works for aria-labelledby on elements in same shadow root", () => {
 		const container = renderIntoDocument("<div></div>");
