@@ -71,7 +71,7 @@ function asFlatString(s: string): FlatString {
 function isHidden(
 	node: Node,
 	getComputedStyleImplementation: GetComputedStyle,
-): node is Element {
+): boolean {
 	if (!isElement(node)) {
 		return false;
 	}
@@ -84,10 +84,40 @@ function isHidden(
 	}
 
 	const style = getComputedStyleImplementation(node);
+	const visibility = style.getPropertyValue("visibility");
 	return (
 		style.getPropertyValue("display") === "none" ||
-		style.getPropertyValue("visibility") === "hidden"
+		visibility === "hidden" ||
+		visibility === "collapse"
 	);
+}
+
+function isHiddenForTraversal(
+	node: Node,
+	getComputedStyleImplementation: GetComputedStyle,
+): boolean {
+	if (!isElement(node)) {
+		return false;
+	}
+	if (isHidden(node, getComputedStyleImplementation)) {
+		return true;
+	}
+	// Computed visibility includes inheritance and explicit visible overrides.
+	// In contrast, these ancestor properties hide the entire subtree and cannot
+	// be overridden by aria-hidden=false or display:block on a descendant.
+	let ancestor = node.parentElement;
+	while (ancestor !== null) {
+		if (
+			ancestor.hasAttribute("hidden") ||
+			ancestor.getAttribute("aria-hidden") === "true" ||
+			getComputedStyleImplementation(ancestor).getPropertyValue("display") ===
+				"none"
+		) {
+			return true;
+		}
+		ancestor = ancestor.parentElement;
+	}
+	return false;
 }
 
 /**
@@ -471,6 +501,7 @@ export function computeTextAlternative(
 						isEmbeddedInLabel: false,
 						isReferenced: false,
 						recursion: false,
+						isNativeTextAlternativeRoot: true,
 					});
 				}
 			}
@@ -485,6 +516,7 @@ export function computeTextAlternative(
 						isEmbeddedInLabel: false,
 						isReferenced: false,
 						recursion: false,
+						isNativeTextAlternativeRoot: true,
 					});
 				}
 			}
@@ -544,6 +576,7 @@ export function computeTextAlternative(
 						isEmbeddedInLabel: true,
 						isReferenced: false,
 						recursion: true,
+						isNativeTextAlternativeRoot: true,
 					});
 				})
 				.filter((label) => {
@@ -588,6 +621,7 @@ export function computeTextAlternative(
 		isEmbeddedInLabel: boolean;
 		isReferenced: boolean;
 		recursion: boolean;
+		isNativeTextAlternativeRoot?: boolean;
 	};
 	let inHiddenReferencedTraversal = false;
 
@@ -595,14 +629,14 @@ export function computeTextAlternative(
 		current: Node,
 		context: TextAlternativeContext,
 	): string {
-		if (!context.isReferenced) {
+		if (!context.isReferenced && !context.isNativeTextAlternativeRoot) {
 			return computeTextAlternativeStep(current, context);
 		}
-		// Step 2A includes hidden descendants only when the directly referenced
-		// node is hidden. Each reference starts its own scoped traversal.
+		// Step 2A starts a separate context for each ARIA reference or native
+		// text alternative, even when that native label is outside a hidden root.
 		const previousTraversal = inHiddenReferencedTraversal;
 		inHiddenReferencedTraversal =
-			!hidden && isHidden(current, getComputedStyle);
+			!hidden && isHiddenForTraversal(current, getComputedStyle);
 		try {
 			return computeTextAlternativeStep(current, context);
 		} finally {
