@@ -584,13 +584,35 @@ export function computeTextAlternative(
 		return null;
 	}
 
+	type TextAlternativeContext = {
+		isEmbeddedInLabel: boolean;
+		isReferenced: boolean;
+		recursion: boolean;
+	};
+	let inHiddenReferencedTraversal = false;
+
 	function computeTextAlternative(
 		current: Node,
-		context: {
-			isEmbeddedInLabel: boolean;
-			isReferenced: boolean;
-			recursion: boolean;
-		},
+		context: TextAlternativeContext,
+	): string {
+		if (!context.isReferenced) {
+			return computeTextAlternativeStep(current, context);
+		}
+		// Step 2A includes hidden descendants only when the directly referenced
+		// node is hidden. Each reference starts its own scoped traversal.
+		const previousTraversal = inHiddenReferencedTraversal;
+		inHiddenReferencedTraversal =
+			!hidden && isHidden(current, getComputedStyle);
+		try {
+			return computeTextAlternativeStep(current, context);
+		} finally {
+			inHiddenReferencedTraversal = previousTraversal;
+		}
+	}
+
+	function computeTextAlternativeStep(
+		current: Node,
+		context: TextAlternativeContext,
 	): string {
 		if (consultedNodes.has(current)) {
 			return "";
@@ -599,7 +621,8 @@ export function computeTextAlternative(
 		if (
 			!hidden &&
 			isHidden(current, getComputedStyle) &&
-			!context.isReferenced
+			!context.isReferenced &&
+			!inHiddenReferencedTraversal
 		) {
 			consultedNodes.add(current);
 			return "" as FlatString;
